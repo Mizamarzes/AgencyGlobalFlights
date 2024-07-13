@@ -9,123 +9,123 @@ CREATE DATABASE airport;
 -- Use the database
 USE airport;
 
--- Create tables for users
+-- Create tables for user
 
-CREATE TABLE IF NOT EXISTS rols (
+CREATE TABLE IF NOT EXISTS role (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
-    CONSTRAINT pk_rols_id PRIMARY KEY(id)
+    CONSTRAINT pk_role_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS permmisions (
+CREATE TABLE IF NOT EXISTS permmision (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(20),
-    CONSTRAINT pk_permmisions_id PRIMARY KEY(id)
+    CONSTRAINT pk_permmision_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS rols_permissions (
+CREATE TABLE IF NOT EXISTS role_permission (
     idrol INT NOT NULL,
     idpermission INT NOT NULL,
-    CONSTRAINT pk_rolspermissions_id PRIMARY KEY(idrol, idpermission),
-    CONSTRAINT fk_rolsperms_rol FOREIGN KEY(idrol) REFERENCES rols(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_rolsperms_permmisions FOREIGN KEY(idpermission) REFERENCES permmisions(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_rolepermissions_id PRIMARY KEY(idrol, idpermission),
+    CONSTRAINT fk_roleperms_rol FOREIGN KEY(idrol) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_roleperms_permmision FOREIGN KEY(idpermission) REFERENCES permmision(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS users (
+CREATE TABLE IF NOT EXISTS user (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(50) NOT NULL,
-    idrols INT NOT NULL,
-    CONSTRAINT pk_users_id PRIMARY KEY(id),
-    CONSTRAINT fk_users_rolS FOREIGN KEY(idrols) REFERENCES rols(id) ON DELETE CASCADE ON UPDATE CASCADE
+    idrole INT NOT NULL,
+    CONSTRAINT pk_user_id PRIMARY KEY(id),
+    CONSTRAINT fk_user_role FOREIGN KEY(idrole) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- Create table for document types
-CREATE TABLE IF NOT EXISTS documenttypes (
+CREATE TABLE IF NOT EXISTS documenttype (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
-    CONSTRAINT pk_documenttypes_id PRIMARY KEY(id)
+    CONSTRAINT pk_documenttype_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
 -- Create table for flight fares
-CREATE TABLE IF NOT EXISTS flightfares (
+CREATE TABLE IF NOT EXISTS flightfare (
     id INT NOT NULL AUTO_INCREMENT,
     description VARCHAR(20),
     details TEXT,
     value DOUBLE(7,2),
-    CONSTRAINT pk_flightfares_id PRIMARY KEY(id)
+    CONSTRAINT pk_flightfare_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
--- Create table for airlines
-CREATE TABLE IF NOT EXISTS airlines (
+-- Create table for airline
+CREATE TABLE IF NOT EXISTS airline (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
-    CONSTRAINT pk_airlines_id PRIMARY KEY(id)
+    CONSTRAINT pk_airline_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
 -- Create table for tripulation roles
-CREATE TABLE IF NOT EXISTS tripulationroles (
+CREATE TABLE IF NOT EXISTS tripulationrole (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
-    CONSTRAINT pk_tripulationroles_id PRIMARY KEY(id)
+    CONSTRAINT pk_tripulationrole_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
 
--- Create table for countries
-CREATE TABLE IF NOT EXISTS countries (
+-- Create table for country
+CREATE TABLE IF NOT EXISTS country (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
-    CONSTRAINT pk_countries_id PRIMARY KEY(id)
+    CONSTRAINT pk_country_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
--- Create table for cities
-CREATE TABLE IF NOT EXISTS cities (
+-- Create table for city
+CREATE TABLE IF NOT EXISTS city (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
     idcountry INT NOT NULL,
-    CONSTRAINT pk_cities_id PRIMARY KEY(id),
-    CONSTRAINT fk_cities_country_id FOREIGN KEY(idcountry) REFERENCES countries(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_city_id PRIMARY KEY(id),
+    CONSTRAINT fk_city_country_id FOREIGN KEY(idcountry) REFERENCES country(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for flights
-CREATE TABLE IF NOT EXISTS flights (
+-- Create table for flight
+CREATE TABLE IF NOT EXISTS flight (
     id INT NOT NULL AUTO_INCREMENT,
     trip_date DATE NOT NULL,
     price_trip DOUBLE NOT NULL,
     orig_city INT NOT NULL,
     dest_city INT NOT NULL,
-    CONSTRAINT pk_flights_id PRIMARY KEY(id),
-    CONSTRAINT fk_flights_orig_city_id FOREIGN KEY(orig_city) REFERENCES cities(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_flights_dest_city_id FOREIGN KEY(dest_city) REFERENCES cities(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_flight_id PRIMARY KEY(id),
+    CONSTRAINT fk_flight_orig_city_id FOREIGN KEY(orig_city) REFERENCES city(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_flight_dest_city_id FOREIGN KEY(dest_city) REFERENCES city(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for statuses
-CREATE TABLE IF NOT EXISTS statuses (
+-- Create table for planestatus
+CREATE TABLE IF NOT EXISTS planestatus (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
-    CONSTRAINT pk_statuses_id PRIMARY KEY(id)
+    CONSTRAINT pk_planestatus_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
--- Create table for manufacturers
-CREATE TABLE IF NOT EXISTS manufacturers (
+-- Create table for manufacturer
+CREATE TABLE IF NOT EXISTS manufacturer (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(40) NOT NULL,
-    CONSTRAINT pk_manufacturers_id PRIMARY KEY(id)
+    CONSTRAINT pk_manufacturer_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
 
--- Create table for customers
-CREATE TABLE IF NOT EXISTS customers (
+-- Create table for customer
+CREATE TABLE IF NOT EXISTS customer (
     id VARCHAR(10) NOT NULL UNIQUE,
     name VARCHAR(30) NOT NULL,
     age INT NOT NULL,
     idnumber VARCHAR(20) NOT NULL UNIQUE,
     iddocument INT NOT NULL,
     iduser INT NOT NULL,
-    CONSTRAINT pk_customers_id PRIMARY KEY(id),
-    CONSTRAINT fk_customers_documenttypes_id FOREIGN KEY(iddocument) REFERENCES documenttypes(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_customers_user_id FOREIGN KEY(iduser) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_customer_id PRIMARY KEY(id),
+    CONSTRAINT fk_customer_documenttype_id FOREIGN KEY(iddocument) REFERENCES documenttype(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_customer_user_id FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
@@ -133,26 +133,26 @@ CREATE TABLE IF NOT EXISTS customers (
 CREATE TABLE IF NOT EXISTS flightbooking (
     id INT NOT NULL AUTO_INCREMENT,
     date DATE NOT NULL,
-    idflights INT NOT NULL,
-    idcustomers INT NOT NULL,
+    idflight INT NOT NULL,
+    idcustomer INT NOT NULL,
     idfares INT NOT NULL,
     CONSTRAINT pk_flightbooking_id PRIMARY KEY(id),
-    CONSTRAINT fk_flightbooking_flights_id FOREIGN KEY(idflights) REFERENCES flights(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_flightbooking_customers_id FOREIGN KEY(idcustomers) REFERENCES customers(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_flightbooking_fares_id FOREIGN KEY(idfares) REFERENCES flightfares(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_flightbooking_flight_id FOREIGN KEY(idflight) REFERENCES flight(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_flightbooking_customer_id FOREIGN KEY(idcustomer) REFERENCES customer(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_flightbooking_fares_id FOREIGN KEY(idfares) REFERENCES flightfare(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for airports
-CREATE TABLE IF NOT EXISTS airports (
+-- Create table for airport
+CREATE TABLE IF NOT EXISTS airport (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(50) NOT NULL,
     idcity INT NOT NULL,
-    CONSTRAINT pk_airports_id PRIMARY KEY(id),
-    CONSTRAINT fk_airports_city_id FOREIGN KEY(idcity) REFERENCES cities(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_airport_id PRIMARY KEY(id),
+    CONSTRAINT fk_airport_city_id FOREIGN KEY(idcity) REFERENCES city(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for employees
-CREATE TABLE IF NOT EXISTS employees (
+-- Create table for employee
+CREATE TABLE IF NOT EXISTS employee (
     id VARCHAR(10) NOT NULL UNIQUE,
     name VARCHAR(40) NOT NULL,
     idrole INT NOT NULL,
@@ -160,42 +160,42 @@ CREATE TABLE IF NOT EXISTS employees (
     idairline INT NOT NULL,
     idairport INT NOT NULL,
     iduser INT NOT NULL,
-    CONSTRAINT pk_employees_id PRIMARY KEY(id),
-    CONSTRAINT fk_employees_roles_id FOREIGN KEY(idrole) REFERENCES tripulationroles(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_employees_airline_id FOREIGN KEY(idairline) REFERENCES airlines(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_employees_airport_id FOREIGN KEY(idairport) REFERENCES airports(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_employees_user_id FOREIGN KEY(iduser) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_employee_id PRIMARY KEY(id),
+    CONSTRAINT fk_employee_roles_id FOREIGN KEY(idrole) REFERENCES tripulationrole(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_employee_airline_id FOREIGN KEY(idairline) REFERENCES airline(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_employee_airport_id FOREIGN KEY(idairport) REFERENCES airport(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_employee_user_id FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS employe_airlines (
+CREATE TABLE IF NOT EXISTS employe_airline (
     id_employee INT NOT NULL,
     id_airline INT NOT NULL,
-    CONSTRAINT pk_employe_airlines_id PRIMARY KEY(id_employee, id_airline),
-    CONSTRAINT fk_employe_airlines_emp_id FOREIGN KEY(id_employee) REFERENCES employees(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_employe_airlines_airl_id FOREIGN KEY(id_airline) REFERENCES airlines(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_employe_airline_id PRIMARY KEY(id_employee, id_airline),
+    CONSTRAINT fk_employe_airline_emp_id FOREIGN KEY(id_employee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_employe_airline_airl_id FOREIGN KEY(id_airline) REFERENCES airline(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- Create table for revision details
-CREATE TABLE IF NOT EXISTS revision_details (
+CREATE TABLE IF NOT EXISTS revision_detail (
     id INT NOT NULL AUTO_INCREMENT,
     description TEXT,
     date DATE NOT NULL,
     id_employee INT NOT NULL,
-    CONSTRAINT pk_revision_details_id PRIMARY KEY(id),
-    CONSTRAINT fk_revision_details_employee_id FOREIGN KEY(id_employee) REFERENCES employees(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_revision_detail_id PRIMARY KEY(id),
+    CONSTRAINT fk_revision_detail_employee_id FOREIGN KEY(id_employee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for models
-CREATE TABLE IF NOT EXISTS models (
+-- Create table for model
+CREATE TABLE IF NOT EXISTS model (
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(30) NOT NULL,
     idmanufacturer INT NOT NULL,
-    CONSTRAINT pk_models_id PRIMARY KEY(id),
-    CONSTRAINT fk_models_manufacturer_id FOREIGN KEY(idmanufacturer) REFERENCES manufacturers(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_model_id PRIMARY KEY(id),
+    CONSTRAINT fk_model_manufacturer_id FOREIGN KEY(idmanufacturer) REFERENCES manufacturer(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for planes
-CREATE TABLE IF NOT EXISTS planes (
+-- Create table for plane
+CREATE TABLE IF NOT EXISTS plane (
     id INT NOT NULL AUTO_INCREMENT,
     plates VARCHAR(30) NOT NULL UNIQUE,
     capacity INT NOT NULL,
@@ -203,62 +203,62 @@ CREATE TABLE IF NOT EXISTS planes (
     id_status INT NOT NULL,
     id_model INT NOT NULL,
     id_airline INT NOT NULL,
-    CONSTRAINT pk_planes_id PRIMARY KEY(id),
-    CONSTRAINT fk_planes_status_id FOREIGN KEY(id_status) REFERENCES statuses(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_planes_model_id FOREIGN KEY(id_model) REFERENCES models(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_planes_airline_id FOREIGN KEY(id_airline) REFERENCES airlines(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_plane_id PRIMARY KEY(id),
+    CONSTRAINT fk_plane_status_id FOREIGN KEY(id_status) REFERENCES planestatus(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_plane_model_id FOREIGN KEY(id_model) REFERENCES model(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_plane_airline_id FOREIGN KEY(id_airline) REFERENCES airline(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- Create table for flight connections
-CREATE TABLE IF NOT EXISTS flight_connections (
+CREATE TABLE IF NOT EXISTS flight_connection (
     id INT NOT NULL AUTO_INCREMENT,
     connection_number VARCHAR(20) NOT NULL,
     id_trip INT NOT NULL,
     id_plane INT NOT NULL,
     id_dest_airport INT NOT NULL,
-    CONSTRAINT pk_flight_connections_id PRIMARY KEY(id),
-    CONSTRAINT fk_flight_connections_trip_id FOREIGN KEY(id_trip) REFERENCES flights(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_flight_connections_plane_id FOREIGN KEY(id_plane) REFERENCES planes(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_flight_connections_airport_id FOREIGN KEY(id_dest_airport) REFERENCES airports(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_flight_connection_id PRIMARY KEY(id),
+    CONSTRAINT fk_flight_connection_trip_id FOREIGN KEY(id_trip) REFERENCES flight(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_flight_connection_plane_id FOREIGN KEY(id_plane) REFERENCES plane(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_flight_connection_airport_id FOREIGN KEY(id_dest_airport) REFERENCES airport(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 -- Create table for trip connections
-CREATE TABLE IF NOT EXISTS tripcrews (
+CREATE TABLE IF NOT EXISTS tripcrew (
     id INT NOT NULL AUTO_INCREMENT,
-    idemployees INT NOT NULL,
+    idemployee INT NOT NULL,
     idconnection INT NOT NULL,
-    CONSTRAINT pk_tripcrews_id PRIMARY KEY(id),
-    CONSTRAINT fk_tripcrews_employees_id FOREIGN KEY(idemployees) REFERENCES employees(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_tripcrews_connection_id FOREIGN KEY(idconnection) REFERENCES flight_connections(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_tripcrew_id PRIMARY KEY(id),
+    CONSTRAINT fk_tripcrew_employee_id FOREIGN KEY(idemployee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_tripcrew_connection_id FOREIGN KEY(idconnection) REFERENCES flight_connection(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for revisions
-CREATE TABLE IF NOT EXISTS revisions (
+-- Create table for revision
+CREATE TABLE IF NOT EXISTS revision (
     id INT NOT NULL AUTO_INCREMENT,
     revision_date DATE NOT NULL,
     id_plane INT NOT NULL,
     description TEXT NULL,
-    CONSTRAINT pk_revisions_id PRIMARY KEY(id),
-    CONSTRAINT fk_revisions_plane_id FOREIGN KEY(id_plane) REFERENCES planes(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_revision_id PRIMARY KEY(id),
+    CONSTRAINT fk_revision_plane_id FOREIGN KEY(id_plane) REFERENCES plane(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for revision employees
+-- Create table for revision employee
 CREATE TABLE IF NOT EXISTS revemployee (
     id INT NOT NULL AUTO_INCREMENT,
     idemployee INT NOT NULL,
     idrevision INT NOT NULL,
-    CONSTRAINT pk_revemployees_id PRIMARY KEY(id),
-    CONSTRAINT fk_revemployees_employee_id FOREIGN KEY(idemployee) REFERENCES employees(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_revemployees_revision_id FOREIGN KEY(idrevision) REFERENCES revisions(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_revemployee_id PRIMARY KEY(id),
+    CONSTRAINT fk_revemployee_employee_id FOREIGN KEY(idemployee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
+    CONSTRAINT fk_revemployee_revision_id FOREIGN KEY(idrevision) REFERENCES revision(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
--- Create table for gates
-CREATE TABLE IF NOT EXISTS gates (
+-- Create table for gate
+CREATE TABLE IF NOT EXISTS gate (
     id INT NOT NULL AUTO_INCREMENT,
     gatenumber VARCHAR(10) NOT NULL,
     idairport INT NOT NULL,
-    CONSTRAINT pk_gates_id PRIMARY KEY(id),
-    CONSTRAINT fk_gates_airport_id FOREIGN KEY(idairport) REFERENCES airports(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT pk_gate_id PRIMARY KEY(id),
+    CONSTRAINT fk_gate_airport_id FOREIGN KEY(idairport) REFERENCES airport(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 
