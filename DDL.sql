@@ -1,13 +1,13 @@
 -- SQL file to create the airport database
 
 -- Delete the database if exists
-DROP DATABASE IF EXISTS airport;
+-- DROP DATABASE IF EXISTS airport;
 
 -- Create the database if not exists
-CREATE DATABASE airport;
+-- CREATE DATABASE airport;
 
 -- Use the database
-USE airport;
+USE railway;
 
 -- Create tables for user
 
