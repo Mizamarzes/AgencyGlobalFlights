@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS flightbooking (
     id INT NOT NULL AUTO_INCREMENT,
     date DATE NOT NULL,
     idflight INT NOT NULL,
-    idcustomer INT NOT NULL,
+    idcustomer VARCHAR(10) NOT NULL,
     idfares INT NOT NULL,
     CONSTRAINT pk_flightbooking_id PRIMARY KEY(id),
     CONSTRAINT fk_flightbooking_flight_id FOREIGN KEY(idflight) REFERENCES flight(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -168,7 +168,7 @@ CREATE TABLE IF NOT EXISTS employee (
 ) ENGINE = InnoDB;
 
 CREATE TABLE IF NOT EXISTS employe_airline (
-    id_employee INT NOT NULL,
+    id_employee VARCHAR(10) NOT NULL,
     id_airline INT NOT NULL,
     CONSTRAINT pk_employe_airline_id PRIMARY KEY(id_employee, id_airline),
     CONSTRAINT fk_employe_airline_emp_id FOREIGN KEY(id_employee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -180,7 +180,7 @@ CREATE TABLE IF NOT EXISTS revision_detail (
     id INT NOT NULL AUTO_INCREMENT,
     description TEXT,
     date DATE NOT NULL,
-    id_employee INT NOT NULL,
+    id_employee VARCHAR(10) NOT NULL,
     CONSTRAINT pk_revision_detail_id PRIMARY KEY(id),
     CONSTRAINT fk_revision_detail_employee_id FOREIGN KEY(id_employee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
@@ -225,7 +225,7 @@ CREATE TABLE IF NOT EXISTS flight_connection (
 -- Create table for trip connections
 CREATE TABLE IF NOT EXISTS tripcrew (
     id INT NOT NULL AUTO_INCREMENT,
-    idemployee INT NOT NULL,
+    idemployee VARCHAR(10) NOT NULL,
     idconnection INT NOT NULL,
     CONSTRAINT pk_tripcrew_id PRIMARY KEY(id),
     CONSTRAINT fk_tripcrew_employee_id FOREIGN KEY(idemployee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -245,7 +245,7 @@ CREATE TABLE IF NOT EXISTS revision (
 -- Create table for revision employee
 CREATE TABLE IF NOT EXISTS revemployee (
     id INT NOT NULL AUTO_INCREMENT,
-    idemployee INT NOT NULL,
+    idemployee VARCHAR(10) NOT NULL,
     idrevision INT NOT NULL,
     CONSTRAINT pk_revemployee_id PRIMARY KEY(id),
     CONSTRAINT fk_revemployee_employee_id FOREIGN KEY(idemployee) REFERENCES employee(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -260,6 +260,7 @@ CREATE TABLE IF NOT EXISTS gate (
     CONSTRAINT pk_gate_id PRIMARY KEY(id),
     CONSTRAINT fk_gate_airport_id FOREIGN KEY(idairport) REFERENCES airport(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
+
 
 
 
