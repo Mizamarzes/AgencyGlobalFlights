@@ -1,4 +1,4 @@
-package com.agencyglobalflights.auth.infrastructure;
+package com.agencyglobalflights.auth.adapter.in.controller;
 
 import java.sql.SQLException;
 
