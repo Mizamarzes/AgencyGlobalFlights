@@ -42,7 +42,8 @@ public class AdminMainView {
 
             switch (op) {
                 case 1:
-
+                    PlaneManageView planeManageView = new PlaneManageView();
+                    planeManageView.showmenu();
                     break;
                 case 2:
 
