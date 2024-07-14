@@ -5,9 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import com.agencyglobalflights.DatabaseConfig;
 import com.agencyglobalflights.auth.domain.User;
 import com.agencyglobalflights.auth.service.UserService;
+import com.agencyglobalflights.infrastructure.config.DatabaseConfig;
 
 public class UserRepository implements UserService {
 

@@ -1,13 +1,13 @@
 package com.agencyglobalflights.auth.adapter.in.controller;
 
 import com.agencyglobalflights.auth.service.UserService;
-import com.agencyglobalflights.view.admin.AdminMainView;
-import com.agencyglobalflights.view.salesagent.SalesAgentMainView;
-import com.agencyglobalflights.view.superadmin.SuperAdminMainView;
-import com.agencyglobalflights.view.technician.TechnicianMainView;
+import com.agencyglobalflights.salesagent.view.SalesAgentMainView;
+import com.agencyglobalflights.superadmin.view.SuperAdminMainView;
+import com.agencyglobalflights.technician.view.TechnicianMainView;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.view.AdminMainView;
 import com.agencyglobalflights.auth.adapter.out.UserRepository;
 import com.agencyglobalflights.auth.domain.User;
 
