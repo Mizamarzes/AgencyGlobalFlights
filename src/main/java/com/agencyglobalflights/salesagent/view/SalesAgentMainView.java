@@ -2,7 +2,7 @@ package com.agencyglobalflights.salesagent.view;
 
 import java.sql.SQLException;
 
-import com.agencyglobalflights.auth.adapter.out.UserRepository;
+import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class SalesAgentMainView {
