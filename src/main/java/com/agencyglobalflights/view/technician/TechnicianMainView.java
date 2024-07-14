@@ -1,18 +1,17 @@
-package com.agencyglobalflights.view.salesagent;
+package com.agencyglobalflights.view.technician;
 
 import java.sql.SQLException;
 
 import com.agencyglobalflights.ConsoleUtils;
 import com.agencyglobalflights.auth.adapter.out.UserRepository;
 
-public class SalesAgentMain {
-
+public class TechnicianMainView {
 
     @SuppressWarnings("unused")
     private String username;
     private String userRole;
 
-    public SalesAgentMain(String username) throws SQLException {
+    public TechnicianMainView(String username) throws SQLException {
         this.username = username;
         UserRepository userRep = new UserRepository();
         userRole = userRep.getUserRole(username);
@@ -23,12 +22,12 @@ public class SalesAgentMain {
         do {
 
             ConsoleUtils.clear();
-            System.out.println("--------------------------------------\n" +
-            "     Signed in as " + userRole +     "\n" +
-            "--------------------------------------\n" +
-            "      Global Flights Sales Panel      \n" +
-            "       Please select an option:       \n" +
-            "--------------------------------------\n" +
+            System.out.println("---------------------------------------\n" +
+            "     Signed in as " + userRole +      "\n" +
+            "---------------------------------------\n" +
+            "    Global Flights Technician Panel    \n" +
+            "       Please select an option:        \n" +
+            "---------------------------------------\n" +
             "\n" +
             "1. Menu1\n" +
             "2. Menu2\n" +
@@ -58,5 +57,4 @@ public class SalesAgentMain {
         } while (true);
 
     }
-
 }
