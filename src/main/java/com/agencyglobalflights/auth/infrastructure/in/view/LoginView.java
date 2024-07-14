@@ -1,9 +1,9 @@
-package com.agencyglobalflights.auth.adapter.in.view;
+package com.agencyglobalflights.auth.infrastructure.in.view;
 
 import java.util.Scanner;
 
-import com.agencyglobalflights.auth.adapter.in.controller.LoginController;
-import com.agencyglobalflights.auth.adapter.out.UserRepository;
+import com.agencyglobalflights.auth.infrastructure.in.controller.LoginController;
+import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.auth.service.UserService;
 import com.agencyglobalflights.utils.ConsoleUtils;
 

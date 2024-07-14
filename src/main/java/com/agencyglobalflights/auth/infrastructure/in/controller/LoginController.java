@@ -1,4 +1,4 @@
-package com.agencyglobalflights.auth.adapter.in.controller;
+package com.agencyglobalflights.auth.infrastructure.in.controller;
 
 import com.agencyglobalflights.auth.service.UserService;
 import com.agencyglobalflights.salesagent.view.SalesAgentMainView;
@@ -8,8 +8,8 @@ import com.agencyglobalflights.technician.view.TechnicianMainView;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.view.AdminMainView;
-import com.agencyglobalflights.auth.adapter.out.UserRepository;
 import com.agencyglobalflights.auth.domain.User;
+import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 
 public class LoginController {
 

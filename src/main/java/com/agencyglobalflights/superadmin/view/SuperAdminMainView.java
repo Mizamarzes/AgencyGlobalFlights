@@ -3,7 +3,7 @@ package com.agencyglobalflights.superadmin.view;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.view.AdminMainView;
-import com.agencyglobalflights.auth.adapter.out.UserRepository;
+import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.salesagent.view.SalesAgentMainView;
 import com.agencyglobalflights.technician.view.TechnicianMainView;
 import com.agencyglobalflights.utils.ConsoleUtils;

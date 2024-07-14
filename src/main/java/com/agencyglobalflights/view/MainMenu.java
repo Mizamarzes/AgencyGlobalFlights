@@ -1,6 +1,6 @@
 package com.agencyglobalflights.view;
 
-import com.agencyglobalflights.auth.adapter.in.view.LoginView;
+import com.agencyglobalflights.auth.infrastructure.in.view.LoginView;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class MainMenu {

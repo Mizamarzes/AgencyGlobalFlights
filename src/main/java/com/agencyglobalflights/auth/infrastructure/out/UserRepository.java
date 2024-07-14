@@ -1,4 +1,4 @@
-package com.agencyglobalflights.auth.adapter.out;
+package com.agencyglobalflights.auth.infrastructure.out;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
