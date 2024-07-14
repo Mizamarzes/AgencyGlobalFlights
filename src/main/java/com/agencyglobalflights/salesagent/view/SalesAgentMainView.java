@@ -30,13 +30,13 @@ public class SalesAgentMainView {
             "       Please select an option:       \n" +
             "--------------------------------------\n" +
             "\n" +
-            "1. Menu1\n" +
-            "2. Menu2\n" +
-            "3. Menu3\n" +
+            "1. Booking Management\n" +
+            "2. Customer Management\n" +
+            "3. Flight Management\n" +
             "4. Sign Out\n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 2);
+            int op = ConsoleUtils.verifyEntryInt(1, 4);
 
 
             switch (op) {
@@ -50,7 +50,8 @@ public class SalesAgentMainView {
 
                     break;
                 case 4:
-                break;
+
+                    break;
                 default:
                     break;
             }

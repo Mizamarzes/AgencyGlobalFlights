@@ -28,13 +28,16 @@ public class AdminMainView {
             "       Please select an option:       \n" +
             "--------------------------------------\n" +
             "\n" +
-            "1. Menu1\n" +
-            "2. Menu2\n" +
-            "3. Menu3\n" +
-            "4. Sign Out\n"
+            "1. Plane management\n" +
+            "2. Flight management\n" +
+            "3. Flight Connections\n" +
+            "4. Flight Fares\n" +
+            "5. Airports Management\n" +
+            "6. Documents Management\n" +
+            "7. Sign Out\n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 2);
+            int op = ConsoleUtils.verifyEntryInt(1, 7);
 
 
             switch (op) {
@@ -48,7 +51,17 @@ public class AdminMainView {
 
                     break;
                 case 4:
-                break;
+
+                    break;
+                case 5:
+
+                    break;
+                case 6:
+
+                    break;
+                case 7:
+                
+                    break;
                 default:
                     break;
             }

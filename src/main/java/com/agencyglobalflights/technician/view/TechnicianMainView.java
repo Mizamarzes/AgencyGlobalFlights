@@ -29,13 +29,14 @@ public class TechnicianMainView {
             "       Please select an option:        \n" +
             "---------------------------------------\n" +
             "\n" +
-            "1. Menu1\n" +
-            "2. Menu2\n" +
-            "3. Menu3\n" +
-            "4. Sign Out\n"
+            "1. Register revision\n" +
+            "2. View plane revision history\n" +
+            "3. Update revision information\n" +
+            "4. Delete maintenance revision\n" +
+            "5. Sign Out\n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 2);
+            int op = ConsoleUtils.verifyEntryInt(1, 5);
 
 
             switch (op) {
@@ -49,7 +50,11 @@ public class TechnicianMainView {
 
                     break;
                 case 4:
-                break;
+
+                    break;
+                case 5:
+                
+                    break;
                 default:
                     break;
             }
