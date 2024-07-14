@@ -17,20 +17,6 @@ CREATE TABLE IF NOT EXISTS role (
     CONSTRAINT pk_role_id PRIMARY KEY(id)
 ) ENGINE = InnoDB;
 
-CREATE TABLE IF NOT EXISTS permmision (
-    id INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(20),
-    CONSTRAINT pk_permmision_id PRIMARY KEY(id)
-) ENGINE = InnoDB;
-
-CREATE TABLE IF NOT EXISTS role_permission (
-    idrol INT NOT NULL,
-    idpermission INT NOT NULL,
-    CONSTRAINT pk_rolepermissions_id PRIMARY KEY(idrol, idpermission),
-    CONSTRAINT fk_roleperms_rol FOREIGN KEY(idrol) REFERENCES role(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_roleperms_permmision FOREIGN KEY(idpermission) REFERENCES permmision(id) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE = InnoDB;
-
 CREATE TABLE IF NOT EXISTS user (
     id INT NOT NULL AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
@@ -122,10 +108,8 @@ CREATE TABLE IF NOT EXISTS customer (
     age INT NOT NULL,
     idnumber VARCHAR(20) NOT NULL UNIQUE,
     iddocument INT NOT NULL,
-    iduser INT NOT NULL,
     CONSTRAINT pk_customer_id PRIMARY KEY(id),
-    CONSTRAINT fk_customer_documenttype_id FOREIGN KEY(iddocument) REFERENCES documenttype(id) ON DELETE CASCADE ON UPDATE CASCADE,
-    CONSTRAINT fk_customer_user_id FOREIGN KEY(iduser) REFERENCES user(id) ON DELETE CASCADE ON UPDATE CASCADE
+    CONSTRAINT fk_customer_documenttype_id FOREIGN KEY(iddocument) REFERENCES documenttype(id) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE = InnoDB;
 
 

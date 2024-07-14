@@ -3,7 +3,7 @@ package com.agencyglobalflights.auth.application;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.auth.domain.User;
-import com.agencyglobalflights.auth.domain.UserService;
+import com.agencyglobalflights.auth.service.UserService;
 
 public class CreateUserUseCase {
     private UserService userService;
