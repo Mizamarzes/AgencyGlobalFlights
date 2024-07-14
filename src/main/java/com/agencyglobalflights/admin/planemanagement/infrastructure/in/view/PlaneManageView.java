@@ -35,7 +35,6 @@ public class PlaneManageView {
 
             switch (op) {
                 case 1:
-                    System.out.println("aaaaa");
                     pc.registerPlaneController();
                     break;
                 case 2:

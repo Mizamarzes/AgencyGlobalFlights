@@ -2,6 +2,8 @@ package com.agencyglobalflights.admin.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
+import com.agencyglobalflights.admin.planemanagement.infrastructure.in.view.PlaneManageView;
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
