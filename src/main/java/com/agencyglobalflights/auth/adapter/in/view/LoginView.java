@@ -2,10 +2,10 @@ package com.agencyglobalflights.auth.adapter.in.view;
 
 import java.util.Scanner;
 
-import com.agencyglobalflights.ConsoleUtils;
 import com.agencyglobalflights.auth.adapter.in.controller.LoginController;
 import com.agencyglobalflights.auth.adapter.out.UserRepository;
 import com.agencyglobalflights.auth.service.UserService;
+import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class LoginView {
     

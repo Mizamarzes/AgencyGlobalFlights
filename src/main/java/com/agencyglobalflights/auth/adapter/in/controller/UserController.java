@@ -2,8 +2,8 @@ package com.agencyglobalflights.auth.adapter.in.controller;
 
 import java.sql.SQLException;
 
-import com.agencyglobalflights.ConsoleUtils;
 import com.agencyglobalflights.auth.application.CreateUserUseCase;
+import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class UserController {
     private final CreateUserUseCase createUserUseCase;
