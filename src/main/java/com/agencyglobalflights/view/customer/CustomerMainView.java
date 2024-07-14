@@ -1,21 +1,10 @@
-package com.agencyglobalflights.view.technician;
+package com.agencyglobalflights.view.customer;
 
 import java.sql.SQLException;
 
 import com.agencyglobalflights.ConsoleUtils;
-import com.agencyglobalflights.auth.adapter.out.UserRepository;
 
-public class TechnicianMain {
-
-    @SuppressWarnings("unused")
-    private String username;
-    private String userRole;
-
-    public TechnicianMain(String username) throws SQLException {
-        this.username = username;
-        UserRepository userRep = new UserRepository();
-        userRole = userRep.getUserRole(username);
-    }
+public class CustomerMainView {
 
     public void showmenu() throws SQLException {
 
@@ -23,9 +12,7 @@ public class TechnicianMain {
 
             ConsoleUtils.clear();
             System.out.println("---------------------------------------\n" +
-            "     Signed in as " + userRole +      "\n" +
-            "---------------------------------------\n" +
-            "    Global Flights Technician Panel    \n" +
+            "   Welcome to Global Flights Agency    \n" +
             "       Please select an option:        \n" +
             "---------------------------------------\n" +
             "\n" +

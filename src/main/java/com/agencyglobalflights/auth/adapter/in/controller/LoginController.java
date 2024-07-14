@@ -1,13 +1,14 @@
 package com.agencyglobalflights.auth.adapter.in.controller;
 
 import com.agencyglobalflights.auth.service.UserService;
-import com.agencyglobalflights.view.admin.AdminMain;
-import com.agencyglobalflights.view.salesagent.SalesAgentMain;
-import com.agencyglobalflights.view.superadmin.SuperAdminMain;
-import com.agencyglobalflights.view.technician.TechnicianMain;
+import com.agencyglobalflights.view.admin.AdminMainView;
+import com.agencyglobalflights.view.salesagent.SalesAgentMainView;
+import com.agencyglobalflights.view.superadmin.SuperAdminMainView;
+import com.agencyglobalflights.view.technician.TechnicianMainView;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.auth.adapter.out.UserRepository;
 import com.agencyglobalflights.auth.domain.User;
 
 public class LoginController {
@@ -19,31 +20,34 @@ public class LoginController {
     }
 
     public boolean login(String username, String password) throws SQLException {
+        final String userRole;
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
+        
 
         if (userService.authUser(user)) {
-            int role = user.getIdrole();
-            switch (role) {
-                case 0:
-                    SuperAdminMain superAdminMenu = new SuperAdminMain(username);
+            UserRepository userRep = new UserRepository();
+            userRole = userRep.getUserRole(username);
+            switch (userRole) {
+                case "Super Admin":
+                    SuperAdminMainView superAdminMenu = new SuperAdminMainView(username);
                     superAdminMenu.showmenu();
                     break;
-                case 1:
-                    AdminMain adminMain = new AdminMain(username);
+                case "Administrator":
+                    AdminMainView adminMain = new AdminMainView(username);
                     adminMain.showmenu();
                     break;
-                case 2:
-                    TechnicianMain techMain = new TechnicianMain(username);
+                case "Maintenance Technician":
+                    TechnicianMainView techMain = new TechnicianMainView(username);
                     techMain.showmenu();
                     break;
-                case 3:
-                    SalesAgentMain salesMain = new SalesAgentMain(username);
+                case "Sales Agent":
+                    SalesAgentMainView salesMain = new SalesAgentMainView(username);
                     salesMain.showmenu();
                     break;
                 default:
-                    throw new IllegalStateException("Unexpected role: " + role);
+                    throw new IllegalStateException("Unexpected role: " + userRole);
             }
             return true;
         } else {
