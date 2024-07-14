@@ -16,7 +16,7 @@ public class PlaneController {
     
     public void registerPlaneController() throws SQLException {
         ConsoleUtils.clear();
-        System.out.println("Enter plates: ");
+        System.out.println("Enter the plane plate: ");
         String plates = ConsoleUtils.verifyEntryString();
 
         System.out.println("Enter the plane capacity: ");
