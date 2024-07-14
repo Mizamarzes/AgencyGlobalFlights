@@ -1,10 +1,10 @@
-package com.agencyglobalflights.customer.view;
+package com.agencyglobalflights.admin.view;
 
 import java.sql.SQLException;
 
 import com.agencyglobalflights.utils.ConsoleUtils;
 
-public class CustomerMainView {
+public class FlightManageVIew {
 
     public void showmenu() throws SQLException {
 
@@ -12,16 +12,20 @@ public class CustomerMainView {
 
             ConsoleUtils.clear();
             System.out.println("---------------------------------------\n" +
-            "   Welcome to Global Flights Agency    \n" +
+            "          Flights Management           \n" +
             "       Please select an option:        \n" +
             "---------------------------------------\n" +
             "\n" +
-            "1. Flights Section\n" +
-            "2. Bookings Management\n" +
-            "3. Sign Out\n"
+            "1. Assign flight plane  \n" +
+            "2. Assign flight crew  \n" +
+            "3. View crew assignment\n" +
+            "4. View flight information\n" +
+            "5. Update flight information\n" +
+            "6. Delete flight \n" +
+            "7. Go Back \n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 3);
+            int op = ConsoleUtils.verifyEntryInt(1, 7);
 
 
             switch (op) {
@@ -33,6 +37,12 @@ public class CustomerMainView {
                     break;
                 case 3:
 
+                    break;
+                case 4:
+
+                    break;
+                case 5:
+                
                     break;
                 default:
                     break;
