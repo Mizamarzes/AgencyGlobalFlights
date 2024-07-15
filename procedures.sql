@@ -17,6 +17,22 @@ BEGIN
 END $$
 DELIMITER;
 
+-- Structured Procedure to insert a new Airport
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS CreateAirports;
+CREATE PROCEDURE CreateAirports(
+    IN id VARCHAR(5),
+    IN name VARCHAR(50),
+    IN idcity INT
+)
+BEGIN
+    INSERT INTO airport (id, name, idcity) VALUES 
+    (id, name, idcity);
+END $$
+DELIMITER ;
+
+
 -- Structure procedure to show up information
 DELIMITER $$
 DROP PROCEDURE IF EXISTS showInformationTable;
@@ -45,6 +61,26 @@ BEGIN
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
 END $$
+DELIMITER ;
+
+-- Structure procedure to show up information about a specific register with id VARCHAR
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS showObjectInformationIDVARCHAR $$
+
+CREATE PROCEDURE showObjectInformationIDVARCHAR(
+    IN table_name VARCHAR(64),
+    IN object_id VARCHAR(3)
+)
+BEGIN
+    SET @query = CONCAT('SELECT * FROM ', table_name, ' WHERE id = ''', object_id, '''');
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+
 DELIMITER ;
 
 -- Structure procedure for displaying information about a specific record with VARCHAR and a different column than id
