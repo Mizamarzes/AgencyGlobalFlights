@@ -9,11 +9,11 @@ public class ViewAirpInfoUseCase {
 
     private final AirportService airportService;
 
-        public ViewAirpInfoUseCase(AirportService airportService) {
+    public ViewAirpInfoUseCase(AirportService airportService) {
         this.airportService = airportService;
     }
 
-    public Airport viewAirportInfo(int id) throws SQLException {
+    public Airport viewAirportInfo(String id) throws SQLException {
         Airport airport = airportService.viewAirportInfo(id);
         return airport;
     }

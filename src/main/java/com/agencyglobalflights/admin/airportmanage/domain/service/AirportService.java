@@ -6,5 +6,6 @@ import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
 
 public interface AirportService {
 
-    Airport viewAirportInfo(int id) throws SQLException;
+    Airport viewAirportInfo(String id) throws SQLException;
+    void createAirport(Airport airport) throws SQLException;
 }

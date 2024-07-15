@@ -22,18 +22,18 @@ public class AirportRepository implements AirportService{
     }
 
     @Override
-    public Airport viewAirportInfo(int id) throws SQLException {
+    public Airport viewAirportInfo(String id) throws SQLException {
         String tableName = "airport";
-        String query = "{call showObjectInformation(?, ?)}";
-        Airport airport = new Airport(id, tableName, id); 
+        String query = "{call showObjectInformationIDVARCHAR(?, ?)}";
+        Airport airport = new Airport(); 
 
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
-            cs.setInt(2, id);
+            cs.setString(2, id);
 
             try (ResultSet rs = cs.executeQuery()) {
                 while (rs.next()) {
-                    airport.setId(rs.getInt("id"));
+                    airport.setId(rs.getString("id"));
                     airport.setName(rs.getString("name"));
                     airport.setIdcity(rs.getInt("idcity"));
                 }
@@ -44,5 +44,22 @@ public class AirportRepository implements AirportService{
         }
         return airport;
     }
+
+        @Override
+    public void createAirport(Airport airport) throws SQLException {
+        String query = "{CALL CreateAirports(?, ?, ?)}";
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, airport.getId());
+            cs.setString(2, airport.getName());
+            cs.setInt(3, airport.getIdcity());
+            cs.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+
+
 
 }
