@@ -40,8 +40,7 @@ public class DocumentManageView {
 
                     break;
                 case 5:
-                
-                    break;
+                    return;
                 default:
                     break;
             }

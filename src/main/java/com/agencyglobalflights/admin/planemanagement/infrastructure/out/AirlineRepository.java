@@ -35,11 +35,9 @@ public class AirlineRepository implements AirlineService{
             
             try (ResultSet rs = cs.executeQuery()) {
                 while (rs.next()) {
-                    // Assuming Airline has a constructor that takes id and name
                     Airline airline = new Airline(0, "");  // Adjust constructor as per your Airline class
                     airline.setId(rs.getInt("id"));
                     airline.setName(rs.getString("name"));
-                    // Set other fields as necessary
                     airlines.add(airline);
                 }
             }
