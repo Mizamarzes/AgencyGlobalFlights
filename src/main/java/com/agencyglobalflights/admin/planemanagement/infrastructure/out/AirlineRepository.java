@@ -1,5 +1,6 @@
 package com.agencyglobalflights.admin.planemanagement.infrastructure.out;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -23,20 +24,31 @@ public class AirlineRepository implements AirlineService{
         }
     }
 
-        @Override
+    @Override
     public List<Airline> findAllAirlines() throws SQLException {
         List<Airline> airlines = new ArrayList<>();
-        String query = "SELECT * FROM airline";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                Airline airline = new Airline(0, query);
-                airline.setId(rs.getInt("id"));
-                airline.setName(rs.getString("name"));
-                airlines.add(airline);
+        String tableName = "airline";  // The table name you want to query
+        String query = "{call showInformationTable(?)}";
+    
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    // Assuming Airline has a constructor that takes id and name
+                    Airline airline = new Airline(0, "");  // Adjust constructor as per your Airline class
+                    airline.setId(rs.getInt("id"));
+                    airline.setName(rs.getString("name"));
+                    // Set other fields as necessary
+                    airlines.add(airline);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
         }
         return airlines;
     }
+    
 
 }
