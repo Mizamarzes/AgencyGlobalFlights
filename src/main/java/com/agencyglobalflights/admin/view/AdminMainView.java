@@ -2,6 +2,7 @@ package com.agencyglobalflights.admin.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.airportmanage.infrastructure.in.view.AirportManageView;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.view.PlaneManageView;
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
@@ -57,14 +58,15 @@ public class AdminMainView {
 
                     break;
                 case 5:
-
+                    AirportManageView airportsManageView = new AirportManageView();
+                    airportsManageView.showmenu();
                     break;
                 case 6:
-
+                    DocumentManageView documentManageView = new DocumentManageView();
+                    documentManageView.showmenu();
                     break;
                 case 7:
-                
-                    break;
+                    
                 default:
                     break;
             }
