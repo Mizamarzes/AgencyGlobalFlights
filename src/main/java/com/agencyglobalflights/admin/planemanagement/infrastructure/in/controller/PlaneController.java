@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import com.agencyglobalflights.admin.planemanagement.application.RegisterPlaneUseCase;
+import com.agencyglobalflights.admin.planemanagement.application.ViewPlaneInformationUseCase;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Airline;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Model;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
@@ -13,11 +14,17 @@ import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class PlaneController {
     private RegisterPlaneUseCase registerPlaneUseCase;
+    private ViewPlaneInformationUseCase viewPlaneInformationUseCase;
 
-    public PlaneController(RegisterPlaneUseCase registerPlaneUseCase) {
+    public PlaneController(RegisterPlaneUseCase registerPlaneUseCase,
+            ViewPlaneInformationUseCase viewPlaneInformationUseCase) {
         this.registerPlaneUseCase = registerPlaneUseCase;
-    }
+        this.viewPlaneInformationUseCase = viewPlaneInformationUseCase;
+    }    
     
+    // -------------------------
+    // REGISTER PLANE
+
     public List<PlaneStatus> getAllStatuses() throws SQLException {
         ConsoleUtils.clear();
         String border = "+----+-----------------+";
@@ -97,5 +104,38 @@ public class PlaneController {
 
         Plane newPlane = new Plane(plates, capacity, fabrication_date, id_status, id_model, id_airline);
         registerPlaneUseCase.planeRegister(newPlane);
+    }
+
+    // -------------------------
+    // VIEW PLANE INFORMATION
+
+    public void getPLaneByPlateController() throws SQLException {
+        ConsoleUtils.clear();
+        System.out.print("Enter the plate of the plane: ");
+        String plate = ConsoleUtils.verifyEntryString();
+
+        Plane plane = viewPlaneInformationUseCase.viewPlaneByPlates(plate);
+
+        if (plane != null) {
+            String border = "+----+--------------------+---------+-------------------+-----------+----------+-----------+";
+            String header = "| ID | Plates             | Capacity| Fabrication Date  | Status ID | Model ID | Airline ID |";
+
+            System.out.println(border);
+            System.out.println(header);
+            System.out.println(border);
+
+            System.out.printf("|  %-2d| %-18s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
+                plane.getId(),
+                plane.getPlates(),
+                plane.getCapacity(),
+                plane.getFabrication_date(),
+                plane.getId_status(),
+                plane.getId_model(),
+                plane.getId_airline()
+            );
+        System.out.println(border);
+        } else {
+            System.out.println("No plane found with the given plate.");
+        }
     }
 }
