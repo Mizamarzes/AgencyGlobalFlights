@@ -14,9 +14,7 @@ import com.agencyglobalflights.admin.planemanagement.domain.service.PlaneService
 import com.agencyglobalflights.infrastructure.config.DatabaseConfig;
 
 public class PlaneRepository implements PlaneService {
-    
-// Register plane, view plane information, delete plane, update plane information
-    
+        
     private Connection connection;
 
     public PlaneRepository() {
@@ -27,13 +25,16 @@ public class PlaneRepository implements PlaneService {
         }
     }
 
+    // -------------------------
+    // REGISTER PLANE
+
     @Override
     public List<PlaneStatus> findAllStatuses() throws SQLException {
         List<PlaneStatus> statuses = new ArrayList<>();
         String tableName = "planestatus"; // The table name you want to query
 
         // Call the stored procedure
-        String query = "{call showInformationTable(?)}";
+        String query = "{CALL showInformationTable(?)}";
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
             
@@ -54,12 +55,11 @@ public class PlaneRepository implements PlaneService {
         return statuses;
     }
 
-
     @Override
     public List<Model> findAllModels() throws SQLException {
         List<Model> models = new ArrayList<>();
         String tableName = "model";
-        String query = "{call showInformationTable(?)}";
+        String query = "{CALL showInformationTable(?)}";
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
             
@@ -82,7 +82,7 @@ public class PlaneRepository implements PlaneService {
     
     @Override
     public void planeRegister(Plane plane) throws SQLException {
-        String query = "{call planeRegister(?, ?, ?, ?, ?, ?)}";
+        String query = "{CALL planeRegister(?, ?, ?, ?, ?, ?)}";
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, plane.getPlates());
             cs.setInt(2, plane.getCapacity());
@@ -97,27 +97,40 @@ public class PlaneRepository implements PlaneService {
         }
     }
 
-    // @Override
-    // public Plane viewPlaneById(String plates) throws SQLException{
-    //     String query = "SELECT plates, capacity, fabrication_date, id_status, id_model, id_airline FROM plane WHERE id = ?";
-    //     try (PreparedStatement ps = connection.prepareStatement(query)) {
-    //         ps.setInt(1, plates);
-    //         try (ResultSet rs = ps.executeQuery()) {
-    //             if (rs.next()) {
-    //                 Plane plane = new Plane(plates, 0, null, 0, 0, 0);
-    //                 plane.getPlates(rs.getString("plates"));
-    //                 plane.setName(rs.getString("name"));
-    //                 plane.setAge(rs.getInt("age"));
-    //                 plane.setNationality(rs.getString("nationality"));
-    //                 plane.setPosition(rs.getString("position"));
-    //                 plane.setShirt_number(rs.getInt("shirt_number"));
-    //                 plane.setTeam(rs.getInt("team"));
-    //                 return plane; 
-    //             }
-    //         }
-    //     }
-    //     return null;
-    // }
+    // -------------------------
+    // VIEW PLANE INFORMATION
 
-
+    public Plane viewPlaneByPlates(String plates) throws SQLException {
+        String tableName = "plane";
+        String columnName = "plates";
+        String query = "{CALL showObjectInformationVarchar(?, ?, ?)}";
+    
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            cs.setString(2, columnName);
+            cs.setString(3, plates);  // Corrected variable name
+    
+            try (ResultSet rs = cs.executeQuery()) {
+                if (rs.next()) {
+                    // Assuming the Plane class has a constructor that accepts these parameters
+                    Plane plane = new Plane(
+                        rs.getInt("id"),  // Assuming the Plane class has id as an integer
+                        rs.getString("plates"),
+                        rs.getInt("capacity"),
+                        rs.getDate("fabrication_date"),
+                        rs.getInt("id_status"),
+                        rs.getInt("id_model"),
+                        rs.getInt("id_airline")
+                    );
+                    return plane;
+                } else {
+                    return null;  // No plane found for the given plates
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+    
 }

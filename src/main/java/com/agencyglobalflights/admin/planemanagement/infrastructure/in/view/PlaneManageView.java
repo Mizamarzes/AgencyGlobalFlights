@@ -3,6 +3,7 @@ package com.agencyglobalflights.admin.planemanagement.infrastructure.in.view;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.planemanagement.application.RegisterPlaneUseCase;
+import com.agencyglobalflights.admin.planemanagement.application.ViewPlaneInformationUseCase;
 import com.agencyglobalflights.admin.planemanagement.domain.service.PlaneService;
 import com.agencyglobalflights.admin.planemanagement.domain.service.AirlineService;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.controller.PlaneController;
@@ -15,8 +16,11 @@ public class PlaneManageView {
     public void showmenu() throws SQLException {
         PlaneService ps = new PlaneRepository();
         AirlineService as = new AirlineRepository();
+
         RegisterPlaneUseCase rpuc = new RegisterPlaneUseCase(ps, as);
-        PlaneController pc = new PlaneController(rpuc);
+        ViewPlaneInformationUseCase vpiuc = new ViewPlaneInformationUseCase(ps);
+
+        PlaneController pc = new PlaneController(rpuc, vpiuc);
 
         do {
 
@@ -41,7 +45,8 @@ public class PlaneManageView {
                     pc.registerPlaneController();
                     break;
                 case 2:
-
+                    pc.getPLaneByPlateController();
+                    ConsoleUtils.waitWindow();
                     break;
                 case 3:
 

@@ -9,8 +9,13 @@ import com.agencyglobalflights.admin.planemanagement.domain.entity.PlaneStatus;
 
 public interface PlaneService {
     
+    // Register plane
     void planeRegister(Plane plane) throws SQLException;
     List<Model> findAllModels() throws SQLException;
     List<PlaneStatus> findAllStatuses() throws SQLException;
+
+    //View plane information
+    Plane viewPlaneByPlates(String plates) throws SQLException;
+
 
 }
