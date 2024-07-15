@@ -30,3 +30,36 @@ BEGIN
     DEALLOCATE PREPARE stmt;
 END $$
 DELIMITER ;
+
+-- Structure procedure to show up information about a specific register with id
+DELIMITER $$
+DROP PROCEDURE IF EXISTS showObjectInformation $$
+CREATE PROCEDURE showObjectInformation(
+    IN table_name VARCHAR(64),
+    IN object_id INT
+)
+BEGIN
+    SET @query = CONCAT('SELECT * FROM ', table_name, ' WHERE id = ', object_id);
+
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+-- Structure procedure for displaying information about a specific record with VARCHAR and a different column than id
+DELIMITER $$
+DROP PROCEDURE IF EXISTS showObjectInformationVarchar;
+CREATE PROCEDURE showObjectInformationVarchar(
+    IN table_name VARCHAR(64),
+    IN column_name VARCHAR(64),
+    IN object_identifier VARCHAR(64)
+)
+BEGIN
+    SET @query = CONCAT('SELECT * FROM ', table_name, ' WHERE ', column_name, ' = \'', object_identifier, '\'');
+
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
