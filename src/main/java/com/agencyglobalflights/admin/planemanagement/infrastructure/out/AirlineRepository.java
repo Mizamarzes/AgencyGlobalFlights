@@ -1,0 +1,42 @@
+package com.agencyglobalflights.admin.planemanagement.infrastructure.out;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.agencyglobalflights.admin.planemanagement.domain.entity.Airline;
+import com.agencyglobalflights.admin.planemanagement.domain.service.AirlineService;
+import com.agencyglobalflights.infrastructure.config.DatabaseConfig;
+
+public class AirlineRepository implements AirlineService{
+
+    private Connection connection;
+
+    public AirlineRepository() {
+        try {
+            this.connection = DatabaseConfig.getConnection();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+        @Override
+    public List<Airline> findAllAirlines() throws SQLException {
+        List<Airline> airlines = new ArrayList<>();
+        String query = "SELECT * FROM airline";
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                Airline airline = new Airline(0, query);
+                airline.setId(rs.getInt("id"));
+                airline.setName(rs.getString("name"));
+                airlines.add(airline);
+            }
+        }
+        return airlines;
+    }
+
+}

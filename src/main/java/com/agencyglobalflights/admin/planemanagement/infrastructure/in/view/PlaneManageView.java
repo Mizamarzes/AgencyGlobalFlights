@@ -4,7 +4,9 @@ import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.planemanagement.application.RegisterPlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.domain.service.PlaneService;
+import com.agencyglobalflights.admin.planemanagement.domain.service.AirlineService;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.controller.PlaneController;
+import com.agencyglobalflights.admin.planemanagement.infrastructure.out.AirlineRepository;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.out.PlaneRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
@@ -12,7 +14,8 @@ public class PlaneManageView {
 
     public void showmenu() throws SQLException {
         PlaneService ps = new PlaneRepository();
-        RegisterPlaneUseCase rpuc = new RegisterPlaneUseCase(ps);
+        AirlineService as = new AirlineRepository();
+        RegisterPlaneUseCase rpuc = new RegisterPlaneUseCase(ps, as);
         PlaneController pc = new PlaneController(rpuc);
 
         do {
