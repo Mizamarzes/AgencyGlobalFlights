@@ -72,8 +72,6 @@ public class PlaneController {
         return airlines;
     }
 
-
-
     public void registerPlaneController() throws SQLException {
         ConsoleUtils.clear();
         System.out.println("Enter the plane plate: ");
@@ -100,6 +98,4 @@ public class PlaneController {
         Plane newPlane = new Plane(plates, capacity, fabrication_date, id_status, id_model, id_airline);
         registerPlaneUseCase.planeRegister(newPlane);
     }
-
-
 }

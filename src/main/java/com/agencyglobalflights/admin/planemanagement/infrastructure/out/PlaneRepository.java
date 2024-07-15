@@ -1,10 +1,9 @@
 package com.agencyglobalflights.admin.planemanagement.infrastructure.out;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,48 +30,67 @@ public class PlaneRepository implements PlaneService {
     @Override
     public List<PlaneStatus> findAllStatuses() throws SQLException {
         List<PlaneStatus> statuses = new ArrayList<>();
-        String query = "SELECT * FROM planestatus";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                PlaneStatus status = new PlaneStatus(0, query);
-                status.setId(rs.getInt("id"));
-                status.setName(rs.getString("name"));
-                statuses.add(status);
+        String tableName = "planestatus"; // The table name you want to query
+
+        // Call the stored procedure
+        String query = "{call showInformationTable(?)}";
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            
+            // Execute the stored procedure and get the result set
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    // Assuming PlaneStatus has a constructor that takes id and name
+                    PlaneStatus status = new PlaneStatus(0, ""); 
+                    status.setId(rs.getInt("id"));
+                    status.setName(rs.getString("name"));
+                    statuses.add(status);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
         }
         return statuses;
     }
 
+
     @Override
     public List<Model> findAllModels() throws SQLException {
         List<Model> models = new ArrayList<>();
-        String query = "SELECT * FROM model";
-        try (Statement stmt = connection.createStatement();
-             ResultSet rs = stmt.executeQuery(query)) {
-            while (rs.next()) {
-                Model model = new Model(0, query, 0);
-                model.setId(rs.getInt("id"));
-                model.setName(rs.getString("name"));
-                models.add(model);
+        String tableName = "model";
+        String query = "{call showInformationTable(?)}";
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    // Assuming Model has a constructor that takes id, name, and some integer value
+                    Model model = new Model(0, "", 0);
+                    model.setId(rs.getInt("id"));
+                    model.setName(rs.getString("name"));
+                    // Set other fields as necessary
+                    models.add(model);
+                }
             }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
         }
         return models;
     }
-
-
-
+    
     @Override
     public void planeRegister(Plane plane) throws SQLException {
-        String query = "INSERT INTO plane (plates, capacity, fabrication_date, id_status, id_model, id_airline) VALUES (?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setString(1, plane.getPlates());
-            ps.setInt(2, plane.getCapacity());
-            ps.setDate(3, plane.getFabrication_date());
-            ps.setInt(4, plane.getId_status());
-            ps.setInt(5, plane.getId_model());
-            ps.setInt(6, plane.getId_airline());
-            ps.executeUpdate();
+        String query = "{call planeRegister(?, ?, ?, ?, ?, ?)}";
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, plane.getPlates());
+            cs.setInt(2, plane.getCapacity());
+            cs.setDate(3, plane.getFabrication_date());
+            cs.setInt(4, plane.getId_status());
+            cs.setInt(5, plane.getId_model());
+            cs.setInt(6, plane.getId_airline());
+            cs.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw e;

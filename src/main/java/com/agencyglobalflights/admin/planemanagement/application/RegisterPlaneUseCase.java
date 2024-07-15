@@ -19,7 +19,6 @@ public class RegisterPlaneUseCase {
         this.airlineService = airlineService;
     }
     
-
     public void planeRegister(Plane plane) throws SQLException{
         planeService.planeRegister(plane);
     }
