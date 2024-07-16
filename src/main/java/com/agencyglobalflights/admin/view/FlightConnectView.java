@@ -37,10 +37,7 @@ public class FlightConnectView {
                     break;
                 case 4:
 
-                    break;
-                case 5:
-                
-                    break;
+                    return;
                 default:
                     break;
             }

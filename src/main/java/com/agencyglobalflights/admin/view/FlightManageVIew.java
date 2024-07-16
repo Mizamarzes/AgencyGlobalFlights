@@ -44,6 +44,12 @@ public class FlightManageVIew {
                 case 5:
                 
                     break;
+                case 6:
+                
+                    break;
+                case 7:
+                
+                    return;
                 default:
                     break;
             }
