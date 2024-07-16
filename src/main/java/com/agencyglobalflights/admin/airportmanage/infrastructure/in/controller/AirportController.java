@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.agencyglobalflights.admin.airportmanage.application.CreateAirpUseCase;
 import com.agencyglobalflights.admin.airportmanage.application.DeleteAirpUseCase;
+import com.agencyglobalflights.admin.airportmanage.application.UpdateAirpUseCase;
 import com.agencyglobalflights.admin.airportmanage.application.ViewAirpInfoUseCase;
 import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
 import com.agencyglobalflights.admin.airportmanage.domain.entity.City;
@@ -17,11 +18,13 @@ public class AirportController {
     private ViewAirpInfoUseCase vaUseCase;
     private CreateAirpUseCase caUseCase;
     private DeleteAirpUseCase delUseCase;
+    private UpdateAirpUseCase updtUseCase;
 
-    public AirportController(ViewAirpInfoUseCase vaUseCase, CreateAirpUseCase caUseCase, DeleteAirpUseCase delUseCase) {
+    public AirportController(ViewAirpInfoUseCase vaUseCase, CreateAirpUseCase caUseCase, DeleteAirpUseCase delUseCase, UpdateAirpUseCase updtUseCase) {
         this.vaUseCase = vaUseCase;
         this.caUseCase = caUseCase;
         this.delUseCase = delUseCase;
+        this.updtUseCase = updtUseCase;
     }
 
     public List<Airport> findAllAirports() throws SQLException {
@@ -45,8 +48,8 @@ public class AirportController {
 
     public List<City> findAllCities() throws SQLException {
         ConsoleUtils.clear();
-        String border = "+------+---------------------------------+-----------+";
-        String header = "|  id  |              name               |  country  |";
+        String border = "+------+--------------------------+-----------+";
+        String header = "|  id  |           name           |  country  |";
         List<City> cities = vaUseCase.findAllCities();
     
         System.out.println(border);
@@ -54,7 +57,7 @@ public class AirportController {
         System.out.println(border);
     
         for (City city : cities) {
-            System.out.printf("| %-4d | %-30s | %-12s |%n",
+            System.out.printf("| %-4d | %-24s | %-9s |%n",
             city.getId(), city.getName(), city.getIdcountry());
         }
 
@@ -98,10 +101,11 @@ public class AirportController {
         "\n" +
         "1. Update Name\n" +
         "2. Update City\n" +
-        "3. Update CODE/ID\n"
+        "3. Update CODE/ID\n" +
+        "4. Go back"
         );
 
-        int op = ConsoleUtils.verifyEntryInt(1, 7);
+        int op = ConsoleUtils.verifyEntryInt(1, 4);
             
         switch (op) {
 
@@ -110,9 +114,9 @@ public class AirportController {
             
                 ConsoleUtils.clear();     
                 System.out.println("Enter the new name: ");
-                int new_name = ConsoleUtils.verifyingIntNoRange();
-                // playerService.updatePlayerTeam(id, new_team);
-                
+                String new_name = ConsoleUtils.verifyEntryString();
+                updtUseCase.updateName(id, new_name);
+                ConsoleUtils.waitWindow();
                 break;
             case 2:
 
@@ -122,17 +126,21 @@ public class AirportController {
                 vaUseCase.findAllCities();
                 System.out.println("Enter the new City: ");
                 int new_city = ConsoleUtils.verifyingIntNoRange();
-                // playerService.updatePlayerPosition(id, new_pos);
+                updtUseCase.updateCity(id, new_city);
+                ConsoleUtils.waitWindow();
                 break;
             case 3:
 
                 // aqui se usa el procedure EditVarcharColumnIdVar
-                
+
                 ConsoleUtils.clear();
                 System.out.println("Enter the new Code/Id: ");
                 String new_id = ConsoleUtils.verifyEntryString();
-                // playerService.updatePlayerShirtNumber(id, new_sn);
+                updtUseCase.updateId(id, new_id);
+                ConsoleUtils.waitWindow();
                 break;
+            case 4:
+                return;
             default:
                 break;
         }
@@ -147,6 +155,7 @@ public class AirportController {
         System.out.println("Enter the Airport Code/Id: ");
         String id = ConsoleUtils.verifyEntryString();
 
+        findAllCities();
         System.out.println("Enter the date Airport city id: ");
         int idcity = ConsoleUtils.verifyingIntNoRange();
 
