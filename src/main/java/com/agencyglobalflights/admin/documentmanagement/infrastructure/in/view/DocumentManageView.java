@@ -1,12 +1,25 @@
-package com.agencyglobalflights.admin.view;
+package com.agencyglobalflights.admin.documentmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.documentmanagement.application.CreateDocTypeUseCase;
+import com.agencyglobalflights.admin.documentmanagement.application.DeleteDocTypeUseCase;
+import com.agencyglobalflights.admin.documentmanagement.application.UpdateDocTypeUseCase;
+import com.agencyglobalflights.admin.documentmanagement.application.ViewDocTypesUseCase;
+import com.agencyglobalflights.admin.documentmanagement.domain.service.DocTypeService;
+import com.agencyglobalflights.admin.documentmanagement.infrastructure.in.controller.DocTypeController;
+import com.agencyglobalflights.admin.documentmanagement.infrastructure.out.DocTypeRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class DocumentManageView {
 
     public void showmenu() throws SQLException {
+        DocTypeService ds = new DocTypeRepository();
+        ViewDocTypesUseCase vduc = new ViewDocTypesUseCase();
+        UpdateDocTypeUseCase uduc = new UpdateDocTypeUseCase();
+        CreateDocTypeUseCase cduc = new CreateDocTypeUseCase();
+        DeleteDocTypeUseCase dduc = new DeleteDocTypeUseCase();
+        DocTypeController dtc = new DocTypeController(vduc, uduc, cduc, dduc);
 
         do {
 
@@ -24,7 +37,6 @@ public class DocumentManageView {
             );
 
             int op = ConsoleUtils.verifyEntryInt(1, 5);
-
 
             switch (op) {
                 case 1:
