@@ -135,3 +135,134 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+-- Structure procedure for editing n varchar column of n object ** WITH ID VARCHAR **
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS EditVarcharColumnIdVar;
+CREATE PROCEDURE EditVarcharColumnIdVar(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_new_value VARCHAR(64),
+    IN p_object_id VARCHAR(10)
+)
+BEGIN
+    DECLARE sql_query VARCHAR(1000);
+    
+    SET @table_name = p_table_name;
+    SET @column_name = p_column_name;
+    SET @new_value = p_new_value;
+    SET @object_id = p_object_id;
+    
+    SET @query = CONCAT('UPDATE ', @table_name, ' SET ', @column_name, ' = ? WHERE id = ?');
+    
+    PREPARE stmt FROM @query;
+    
+    EXECUTE stmt USING @new_value, @object_id;
+    DEALLOCATE PREPARE stmt;
+    SELECT 1;
+    
+END $$
+DELIMITER ;
+
+--Example: CALL EditVarcharColumn('airport', 'name', 'El Dorado', 'BOG');
+
+-- Structure procedure for editing n varchar column of n object ** WITH ID INT **
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS EditVarcharColumnidInt;
+CREATE PROCEDURE EditVarcharColumnidInt(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_new_value VARCHAR(64),
+    IN p_object_id INT
+)
+BEGIN
+    DECLARE sql_query VARCHAR(1000);
+    
+    SET @table_name = p_table_name;
+    SET @column_name = p_column_name;
+    SET @new_value = p_new_value;
+    SET @object_id = p_object_id;
+    
+    SET @query = CONCAT('UPDATE ', @table_name, ' SET ', @column_name, ' = ? WHERE id = ?');
+    
+    PREPARE stmt FROM @query;
+    
+    EXECUTE stmt USING @new_value, @object_id;
+    DEALLOCATE PREPARE stmt;
+    SELECT 1;
+    
+END $$
+DELIMITER ;
+
+--Example: CALL EditVarcharColumnidInt('city', 'name', 'Bogotáaa', '1');
+
+
+-- Structure procedure for editing n int column of n object **WITH ID VARCHAR**
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS EditIntColumnidVar;
+CREATE PROCEDURE EditIntColumnidVar(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_new_value INT,
+    IN p_object_id VARCHAR(10)
+)
+BEGIN
+    DECLARE sql_query VARCHAR(1000);
+    
+    SET @table_name = p_table_name;
+    SET @column_name = p_column_name;
+    SET @new_value = p_new_value;
+    SET @object_id = p_object_id;
+    
+    SET @query = CONCAT('UPDATE ', @table_name, ' SET ', @column_name, ' = ? WHERE id = ?');
+    
+    PREPARE stmt FROM @query;
+    
+    EXECUTE stmt USING @new_value, @object_id;
+    DEALLOCATE PREPARE stmt;
+    SELECT 1;
+    
+END $$
+DELIMITER ;
+
+--Example: CALL EditIntColumnidVar('airport', 'idcity', '1', 'BOG');
+
+
+-- Structure procedure for editing n int column of n object **WITH ID INT**
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS EditIntColumnidInt;
+CREATE PROCEDURE EditIntColumnidInt(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_new_value INT,
+    IN p_object_id INT
+)
+BEGIN
+    DECLARE sql_query VARCHAR(1000);
+    
+    SET @table_name = p_table_name;
+    SET @column_name = p_column_name;
+    SET @new_value = p_new_value;
+    SET @object_id = p_object_id;
+    
+    SET @query = CONCAT('UPDATE ', @table_name, ' SET ', @column_name, ' = ? WHERE id = ?');
+    
+    PREPARE stmt FROM @query;
+    
+    EXECUTE stmt USING @new_value, @object_id;
+    DEALLOCATE PREPARE stmt;
+    SELECT 1;
+    
+END $$
+DELIMITER ;
+
+--Example: CALL EditIntColumnidVar('tablename', 'columname', 'newintvalue', 'objectid');

@@ -105,14 +105,19 @@ public class AirportController {
             
         switch (op) {
 
-            // falta crear los procedimientos para editar nombres y ids y ids varchar
             case 1:
+                // aqui se usa el procedure EditVarcharColumnIdVar
+            
                 ConsoleUtils.clear();     
                 System.out.println("Enter the new name: ");
                 int new_name = ConsoleUtils.verifyingIntNoRange();
                 // playerService.updatePlayerTeam(id, new_team);
+                
                 break;
             case 2:
+
+                // aqui se usa el procedure EditIntColumnidVar
+
                 ConsoleUtils.clear();
                 vaUseCase.findAllCities();
                 System.out.println("Enter the new City: ");
@@ -120,6 +125,9 @@ public class AirportController {
                 // playerService.updatePlayerPosition(id, new_pos);
                 break;
             case 3:
+
+                // aqui se usa el procedure EditVarcharColumnIdVar
+                
                 ConsoleUtils.clear();
                 System.out.println("Enter the new Code/Id: ");
                 String new_id = ConsoleUtils.verifyEntryString();
