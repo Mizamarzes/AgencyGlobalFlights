@@ -1,5 +1,6 @@
 
 -- Structured Procedure to insert a new plane
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS planeRegister;
 CREATE PROCEDURE planeRegister(
@@ -34,6 +35,7 @@ DELIMITER ;
 
 
 -- Structure procedure to show up information
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS showInformationTable;
 CREATE PROCEDURE showInformationTable(
@@ -48,6 +50,7 @@ END $$
 DELIMITER ;
 
 -- Structure procedure to show up information about a specific register with id
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS showObjectInformation $$
 CREATE PROCEDURE showObjectInformation(
@@ -68,7 +71,6 @@ DELIMITER ;
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS showObjectInformationIDVARCHAR $$
-
 CREATE PROCEDURE showObjectInformationIDVARCHAR(
     IN table_name VARCHAR(64),
     IN object_id VARCHAR(3)
@@ -84,6 +86,7 @@ END $$
 DELIMITER ;
 
 -- Structure procedure for displaying information about a specific record with VARCHAR and a different column than id
+
 DELIMITER $$
 DROP PROCEDURE IF EXISTS showObjectInformationVarchar;
 CREATE PROCEDURE showObjectInformationVarchar(
@@ -98,4 +101,37 @@ BEGIN
     EXECUTE stmt;
     DEALLOCATE PREPARE stmt;
 END $$
+DELIMITER ;
+
+-- Structure procedure for displaying all the airport list
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS showAllAirports $$
+CREATE PROCEDURE showAllAirports()
+BEGIN
+    SELECT a.id,
+           a.name,
+           c.name as city_name
+    FROM airport a
+    JOIN city c ON a.idcity = c.id;
+END $$
+
+DELIMITER ;
+
+-- Structure procedure for displaying all of N table
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS showAllRegs;
+CREATE PROCEDURE showAllRegs(
+    IN table_name VARCHAR(64)
+)
+BEGIN
+    SET @query = CONCAT('SELECT * FROM ', table_name);
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+
 DELIMITER ;
