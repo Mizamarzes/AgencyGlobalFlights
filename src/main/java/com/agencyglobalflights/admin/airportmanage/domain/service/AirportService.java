@@ -14,4 +14,8 @@ public interface AirportService {
     void deleteAirport(String id) throws SQLException;
     List<City> findAllCities() throws SQLException;
 
+    void updateName(String id, String newName) throws SQLException;
+    void updateCity(String id, int newCity) throws SQLException;
+    void updateId(String id, String newId) throws SQLException;
+
 }

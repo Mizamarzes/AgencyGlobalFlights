@@ -85,7 +85,7 @@ public class AirportRepository implements AirportService{
     @Override
     public void deleteAirport(String id) throws SQLException {
         String tableName = "airport";
-        String query = "{CALL DeleteRecordByID(?, ?)}";
+        String query = "{CALL DeleteByIdVarchar(?, ?)}";
 
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
@@ -111,7 +111,7 @@ public class AirportRepository implements AirportService{
                     City city = new City();
                     city.setId(rs.getInt("id"));
                     city.setName(rs.getString("name"));
-                    city.setIdcountry(rs.getString("idcity"));
+                    city.setIdcountry(rs.getString("idcountry"));
                     cities.add(city);
                 }
             }
@@ -120,6 +120,78 @@ public class AirportRepository implements AirportService{
             throw e;
         }
         return cities;
+    }
+
+    @Override
+    public void updateName(String id, String newName) throws SQLException {
+        String tablename = "airport";
+        String columnname = "name";
+    
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditVarcharColumnIdVar(?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnname);
+            cs.setString(3, newName);
+            cs.setString(4, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Airport name updated succesfully");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+    }
+    
+    @Override
+    public void updateCity(String id, int newCity) throws SQLException{
+        String tablename = "airport";
+        String columnname = "city";
+    
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditIntColumnidVar(?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnname);
+            cs.setInt(3, newCity);
+            cs.setString(4, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Airport city updated succesfully");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+    }
+
+    @Override
+    public void updateId(String id, String newId) throws SQLException{
+        String tablename = "airport";
+        String columnname = "id";
+    
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditVarcharColumnIdVar(?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnname);
+            cs.setString(3, newId);
+            cs.setString(4, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Airport Id updated succesfully");
+                        
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
     }
 
 }
