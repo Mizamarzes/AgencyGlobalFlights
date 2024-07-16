@@ -56,7 +56,7 @@ public class PlaneManageView {
                     break;
                 case 5:
                 
-                    break;
+                    return;
                 default:
                     break;
             }

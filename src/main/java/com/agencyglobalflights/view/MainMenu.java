@@ -32,7 +32,7 @@ public class MainMenu {
                 break;
             case 3:
                 System.out.println("Thanks for using our Platform");
-                break;
+                return;
             default:
                 break;
         }

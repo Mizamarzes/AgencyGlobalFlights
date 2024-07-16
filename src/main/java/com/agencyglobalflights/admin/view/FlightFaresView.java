@@ -41,7 +41,7 @@ public class FlightFaresView {
                     break;
                 case 5:
                 
-                    break;
+                    return;
                 default:
                     break;
             }
