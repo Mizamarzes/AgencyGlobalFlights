@@ -1,54 +1,133 @@
 package com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller;
 
-import java.io.Console;
-import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.agencyglobalflights.admin.airportmanage.application.CreateAirpUseCase;
+import com.agencyglobalflights.admin.airportmanage.application.DeleteAirpUseCase;
 import com.agencyglobalflights.admin.airportmanage.application.ViewAirpInfoUseCase;
 import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
+import com.agencyglobalflights.admin.airportmanage.domain.entity.City;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class AirportController {
     private ViewAirpInfoUseCase vaUseCase;
     private CreateAirpUseCase caUseCase;
+    private DeleteAirpUseCase delUseCase;
 
-    public AirportController(ViewAirpInfoUseCase vaUseCase, CreateAirpUseCase caUseCase) {
+    public AirportController(ViewAirpInfoUseCase vaUseCase, CreateAirpUseCase caUseCase, DeleteAirpUseCase delUseCase) {
         this.vaUseCase = vaUseCase;
         this.caUseCase = caUseCase;
+        this.delUseCase = delUseCase;
+    }
+
+    public List<Airport> findAllAirports() throws SQLException {
+        ConsoleUtils.clear();
+        String border = "+------+-------------------------------------+--------------+";
+        String header = "|  id  |                name                 |     city     |";
+        List<Airport> airports = vaUseCase.findAllAirports();
+    
+        System.out.println(border);
+        System.out.println(header);
+        System.out.println(border);
+    
+        for (Airport airport : airports) {
+            System.out.printf("| %-4s | %-35s | %-12s |%n",
+            airport.getId(), airport.getName(), airport.getCityname());
+        }
+
+        System.out.println(border);
+        return airports;
+    }
+
+    public List<City> findAllCities() throws SQLException {
+        ConsoleUtils.clear();
+        String border = "+------+---------------------------------+-----------+";
+        String header = "|  id  |              name               |  country  |";
+        List<City> cities = vaUseCase.findAllCities();
+    
+        System.out.println(border);
+        System.out.println(header);
+        System.out.println(border);
+    
+        for (City city : cities) {
+            System.out.printf("| %-4d | %-30s | %-12s |%n",
+            city.getId(), city.getName(), city.getIdcountry());
+        }
+
+        System.out.println(border);
+        return cities;
     }
 
     public Airport viewAirportInfo() throws SQLException {
 
-        // Definición del formato de la tabla
-        String border = "+----+------------------+---------+";
-        String header = "| id |     Airport      | city id |";
-
-        // Limpia la consola
+        String border = "+------+-------------------------------------+--------------+";
+        String header = "|  id  |                name                 |     city     |";
+        
         ConsoleUtils.clear();
         
-        // Solicita el ID del aeropuerto
         System.out.print("Enter the Airport id:  ");
         String id = ConsoleUtils.verifyEntryString();
-        
-        // Obtiene la información del aeropuerto
         Airport airport = vaUseCase.viewAirportInfo(id);
-        
-        // Limpia la consola nuevamente
         ConsoleUtils.clear();
         
-        // Imprime la tabla con la información del aeropuerto
         System.out.println(border);
         System.out.println(header);
         System.out.println(border);
-        System.out.printf("| %-3s| %-16s | %-7d |%n",
+        System.out.printf("| %-4s | %-35s | %-12s |%n",
                            airport.getId(), airport.getName(), airport.getIdcity());
         System.out.println(border);
         
-        // Espera a que el usuario presione una tecla para continuar
         ConsoleUtils.waitWindow();
-        
         return airport;
+    }
+
+    public void UpdateAirport() throws SQLException {
+        findAllAirports();
+        System.out.println("\n" + "Please enter the CODE/ID of the Airport to edit:");
+        String id = ConsoleUtils.verifyEntryString();
+        ConsoleUtils.clear();
+        vaUseCase.viewAirportInfo(id);
+
+        System.out.println("--------------------------------------\n" +
+        "       Please select an option:       \n" +
+        "--------------------------------------\n" +
+        "\n" +
+        "1. Update Name\n" +
+        "2. Update City\n" +
+        "3. Update CODE/ID\n"
+        );
+
+        int op = ConsoleUtils.verifyEntryInt(1, 7);
+            
+        switch (op) {
+
+            // falta crear los procedimientos para editar nombres y ids y ids varchar
+            case 1:
+                ConsoleUtils.clear();     
+                System.out.println("Enter the new name: ");
+                int new_name = ConsoleUtils.verifyingIntNoRange();
+                // playerService.updatePlayerTeam(id, new_team);
+                break;
+            case 2:
+                ConsoleUtils.clear();
+                vaUseCase.findAllCities();
+                System.out.println("Enter the new City: ");
+                int new_city = ConsoleUtils.verifyingIntNoRange();
+                // playerService.updatePlayerPosition(id, new_pos);
+                break;
+            case 3:
+                ConsoleUtils.clear();
+                System.out.println("Enter the new Code/Id: ");
+                String new_id = ConsoleUtils.verifyEntryString();
+                // playerService.updatePlayerShirtNumber(id, new_sn);
+                break;
+            default:
+                break;
+        }
     }
 
     public void createAirport() throws SQLException {
@@ -57,7 +136,7 @@ public class AirportController {
         System.out.println("Enter the Airport name: ");
         String name = ConsoleUtils.verifyEntryString();
 
-        System.out.println("Enter the Airport IATA Code: ");
+        System.out.println("Enter the Airport Code/Id: ");
         String id = ConsoleUtils.verifyEntryString();
 
         System.out.println("Enter the date Airport city id: ");
@@ -67,5 +146,24 @@ public class AirportController {
         caUseCase.createAirport(newAirport);
         
     }
+
+    public void deleteAirport() throws SQLException {
+        findAllAirports();
+        System.out.println("\n" + "Please enter the CODE/ID of the Airport to delete:");
+        String id = ConsoleUtils.verifyEntryString();
+        System.out.println("Are you Sure?\n" +
+            "1. NO\n" +
+            "2. YES\n");
+        int conf = ConsoleUtils.verifyingIntNoRange();
+
+        if (conf == 2) {
+            delUseCase.deleteAirport(id);
+            System.out.println("Player successfully eliminated.");
+        } else {
+            System.out.println("Elimination canceled.");
+        }
+        ConsoleUtils.waitWindow();        
+    }
+
 
 }

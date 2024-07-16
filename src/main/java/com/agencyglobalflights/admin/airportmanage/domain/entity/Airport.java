@@ -5,6 +5,7 @@ public class Airport {
     private String id;
     private String name;
     private int idcity;
+    private String cityname;
    
     public Airport() {
     }
@@ -13,6 +14,13 @@ public class Airport {
         this.id = id;
         this.name = name;
         this.idcity = idcity;
+    }
+
+
+    public Airport(String id, String name, String cityname) {
+        this.id = id;
+        this.name = name;
+        this.cityname = cityname;
     }
 
     public String getId() {
@@ -38,5 +46,15 @@ public class Airport {
     public void setIdcity(int idcity) {
         this.idcity = idcity;
     }
+
+    public String getCityname() {
+        return cityname;
+    }
+
+    public void setCityname(String cityname) {
+        this.cityname = cityname;
+    }
+
+    
     
 }

@@ -3,6 +3,7 @@ package com.agencyglobalflights.admin.airportmanage.infrastructure.in.view;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.airportmanage.application.CreateAirpUseCase;
+import com.agencyglobalflights.admin.airportmanage.application.DeleteAirpUseCase;
 import com.agencyglobalflights.admin.airportmanage.application.ViewAirpInfoUseCase;
 import com.agencyglobalflights.admin.airportmanage.domain.service.AirportService;
 import com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller.AirportController;
@@ -15,7 +16,8 @@ public class AirportManageView {
         AirportService as = new AirportRepository();
         ViewAirpInfoUseCase vauc = new ViewAirpInfoUseCase(as);
         CreateAirpUseCase cauc = new CreateAirpUseCase(as);
-        AirportController ac = new AirportController(vauc, cauc);
+        DeleteAirpUseCase deluc = new DeleteAirpUseCase(as);
+        AirportController ac = new AirportController(vauc, cauc, deluc);
 
 
         do {
@@ -47,7 +49,7 @@ public class AirportManageView {
                     ac.createAirport();
                     break;
                 case 4:
-                    System.out.println("En desarrollo..");
+                    ac.deleteAirport();
                     return;
                 case 5:
                     return;
