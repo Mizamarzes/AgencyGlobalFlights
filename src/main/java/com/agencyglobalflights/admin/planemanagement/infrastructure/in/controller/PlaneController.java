@@ -82,7 +82,7 @@ public class PlaneController {
     public void registerPlaneController() throws SQLException {
         ConsoleUtils.clear();
         System.out.println("Enter the plane plate: ");
-        String plates = ConsoleUtils.verifyEntryString();
+        String id = ConsoleUtils.verifyEntryString();
 
         System.out.println("Enter the plane capacity: ");
         int capacity = ConsoleUtils.verifyingIntNoRange();
@@ -102,7 +102,7 @@ public class PlaneController {
         System.out.println("Select the airline for the plane: ");
         int id_airline = ConsoleUtils.verifyingIntNoRange();
 
-        Plane newPlane = new Plane(plates, capacity, fabrication_date, id_status, id_model, id_airline);
+        Plane newPlane = new Plane(id, capacity, fabrication_date, id_status, id_model, id_airline);
         registerPlaneUseCase.planeRegister(newPlane);
     }
 
@@ -117,16 +117,15 @@ public class PlaneController {
         Plane plane = viewPlaneInformationUseCase.viewPlaneByPlates(plate);
 
         if (plane != null) {
-            String border = "+----+--------------------+---------+-------------------+-----------+----------+-----------+";
-            String header = "| ID | Plates             | Capacity| Fabrication Date  | Status ID | Model ID | Airline ID |";
+            String border = "+--------+---------+-------------------+-----------+----------+------------+";
+            String header = "|   ID   | Capacity | Fabrication Date  | Status ID | Model ID | Airline ID |";
 
             System.out.println(border);
             System.out.println(header);
             System.out.println(border);
 
-            System.out.printf("|  %-2d| %-18s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
+            System.out.printf("| %-2s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
                 plane.getId(),
-                plane.getPlates(),
                 plane.getCapacity(),
                 plane.getFabrication_date(),
                 plane.getId_status(),
@@ -138,4 +137,9 @@ public class PlaneController {
             System.out.println("No plane found with the given plate.");
         }
     }
+
+    // -------------------------
+    // VIEW PLANE INFORMATION
+
+    
 }

@@ -12,8 +12,8 @@ public class ViewPlaneInformationUseCase {
         this.planeService = planeService;
     }
 
-    public Plane viewPlaneByPlates(String plates) throws SQLException {
-        Plane plane = planeService.viewPlaneByPlates(plates);
+    public Plane viewPlaneByPlates(String id) throws SQLException {
+        Plane plane = planeService.viewPlaneByPlates(id);
         return plane;
     }
 

@@ -84,7 +84,7 @@ public class PlaneRepository implements PlaneService {
     public void planeRegister(Plane plane) throws SQLException {
         String query = "{CALL planeRegister(?, ?, ?, ?, ?, ?)}";
         try (CallableStatement cs = connection.prepareCall(query)) {
-            cs.setString(1, plane.getPlates());
+            cs.setString(1, plane.getId());
             cs.setInt(2, plane.getCapacity());
             cs.setDate(3, plane.getFabrication_date());
             cs.setInt(4, plane.getId_status());
@@ -100,22 +100,21 @@ public class PlaneRepository implements PlaneService {
     // -------------------------
     // VIEW PLANE INFORMATION
 
-    public Plane viewPlaneByPlates(String plates) throws SQLException {
+    public Plane viewPlaneByPlates(String id) throws SQLException {
         String tableName = "plane";
-        String columnName = "plates";
+        String columnName = "id";
         String query = "{CALL showObjectInformationVarchar(?, ?, ?)}";
     
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
             cs.setString(2, columnName);
-            cs.setString(3, plates);  // Corrected variable name
+            cs.setString(3, id);  // Corrected variable name
     
             try (ResultSet rs = cs.executeQuery()) {
                 if (rs.next()) {
                     // Assuming the Plane class has a constructor that accepts these parameters
                     Plane plane = new Plane(
-                        rs.getInt("id"),  // Assuming the Plane class has id as an integer
-                        rs.getString("plates"),
+                        rs.getString("id"),
                         rs.getInt("capacity"),
                         rs.getDate("fabrication_date"),
                         rs.getInt("id_status"),
@@ -133,4 +132,22 @@ public class PlaneRepository implements PlaneService {
         }
     }
     
+    // -------------------------
+    // DELETE PLANE 
+
+    @Override
+    public void deletePlane(String id) throws SQLException {
+        String tableName = "plane";
+        String query = "{CALL DeleteByIdVarchar(?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            cs.setString(2, id);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
 }

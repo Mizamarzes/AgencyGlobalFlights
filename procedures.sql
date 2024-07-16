@@ -4,7 +4,7 @@
 DELIMITER $$
 DROP PROCEDURE IF EXISTS planeRegister;
 CREATE PROCEDURE planeRegister(
-    IN plates_insert VARCHAR(30),
+    IN id_insert VARCHAR(30),
     IN capacity_insert INT,
     IN fabrication_date_insert DATE,
     IN id_status_insert INT,
@@ -12,11 +12,10 @@ CREATE PROCEDURE planeRegister(
     IN id_airline_insert INT
 )
 BEGIN
-    INSERT INTO plane (id, plates, capacity, fabrication_date, id_status, id_model, id_airline) VALUES 
-    (NULL, plates_insert, capacity_insert, fabrication_date_insert, id_status_insert, id_model_insert, id_airline_insert)
-
+    INSERT INTO plane (id, capacity, fabrication_date, id_status, id_model, id_airline) 
+    VALUES (id_insert, capacity_insert, fabrication_date_insert, id_status_insert, id_model_insert, id_airline_insert);
 END $$
-DELIMITER;
+DELIMITER ;
 
 -- Structured Procedure to insert a new Airport
 
@@ -266,3 +265,23 @@ END $$
 DELIMITER ;
 
 --Example: CALL EditIntColumnidVar('tablename', 'columname', 'newintvalue', 'objectid');
+
+
+-- Procedure to delete a register when the id is VARCHAR
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS DeleteByIdVarchar;
+CREATE PROCEDURE DeleteByIdVarchar(
+    IN table_name VARCHAR(64),
+    IN object_id VARCHAR(5)
+)
+BEGIN
+    SET @query = CONCAT('DELETE FROM ', table_name, ' WHERE id = ''', object_id, '''');
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+

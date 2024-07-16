@@ -14,8 +14,11 @@ public interface PlaneService {
     List<Model> findAllModels() throws SQLException;
     List<PlaneStatus> findAllStatuses() throws SQLException;
 
-    //View plane information
-    Plane viewPlaneByPlates(String plates) throws SQLException;
+    // View plane information
+    Plane viewPlaneByPlates(String id) throws SQLException;
 
+    // Delete plane
+    void deletePlane(String id) throws SQLException;
 
+    // Update plane information
 }
