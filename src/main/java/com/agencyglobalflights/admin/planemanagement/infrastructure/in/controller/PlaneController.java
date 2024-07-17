@@ -4,7 +4,9 @@ import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
+import com.agencyglobalflights.admin.planemanagement.application.DeletePlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.application.RegisterPlaneUseCase;
+import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.application.ViewPlaneInformationUseCase;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Airline;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Model;
@@ -15,11 +17,17 @@ import com.agencyglobalflights.utils.ConsoleUtils;
 public class PlaneController {
     private RegisterPlaneUseCase registerPlaneUseCase;
     private ViewPlaneInformationUseCase viewPlaneInformationUseCase;
+    private DeletePlaneUseCase deletePlaneUseCase;
+    private UpdatePlaneUseCase updatePlaneUseCase;
 
     public PlaneController(RegisterPlaneUseCase registerPlaneUseCase,
-            ViewPlaneInformationUseCase viewPlaneInformationUseCase) {
+            ViewPlaneInformationUseCase viewPlaneInformationUseCase,
+            DeletePlaneUseCase deletePlaneUseCase,
+            UpdatePlaneUseCase updatePlaneUseCase) {
         this.registerPlaneUseCase = registerPlaneUseCase;
         this.viewPlaneInformationUseCase = viewPlaneInformationUseCase;
+        this.deletePlaneUseCase = deletePlaneUseCase;
+        this.updatePlaneUseCase = updatePlaneUseCase;
     }    
     
     // -------------------------
@@ -136,10 +144,62 @@ public class PlaneController {
         } else {
             System.out.println("No plane found with the given plate.");
         }
+        ConsoleUtils.waitWindow();
     }
 
     // -------------------------
-    // VIEW PLANE INFORMATION
+    // UPDATE PLANE
 
+    public List<Plane> findAllPlanes() throws SQLException {
+        ConsoleUtils.clear();
+        String border = "+--------+---------+-------------------+-----------+----------+------------+";
+        String header = "|   ID   | Capacity | Fabrication Date  | Status ID | Model ID | Airline ID |";
+        List<Plane> planes = updatePlaneUseCase.findAllPlanes();
     
+        System.out.println(border);
+        System.out.println(header);
+        System.out.println(border);
+    
+        for (Plane plane : planes) {
+            System.out.printf("| %-2s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
+            plane.getId(),
+            plane.getCapacity(),
+            plane.getFabrication_date(),
+            plane.getId_status(),
+            plane.getId_model(),
+            plane.getId_airline());
+        }
+        System.out.println(border);
+        return planes;
+    }
+    
+    public void updatePlaneController() throws SQLException {
+        findAllPlanes();
+        System.out.println("\n" + "Please enter the plate of the Plane to edit:");
+        String id = ConsoleUtils.verifyEntryString();
+        ConsoleUtils.clear();
+        
+    }
+
+
+    // -------------------------
+    // DELETE PLANE
+
+    public void deletePlaneController() throws SQLException {
+        ConsoleUtils.clear();
+        System.out.println("Please, enter the plate of the plane to delete: ");
+        String id = ConsoleUtils.verifyEntryString();
+        System.out.println("Are you Sure?\n" +
+            "1. NO\n" +
+            "2. YES\n");
+        int conf = ConsoleUtils.verifyEntryInt(1, 2);
+
+        if (conf == 2) {
+            deletePlaneUseCase.deletePlane(id);
+            System.out.println("Plane succesfully eliminated.");
+        } else {
+            System.out.println("Elimination canceled.");
+        }
+        ConsoleUtils.waitWindow();
+    }
 }

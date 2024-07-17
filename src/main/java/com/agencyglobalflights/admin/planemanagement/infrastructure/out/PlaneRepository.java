@@ -2,11 +2,14 @@ package com.agencyglobalflights.admin.planemanagement.infrastructure.out;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Model;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.PlaneStatus;
@@ -132,6 +135,106 @@ public class PlaneRepository implements PlaneService {
         }
     }
     
+    // -------------------------
+    // UPDATE PLANE 
+
+    @Override
+    public Plane viewPlaneInfo(String id) throws SQLException {
+        String tableName = "plane";
+        String query = "{call showObjectInformationIDVARCHAR(?, ?)}";
+        Plane plane = new Plane(); 
+
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setString(1, tableName);
+            cs.setString(2, id);
+
+            try (ResultSet rs = cs.executeQuery()) {
+                while (rs.next()) {
+                    plane.setId(rs.getString("id"));
+                    plane.setCapacity(rs.getInt("capacity"));
+                    plane.setFabrication_date(rs.getDate("fabrication_date"));
+                    plane.setStatus_name(rs.getString("status_name"));
+                    plane.setModel_name(rs.getString("model_name"));
+                    plane.setAirline_name(rs.getString("airline_name"));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
+        return plane;
+    }
+
+    @Override
+    public List<Plane> findAllPlanes() throws SQLException {
+        List<Plane> planes = new ArrayList<>();
+        String query = "CALL showAllPlanes()";
+        try (Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                Plane plane = new Plane(query, 0, null, query, query, query);
+                plane.setId(rs.getString("id"));
+                plane.setCapacity(rs.getInt("capacity"));
+                plane.setFabrication_date(rs.getDate("fabrication_date"));
+                plane.setStatus_name(rs.getString("status_name"));
+                plane.setModel_name(rs.getString("model_name"));
+                plane.setAirline_name(rs.getString("airline_name"));
+                planes.add(plane);
+            }
+        }
+        return planes;
+    }
+
+    @Override
+    public void updatePlaneColumnIntAndVarchar(String id, String columnName, String newValue, String dataType) throws SQLException {
+        String tablename = "plane";
+
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditColumnidVar(?, ?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnName);
+            cs.setString(3, newValue);
+            cs.setString(4, dataType);
+            cs.setString(5, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Column " + columnName + " of plane updated successfully.");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+    }
+
+
+    @Override
+    public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
+        String tablename = "plane";
+        String columnname = "capacity";
+    
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditIntColumnidVar(?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnname);
+            cs.setDate(3, newDate);
+            cs.setString(4, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Capacity plane updated succesfully");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+    }
+
+
     // -------------------------
     // DELETE PLANE 
 

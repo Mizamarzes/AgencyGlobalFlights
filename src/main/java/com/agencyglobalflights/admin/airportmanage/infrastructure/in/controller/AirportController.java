@@ -168,11 +168,11 @@ public class AirportController {
         System.out.println("Are you Sure?\n" +
             "1. NO\n" +
             "2. YES\n");
-        int conf = ConsoleUtils.verifyingIntNoRange();
+        int conf = ConsoleUtils.verifyEntryInt(1, 2);
 
         if (conf == 2) {
             delUseCase.deleteAirport(id);
-            System.out.println("Player successfully eliminated.");
+            System.out.println("Airport successfully eliminated.");
         } else {
             System.out.println("Elimination canceled.");
         }

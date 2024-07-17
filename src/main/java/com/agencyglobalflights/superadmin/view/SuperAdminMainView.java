@@ -40,7 +40,7 @@ public class SuperAdminMainView {
             "4. Sign Out\n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 2);
+            int op = ConsoleUtils.verifyEntryInt(1, 4);
 
 
             switch (op) {
@@ -57,7 +57,8 @@ public class SuperAdminMainView {
                     salesMain.showmenu();
                     break;
                 case 4:
-                break;
+                    
+                    return;
                 default:
                     break;
             }
