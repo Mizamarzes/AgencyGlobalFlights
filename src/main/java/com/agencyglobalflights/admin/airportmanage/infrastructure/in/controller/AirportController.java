@@ -25,11 +25,11 @@ public class AirportController {
     }
 
     public List<Airport> findAllAirports() throws SQLException {
-        ConsoleUtils.clear();
         String border = "+------+-------------------------------------+--------------+";
         String header = "|  id  |                name                 |     city     |";
         List<Airport> airports = vaUseCase.findAllAirports();
     
+        ConsoleUtils.clear();
         System.out.println(border);
         System.out.println(header);
         System.out.println(border);

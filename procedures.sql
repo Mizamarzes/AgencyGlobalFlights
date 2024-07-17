@@ -32,6 +32,19 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
+
+-- Structure procedure to insert a new Document Type
+
+DROP PROCEDURE IF EXISTS createDocType;
+CREATE PROCEDURE createDocType(
+    IN name_insert VARCHAR(40)
+)
+BEGIN
+    INSERT INTO documenttype (name) 
+    VALUES (name_insert);
+END $$
+DELIMITER ;
 
 -- Structure procedure to show up information
 

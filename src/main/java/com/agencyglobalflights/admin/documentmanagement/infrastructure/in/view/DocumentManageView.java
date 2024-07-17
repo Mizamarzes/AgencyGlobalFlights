@@ -15,10 +15,10 @@ public class DocumentManageView {
 
     public void showmenu() throws SQLException {
         DocTypeService ds = new DocTypeRepository();
-        ViewDocTypesUseCase vduc = new ViewDocTypesUseCase();
-        UpdateDocTypeUseCase uduc = new UpdateDocTypeUseCase();
-        CreateDocTypeUseCase cduc = new CreateDocTypeUseCase();
-        DeleteDocTypeUseCase dduc = new DeleteDocTypeUseCase();
+        ViewDocTypesUseCase vduc = new ViewDocTypesUseCase(ds);
+        UpdateDocTypeUseCase uduc = new UpdateDocTypeUseCase(ds);
+        CreateDocTypeUseCase cduc = new CreateDocTypeUseCase(ds);
+        DeleteDocTypeUseCase dduc = new DeleteDocTypeUseCase(ds);
         DocTypeController dtc = new DocTypeController(vduc, uduc, cduc, dduc);
 
         do {
@@ -40,16 +40,16 @@ public class DocumentManageView {
 
             switch (op) {
                 case 1:
-
+                    dtc.viewAllTypes();
+                    ConsoleUtils.waitWindow();
                     break;
                 case 2:
-
                     break;
                 case 3:
-
+                    dtc.CreateType();
                     break;
                 case 4:
-
+                    dtc.deleteType();
                     break;
                 case 5:
                     return;

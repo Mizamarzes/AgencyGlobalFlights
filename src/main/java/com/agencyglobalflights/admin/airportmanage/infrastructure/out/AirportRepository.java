@@ -89,6 +89,7 @@ public class AirportRepository implements AirportService{
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, tableName);
             cs.setString(2, id);
+            cs.executeUpdate();
 
         } catch (SQLException e) {
             e.printStackTrace();
