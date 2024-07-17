@@ -2,7 +2,9 @@ package com.agencyglobalflights.admin.planemanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.planemanagement.application.DeletePlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.application.RegisterPlaneUseCase;
+import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.application.ViewPlaneInformationUseCase;
 import com.agencyglobalflights.admin.planemanagement.domain.service.PlaneService;
 import com.agencyglobalflights.admin.planemanagement.domain.service.AirlineService;
@@ -19,8 +21,10 @@ public class PlaneManageView {
 
         RegisterPlaneUseCase rpuc = new RegisterPlaneUseCase(ps, as);
         ViewPlaneInformationUseCase vpiuc = new ViewPlaneInformationUseCase(ps);
+        DeletePlaneUseCase dpuc = new DeletePlaneUseCase(ps);
+        UpdatePlaneUseCase upuc = new UpdatePlaneUseCase(ps);
 
-        PlaneController pc = new PlaneController(rpuc, vpiuc);
+        PlaneController pc = new PlaneController(rpuc, vpiuc, dpuc, upuc);
 
         do {
 
@@ -46,16 +50,15 @@ public class PlaneManageView {
                     break;
                 case 2:
                     pc.getPLaneByPlateController();
-                    ConsoleUtils.waitWindow();
                     break;
                 case 3:
-
+                    pc.updatePlaneController();
                     break;
                 case 4:
-
+                    pc.deletePlaneController();
                     break;
                 case 5:
-                
+
                     return;
                 default:
                     break;
