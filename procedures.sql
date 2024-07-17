@@ -32,6 +32,19 @@ BEGIN
 END $$
 DELIMITER ;
 
+DELIMITER $$
+
+-- Structure procedure to insert a new Document Type
+
+DROP PROCEDURE IF EXISTS createDocType;
+CREATE PROCEDURE createDocType(
+    IN name_insert VARCHAR(40)
+)
+BEGIN
+    INSERT INTO documenttype (name) 
+    VALUES (name_insert);
+END $$
+DELIMITER ;
 
 -- Structure procedure to show up information
 
@@ -284,4 +297,19 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- Procedure to delete a register when the id is VARCHAR
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS DeleteByIdInt;
+CREATE PROCEDURE DeleteByIdInt(
+    IN table_name VARCHAR(64),
+    IN object_id INT
+)
+BEGIN
+    SET @query = CONCAT('DELETE FROM ', table_name, ' WHERE id = ''', object_id, '''');
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;

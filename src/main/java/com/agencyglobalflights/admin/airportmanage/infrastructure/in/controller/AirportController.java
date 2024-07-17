@@ -1,9 +1,6 @@
 package com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.agencyglobalflights.admin.airportmanage.application.CreateAirpUseCase;
@@ -28,11 +25,11 @@ public class AirportController {
     }
 
     public List<Airport> findAllAirports() throws SQLException {
-        ConsoleUtils.clear();
         String border = "+------+-------------------------------------+--------------+";
         String header = "|  id  |                name                 |     city     |";
         List<Airport> airports = vaUseCase.findAllAirports();
     
+        ConsoleUtils.clear();
         System.out.println(border);
         System.out.println(header);
         System.out.println(border);
