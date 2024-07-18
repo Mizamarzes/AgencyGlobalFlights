@@ -18,17 +18,13 @@ public class UpdatePlaneUseCase {
         planeService.updatePlaneColumnIntAndVarchar(id, columnName, newValue, dataType);
     }
 
-    public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
-        planeService.updateFabricationDatePlane(id, newDate);
-    }
+    // public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
+    //     planeService.updateFabricationDatePlane(id, newDate);
+    // }
 
     public List<Plane> findAllPlanes() throws SQLException {
         List<Plane> planes = planeService.findAllPlanes();
         return planes;
     }
 
-    public Plane viewPlaneInfo(String id) throws SQLException {
-        Plane plane = planeService.viewPlaneInfo(id);
-        return plane;
-    }
 }
