@@ -178,13 +178,10 @@ public class PlaneController {
         System.out.println("\n" + "Please enter the plate of the Plane to edit:");
         String id = ConsoleUtils.verifyEntryString();
         ConsoleUtils.clear();
-        viewPlaneInformationUseCase.viewPlaneByPlates(id);
-        ConsoleUtils.waitWindow();
-
+        
         String data_int = "INT";
         String data_varchar = "VARCHAR";
         String data_date = "DATE";
-
 
         System.out.println("--------------------------------------\n" +
         "       Please select an option:       \n" +
@@ -202,50 +199,42 @@ public class PlaneController {
 
         switch (op) {
 
-            case 1:
-
-                // ConsoleUtils.clear();     
-                // System.out.println("Enter the new Capacity: ");
-                // int new_capacity = ConsoleUtils.verifyingIntNoRange();
-                // updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "capacity", new_capacity, data_int);;
-                // ConsoleUtils.waitWindow();
+            case 1:  
+                ConsoleUtils.clear();
+                System.out.println("Enter the new Capacity: ");
+                String new_capacity = ConsoleUtils.verifyEntryString();
+                updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "capacity", new_capacity, data_int);
                 break;
 
             case 2:
-
-                // ConsoleUtils.clear();
-                // vaUseCase.findAllCities();
-                // System.out.println("Enter the new City: ");
-                // int new_city = ConsoleUtils.verifyingIntNoRange();
-                // updtUseCase.updateCity(id, new_city);
-                // ConsoleUtils.waitWindow();
+                ConsoleUtils.clear();
+                System.out.println("Enter the new Fabrication Date(yyyy-mm-dd): ");
+                String new_fabrication_date = ConsoleUtils.verifyEntryString();
+                updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "fabrication_date", new_fabrication_date, data_date);
                 break;
 
             case 3:
-
-                // ConsoleUtils.clear();
-                // System.out.println("Enter the new Code/Id: ");
-                // String new_id = ConsoleUtils.verifyEntryString();
-                // updtUseCase.updateId(id, new_id);
-                // ConsoleUtils.waitWindow();
+                ConsoleUtils.clear();
+                getAllStatuses();
+                System.out.println("Enter the new Status: ");
+                String new_status = ConsoleUtils.verifyEntryString();
+                updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_status", new_status, data_int);
                 break;
 
             case 4:
-
-                // ConsoleUtils.clear();
-                // System.out.println("Enter the new Code/Id: ");
-                // String new_id = ConsoleUtils.verifyEntryString();
-                // updtUseCase.updateId(id, new_id);
-                // ConsoleUtils.waitWindow();
+                ConsoleUtils.clear();
+                getAllModels();
+                System.out.println("Enter the new Model: ");
+                String new_model = ConsoleUtils.verifyEntryString();
+                updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_model", new_model, data_int);
                 break;
 
             case 5:
-
-                // ConsoleUtils.clear();
-                // System.out.println("Enter the new Code/Id: ");
-                // String new_id = ConsoleUtils.verifyEntryString();
-                // updtUseCase.updateId(id, new_id);
-                // ConsoleUtils.waitWindow();
+                ConsoleUtils.clear();
+                getAllAirlines();
+                System.out.println("Enter the new Airline: ");
+                String new_airline = ConsoleUtils.verifyEntryString();
+                updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_airline", new_airline, data_int);
                 break;
 
             case 6:
