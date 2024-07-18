@@ -1,12 +1,21 @@
-package com.agencyglobalflights.admin.view;
+package com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFlightFareUseCase;
+import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class FlightFaresView {
 
     public void showmenu() throws SQLException {
+        FlightFareService ffs = new FlightFareRepository();
+
+        ViewFlightFareUseCase vffuc = new ViewFlightFareUseCase(ffs);
+
+        FlightFareController ffc = new FlightFareController(vffuc);
 
         do {
 
@@ -28,7 +37,7 @@ public class FlightFaresView {
 
             switch (op) {
                 case 1:
-
+                    ffc.viewflightFareByIdController();
                     break;
                 case 2:
 
