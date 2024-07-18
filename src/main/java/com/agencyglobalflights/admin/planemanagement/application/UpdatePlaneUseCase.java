@@ -1,6 +1,5 @@
 package com.agencyglobalflights.admin.planemanagement.application;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -17,10 +16,6 @@ public class UpdatePlaneUseCase {
     public void updatePlaneColumnIntAndVarchar(String id, String columnName, String newValue, String dataType) throws SQLException{
         planeService.updatePlaneColumnIntAndVarchar(id, columnName, newValue, dataType);
     }
-
-    // public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
-    //     planeService.updateFabricationDatePlane(id, newDate);
-    // }
 
     public List<Plane> findAllPlanes() throws SQLException {
         List<Plane> planes = planeService.findAllPlanes();

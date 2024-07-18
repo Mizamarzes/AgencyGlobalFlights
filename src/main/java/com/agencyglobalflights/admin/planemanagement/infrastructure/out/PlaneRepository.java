@@ -2,7 +2,6 @@ package com.agencyglobalflights.admin.planemanagement.infrastructure.out;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
-import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -129,31 +128,6 @@ public class PlaneRepository implements PlaneService {
     // -------------------------
     // UPDATE PLANE 
 
-    // @Override
-    // public Plane viewPlaneInfo(String id) throws SQLException {
-    //     String query = "{call showObjectInformationIDVARCHARPlane(?)}";
-    //     Plane plane = new Plane(); 
-
-    //     try (CallableStatement cs = connection.prepareCall(query)) {
-    //         cs.setString(1, id);
-
-    //         try (ResultSet rs = cs.executeQuery()) {
-    //             while (rs.next()) {
-    //                 plane.setId(rs.getString("id"));
-    //                 plane.setCapacity(rs.getInt("capacity"));
-    //                 plane.setFabrication_date(rs.getDate("fabrication_date"));
-    //                 plane.setStatus_name(rs.getString("status_name"));
-    //                 plane.setModel_name(rs.getString("model_name"));
-    //                 plane.setAirline_name(rs.getString("airline_name"));
-    //             }
-    //         }
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         throw e;
-    //     }
-    //     return plane;
-    // }
-
     @Override
     public List<Plane> findAllPlanes() throws SQLException {
         List<Plane> planes = new ArrayList<>();
@@ -197,32 +171,6 @@ public class PlaneRepository implements PlaneService {
             // Handle exceptions appropriately
         }
     }
-
-
-    // @Override
-    // public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
-    //     String tablename = "plane";
-    //     String columnname = "fabrication_date";
-    
-    //     try {
-    //         CallableStatement cs = connection.prepareCall("{CALL EditIntColumnidVar(?, ?, ?, ?)}");
-            
-    //         // Set the parameters for the stored procedure
-    //         cs.setString(1, tablename);
-    //         cs.setString(2, columnname);
-    //         cs.setDate(3, newDate);
-    //         cs.setString(4, id);
-            
-    //         // Execute the stored procedure
-    //         cs.execute();
-    //         System.out.println("Capacity plane updated succesfully");
-            
-    //     } catch (SQLException e) {
-    //         e.printStackTrace();
-    //         // Handle exceptions appropriately
-    //     }
-    // }
-
 
     // -------------------------
     // DELETE PLANE 

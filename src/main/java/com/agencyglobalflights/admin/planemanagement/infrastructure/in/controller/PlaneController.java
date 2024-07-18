@@ -180,7 +180,6 @@ public class PlaneController {
         ConsoleUtils.clear();
         
         String data_int = "INT";
-        String data_varchar = "VARCHAR";
         String data_date = "DATE";
 
         System.out.println("--------------------------------------\n" +

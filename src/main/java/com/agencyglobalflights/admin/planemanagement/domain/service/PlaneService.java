@@ -1,6 +1,5 @@
 package com.agencyglobalflights.admin.planemanagement.domain.service;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -20,7 +19,6 @@ public interface PlaneService {
     
     // Update plane information
     void updatePlaneColumnIntAndVarchar(String id, String columnName, String newValue, String dataType) throws SQLException;
-    // void updateFabricationDatePlane(String id, Date newDate) throws SQLException;
     List<Plane> findAllPlanes() throws SQLException;
 
     // Delete plane

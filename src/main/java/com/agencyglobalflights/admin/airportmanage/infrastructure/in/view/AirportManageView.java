@@ -10,7 +10,6 @@ import com.agencyglobalflights.admin.airportmanage.domain.service.AirportService
 import com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller.AirportController;
 import com.agencyglobalflights.admin.airportmanage.infrastructure.out.AirportRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
-import com.mysql.cj.jdbc.result.UpdatableResultSet;
 
 public class AirportManageView {
 
