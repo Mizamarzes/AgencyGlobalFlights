@@ -28,8 +28,8 @@ public class DocTypeController {
 
     public List<DocumentType> viewAllTypes() throws SQLException{
         List<DocumentType> alltypes = viewDocsUc.viewAllTypes();
-        String border = "+------+------------------------+";
-        String header = "|  id  |          name          |";
+        String border = "+------+----------------------------------+";
+        String header = "|  id  |               name               |";
 
         ConsoleUtils.clear();
         System.out.println(border);
@@ -37,7 +37,7 @@ public class DocTypeController {
         System.out.println(border);
 
         for (DocumentType documentType : alltypes) {
-            System.out.printf("| %-4d | %-22s |\n",
+            System.out.printf("| %-4d | %-32s |\n",
             documentType.getId(), documentType.getName());
         }
         System.out.println(border);
@@ -79,16 +79,14 @@ public class DocTypeController {
         ConsoleUtils.waitWindow();  
     }
 
-    public void updateDocs() throws SQLException {
+    public void updateType() throws SQLException {
         viewAllTypes();
         System.out.println("Please select a Document Type to Edit: ");
         int id = ConsoleUtils.verifyingIntNoRange();
+        System.out.println("Please Enter the new Document type Name");
+        String newName = ConsoleUtils.verifyEntryString();
         ConsoleUtils.clear();
-
-        // aqui llama al metodo de update 
-        
-        // se usara el procedure EditVarcharColumnidInt
-
+        updateDocsUc.UpdateDocType(newName, id);
     }
 
 }

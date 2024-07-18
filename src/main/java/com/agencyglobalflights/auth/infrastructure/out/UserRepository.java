@@ -16,7 +16,6 @@ public class UserRepository implements UserService {
     public UserRepository() {
         try {
             this.connection = DatabaseConfig.getConnection();
-            System.out.println("Base de datos Conectada");
         } catch (SQLException e) {
             e.printStackTrace();
             System.out.println("Base de datos CRASH");

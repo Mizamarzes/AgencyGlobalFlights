@@ -80,4 +80,30 @@ private Connection connection;
             throw e;
         }
     }
+
+    @Override
+    public void UpdateDocType(String newName, int id) throws SQLException {
+        String tablename = "documenttype";
+        String columnname = "name";
+    
+        try {
+            CallableStatement cs = connection.prepareCall("{CALL EditVarcharColumnidInt(?, ?, ?, ?)}");
+            
+            // Set the parameters for the stored procedure
+            cs.setString(1, tablename);
+            cs.setString(2, columnname);
+            cs.setString(3, newName);
+            cs.setInt(4, id);
+            
+            // Execute the stored procedure
+            cs.execute();
+            System.out.println("Airport name updated succesfully");
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            // Handle exceptions appropriately
+        }
+    }
+
 }
+

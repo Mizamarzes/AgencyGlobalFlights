@@ -44,6 +44,7 @@ public class DocumentManageView {
                     ConsoleUtils.waitWindow();
                     break;
                 case 2:
+                dtc.updateType();
                     break;
                 case 3:
                     dtc.CreateType();
