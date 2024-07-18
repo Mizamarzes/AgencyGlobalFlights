@@ -46,6 +46,24 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- Structure procedure to insert a new Document Type
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS createRevision $$
+CREATE PROCEDURE createRevision(
+    IN date_insert VARCHAR(40),
+    IN id_plane_insert VARCHAR(30),
+    IN desc_insert TEXT,
+    IN id_emp_insert VARCHAR(10)
+)
+BEGIN
+    INSERT INTO revision (revision_date, id_plane, description, id_emp) 
+    VALUES (date_insert, id_plane_insert, desc_insert, id_emp_insert);
+END $$
+
+DELIMITER ;
+
 -- Structure procedure to show up information
 
 DELIMITER $$

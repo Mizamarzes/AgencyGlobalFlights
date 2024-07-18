@@ -66,7 +66,6 @@ private Connection connection;
 
     @Override
     public void deleteType(int id) throws SQLException{
-        System.out.println(id);
         String tableName = "documenttype";
         String query = "{CALL DeleteByIdInt(?, ?)}";
 
