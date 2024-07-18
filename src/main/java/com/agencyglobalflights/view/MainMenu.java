@@ -19,6 +19,7 @@ public class MainMenu {
         );
 
         int op = ConsoleUtils.verifyEntryInt(1, 3);
+        System.out.println("Loading...");
         
         switch (op) {
             case 1:

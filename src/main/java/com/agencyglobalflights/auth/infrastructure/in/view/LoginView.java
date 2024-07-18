@@ -33,7 +33,6 @@ public class LoginView {
         try {
             boolean success = controller.login(username, password);
             if (success) {
-                System.out.println("Login successful!");
             } else {
                 System.out.println("Incorrect username or password.");
             }

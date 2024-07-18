@@ -10,8 +10,6 @@ public interface DocTypeService {
     List<DocumentType> viewAllTypes() throws SQLException;
     void createType(DocumentType documentType) throws SQLException;
     void deleteType(int id) throws SQLException;
-
-    //UPDATE
-    // void updateType() throws SQLException;
+    void UpdateDocType(String newName, int id) throws SQLException;
 
 }

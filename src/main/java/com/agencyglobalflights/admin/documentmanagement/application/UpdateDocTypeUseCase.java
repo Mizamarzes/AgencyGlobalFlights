@@ -1,5 +1,7 @@
 package com.agencyglobalflights.admin.documentmanagement.application;
 
+import java.sql.SQLException;
+
 import com.agencyglobalflights.admin.documentmanagement.domain.service.DocTypeService;
 
 public class UpdateDocTypeUseCase {
@@ -10,4 +12,7 @@ public class UpdateDocTypeUseCase {
         this.docTypeService = docTypeService;
     }
 
+    public void UpdateDocType(String newName, int id) throws SQLException {
+        docTypeService.UpdateDocType(newName, id);
+    }
 }
