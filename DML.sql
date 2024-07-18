@@ -119,3 +119,9 @@ INSERT INTO city (id, name, idcountry) VALUES
 (25, 'New Delhi', 'IN'),
 (26, 'Canberra', 'AU'),
 (27, 'Wellington', 'NZ');
+
+
+INSERT INTO flightfare (name, value) VALUES ('Basic', 100.00);
+INSERT INTO flightfare (name, value) VALUES ('Economy', 100.00);
+INSERT INTO flightfare (name, value) VALUES ('Business', 250.00);
+INSERT INTO flightfare (name, value) VALUES ('First Class', 500.00);
