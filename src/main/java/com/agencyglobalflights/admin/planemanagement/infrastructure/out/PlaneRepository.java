@@ -9,7 +9,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Model;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.PlaneStatus;
@@ -104,49 +103,11 @@ public class PlaneRepository implements PlaneService {
     // VIEW PLANE INFORMATION
 
     public Plane viewPlaneByPlates(String id) throws SQLException {
-        String tableName = "plane";
-        String columnName = "id";
-        String query = "{CALL showObjectInformationVarchar(?, ?, ?)}";
-    
-        try (CallableStatement cs = connection.prepareCall(query)) {
-            cs.setString(1, tableName);
-            cs.setString(2, columnName);
-            cs.setString(3, id);  // Corrected variable name
-    
-            try (ResultSet rs = cs.executeQuery()) {
-                if (rs.next()) {
-                    // Assuming the Plane class has a constructor that accepts these parameters
-                    Plane plane = new Plane(
-                        rs.getString("id"),
-                        rs.getInt("capacity"),
-                        rs.getDate("fabrication_date"),
-                        rs.getInt("id_status"),
-                        rs.getInt("id_model"),
-                        rs.getInt("id_airline")
-                    );
-                    return plane;
-                } else {
-                    return null;  // No plane found for the given plates
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw e;
-        }
-    }
-    
-    // -------------------------
-    // UPDATE PLANE 
-
-    @Override
-    public Plane viewPlaneInfo(String id) throws SQLException {
-        String tableName = "plane";
-        String query = "{call showObjectInformationIDVARCHAR(?, ?)}";
+        String query = "{call showObjectInformationIDVARCHARPlane(?)}";
         Plane plane = new Plane(); 
 
         try (CallableStatement cs = connection.prepareCall(query)) {
-            cs.setString(1, tableName);
-            cs.setString(2, id);
+            cs.setString(1, id);
 
             try (ResultSet rs = cs.executeQuery()) {
                 while (rs.next()) {
@@ -164,6 +125,34 @@ public class PlaneRepository implements PlaneService {
         }
         return plane;
     }
+    
+    // -------------------------
+    // UPDATE PLANE 
+
+    // @Override
+    // public Plane viewPlaneInfo(String id) throws SQLException {
+    //     String query = "{call showObjectInformationIDVARCHARPlane(?)}";
+    //     Plane plane = new Plane(); 
+
+    //     try (CallableStatement cs = connection.prepareCall(query)) {
+    //         cs.setString(1, id);
+
+    //         try (ResultSet rs = cs.executeQuery()) {
+    //             while (rs.next()) {
+    //                 plane.setId(rs.getString("id"));
+    //                 plane.setCapacity(rs.getInt("capacity"));
+    //                 plane.setFabrication_date(rs.getDate("fabrication_date"));
+    //                 plane.setStatus_name(rs.getString("status_name"));
+    //                 plane.setModel_name(rs.getString("model_name"));
+    //                 plane.setAirline_name(rs.getString("airline_name"));
+    //             }
+    //         }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         throw e;
+    //     }
+    //     return plane;
+    // }
 
     @Override
     public List<Plane> findAllPlanes() throws SQLException {
@@ -190,7 +179,7 @@ public class PlaneRepository implements PlaneService {
         String tablename = "plane";
 
         try {
-            CallableStatement cs = connection.prepareCall("{CALL EditColumnidVar(?, ?, ?, ?, ?)}");
+            CallableStatement cs = connection.prepareCall("{CALL EditColumnidVarAndInt(?, ?, ?, ?, ?)}");
             
             // Set the parameters for the stored procedure
             cs.setString(1, tablename);
@@ -210,29 +199,29 @@ public class PlaneRepository implements PlaneService {
     }
 
 
-    @Override
-    public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
-        String tablename = "plane";
-        String columnname = "capacity";
+    // @Override
+    // public void updateFabricationDatePlane(String id, Date newDate) throws SQLException{
+    //     String tablename = "plane";
+    //     String columnname = "fabrication_date";
     
-        try {
-            CallableStatement cs = connection.prepareCall("{CALL EditIntColumnidVar(?, ?, ?, ?)}");
+    //     try {
+    //         CallableStatement cs = connection.prepareCall("{CALL EditIntColumnidVar(?, ?, ?, ?)}");
             
-            // Set the parameters for the stored procedure
-            cs.setString(1, tablename);
-            cs.setString(2, columnname);
-            cs.setDate(3, newDate);
-            cs.setString(4, id);
+    //         // Set the parameters for the stored procedure
+    //         cs.setString(1, tablename);
+    //         cs.setString(2, columnname);
+    //         cs.setDate(3, newDate);
+    //         cs.setString(4, id);
             
-            // Execute the stored procedure
-            cs.execute();
-            System.out.println("Capacity plane updated succesfully");
+    //         // Execute the stored procedure
+    //         cs.execute();
+    //         System.out.println("Capacity plane updated succesfully");
             
-        } catch (SQLException e) {
-            e.printStackTrace();
-            // Handle exceptions appropriately
-        }
-    }
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         // Handle exceptions appropriately
+    //     }
+    // }
 
 
     // -------------------------

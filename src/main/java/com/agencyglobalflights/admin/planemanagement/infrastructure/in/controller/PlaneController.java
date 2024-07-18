@@ -125,20 +125,20 @@ public class PlaneController {
         Plane plane = viewPlaneInformationUseCase.viewPlaneByPlates(plate);
 
         if (plane != null) {
-            String border = "+--------+---------+-------------------+-----------+----------+------------+";
-            String header = "|   ID   | Capacity | Fabrication Date  | Status ID | Model ID | Airline ID |";
+            String border = "+--------+---------+-------------------+------------+----------+------------+";
+            String header = "|   ID   | Capacity | Fabrication Date  | Status | Model | Airline  |";
 
             System.out.println(border);
             System.out.println(header);
             System.out.println(border);
 
-            System.out.printf("| %-2s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
+            System.out.printf("| %-2s | %-7d | %-17s | %-9s | %-7s | %-9s |%n",
                 plane.getId(),
                 plane.getCapacity(),
                 plane.getFabrication_date(),
-                plane.getId_status(),
-                plane.getId_model(),
-                plane.getId_airline()
+                plane.getStatus_name(),
+                plane.getModel_name(),
+                plane.getAirline_name()
             );
         System.out.println(border);
         } else {
@@ -178,7 +178,83 @@ public class PlaneController {
         System.out.println("\n" + "Please enter the plate of the Plane to edit:");
         String id = ConsoleUtils.verifyEntryString();
         ConsoleUtils.clear();
-        
+        viewPlaneInformationUseCase.viewPlaneByPlates(id);
+        ConsoleUtils.waitWindow();
+
+        String data_int = "INT";
+        String data_varchar = "VARCHAR";
+        String data_date = "DATE";
+
+
+        System.out.println("--------------------------------------\n" +
+        "       Please select an option:       \n" +
+        "--------------------------------------\n" +
+        "\n" +
+        "1. Update Capacity\n" +
+        "2. Update Fabrication Date\n" +
+        "3. Update Status\n" +
+        "4. Update Model\n" +
+        "5. Update Airline\n" +
+        "6. Go back"
+        );
+
+        int op = ConsoleUtils.verifyEntryInt(1, 6);
+
+        switch (op) {
+
+            case 1:
+
+                // ConsoleUtils.clear();     
+                // System.out.println("Enter the new Capacity: ");
+                // int new_capacity = ConsoleUtils.verifyingIntNoRange();
+                // updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "capacity", new_capacity, data_int);;
+                // ConsoleUtils.waitWindow();
+                break;
+
+            case 2:
+
+                // ConsoleUtils.clear();
+                // vaUseCase.findAllCities();
+                // System.out.println("Enter the new City: ");
+                // int new_city = ConsoleUtils.verifyingIntNoRange();
+                // updtUseCase.updateCity(id, new_city);
+                // ConsoleUtils.waitWindow();
+                break;
+
+            case 3:
+
+                // ConsoleUtils.clear();
+                // System.out.println("Enter the new Code/Id: ");
+                // String new_id = ConsoleUtils.verifyEntryString();
+                // updtUseCase.updateId(id, new_id);
+                // ConsoleUtils.waitWindow();
+                break;
+
+            case 4:
+
+                // ConsoleUtils.clear();
+                // System.out.println("Enter the new Code/Id: ");
+                // String new_id = ConsoleUtils.verifyEntryString();
+                // updtUseCase.updateId(id, new_id);
+                // ConsoleUtils.waitWindow();
+                break;
+
+            case 5:
+
+                // ConsoleUtils.clear();
+                // System.out.println("Enter the new Code/Id: ");
+                // String new_id = ConsoleUtils.verifyEntryString();
+                // updtUseCase.updateId(id, new_id);
+                // ConsoleUtils.waitWindow();
+                break;
+
+            case 6:
+
+                return;
+            default:
+
+                break;
+        }
     }
 
 

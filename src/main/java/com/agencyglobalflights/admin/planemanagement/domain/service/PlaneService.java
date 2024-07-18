@@ -20,9 +20,8 @@ public interface PlaneService {
     
     // Update plane information
     void updatePlaneColumnIntAndVarchar(String id, String columnName, String newValue, String dataType) throws SQLException;
-    void updateFabricationDatePlane(String id, Date newDate) throws SQLException;
+    // void updateFabricationDatePlane(String id, Date newDate) throws SQLException;
     List<Plane> findAllPlanes() throws SQLException;
-    Plane viewPlaneInfo(String id) throws SQLException;
 
     // Delete plane
     void deletePlane(String id) throws SQLException;
