@@ -1,4 +1,4 @@
-package com.agencyglobalflights.admin.view;
+package com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
