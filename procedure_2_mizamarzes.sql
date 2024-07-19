@@ -56,12 +56,44 @@ BEGIN
         SET @query = CONCAT(@query, '?');
     END IF;
     
-    SET @query = CONCAT(@query, ' WHERE id = ?');
+    SET @query = CONCAT(@query, ' WHERE id = ?');new_capacity
     
     PREPARE stmt FROM @query;
     EXECUTE stmt USING @new_value, @object_id;
     DEALLOCATE PREPARE stmt;
     
     SELECT 1;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS FlightFareRegister;
+CREATE PROCEDURE FlightFareRegister(
+    IN flightFare_name VARCHAR(30),
+    IN flightFare_value DOUBLE(7,2)
+)
+BEGIN
+    INSERT INTO flightFare (id, name, value) 
+    VALUES (NULL, flightFare_name, flightFare_value);
+END $$
+DELIMITER ;
+
+
+-- Procedure to delete a register when the id is INT
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS DeleteByIdInt;
+CREATE PROCEDURE DeleteByIdInt(
+    IN table_name VARCHAR(64),
+    IN object_id INT
+)
+BEGIN
+    SET @query = CONCAT('DELETE FROM ', table_name, ' WHERE id = ''', object_id, '''');
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
 END $$
 DELIMITER ;

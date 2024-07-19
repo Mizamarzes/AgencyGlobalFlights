@@ -182,6 +182,10 @@ public class PlaneController {
         String data_int = "INT";
         String data_date = "DATE";
 
+        String REGEX_ONLY_DIGITS = "^\\d+$";
+        String REGEX_DATE = "^\\d{4}-\\d{2}-\\d{2}$";
+
+
         System.out.println("--------------------------------------\n" +
         "       Please select an option:       \n" +
         "--------------------------------------\n" +
@@ -201,39 +205,44 @@ public class PlaneController {
             case 1:  
                 ConsoleUtils.clear();
                 System.out.println("Enter the new Capacity: ");
-                String new_capacity = ConsoleUtils.verifyEntryString();
+                String new_capacity = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "capacity", new_capacity, data_int);
+                ConsoleUtils.waitWindow();
                 break;
 
             case 2:
                 ConsoleUtils.clear();
                 System.out.println("Enter the new Fabrication Date(yyyy-mm-dd): ");
-                String new_fabrication_date = ConsoleUtils.verifyEntryString();
+                String new_fabrication_date = ConsoleUtils.verifyingStringFormat(REGEX_DATE, "date (yyyy-mm-dd)");
                 updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "fabrication_date", new_fabrication_date, data_date);
+                ConsoleUtils.waitWindow();
                 break;
 
             case 3:
                 ConsoleUtils.clear();
                 getAllStatuses();
                 System.out.println("Enter the new Status: ");
-                String new_status = ConsoleUtils.verifyEntryString();
+                String new_status = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_status", new_status, data_int);
+                ConsoleUtils.waitWindow();
                 break;
 
             case 4:
                 ConsoleUtils.clear();
                 getAllModels();
                 System.out.println("Enter the new Model: ");
-                String new_model = ConsoleUtils.verifyEntryString();
+                String new_model = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_model", new_model, data_int);
+                ConsoleUtils.waitWindow();
                 break;
 
             case 5:
                 ConsoleUtils.clear();
                 getAllAirlines();
                 System.out.println("Enter the new Airline: ");
-                String new_airline = ConsoleUtils.verifyEntryString();
+                String new_airline = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 updatePlaneUseCase.updatePlaneColumnIntAndVarchar(id, "id_airline", new_airline, data_int);
+                ConsoleUtils.waitWindow();
                 break;
 
             case 6:
@@ -251,6 +260,7 @@ public class PlaneController {
 
     public void deletePlaneController() throws SQLException {
         ConsoleUtils.clear();
+        findAllPlanes();
         System.out.println("Please, enter the plate of the plane to delete: ");
         String id = ConsoleUtils.verifyEntryString();
         System.out.println("Are you Sure?\n" +

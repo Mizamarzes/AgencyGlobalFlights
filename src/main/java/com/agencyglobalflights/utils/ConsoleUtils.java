@@ -78,7 +78,7 @@ public class ConsoleUtils {
         return entry; 
     }
 
-
+    // this method confirms the format of the date
     public static Date verifyDate() {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         formatter.setLenient(false);
@@ -93,4 +93,46 @@ public class ConsoleUtils {
         }
     }
 
+    // this method confirms, if the data entered is DOUBLE(7, 2)
+    public static double verifyingDouble() {
+        double option = 0;
+        boolean validInput = false;
+
+        while (!validInput) {
+            try {
+                String input = sc.next();
+                option = Double.parseDouble(input);
+
+                // Validar formato
+                if (input.matches("^\\d{1,5}(\\.\\d{1,2})?$")) {
+                    validInput = true;
+                } else {
+                    System.out.println("Invalid input. Please enter a number in the format XXXXX.XX");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid double number.");
+            }
+        }
+
+        return option;
+    }
+
+    // verify the format from string
+    public static String verifyingStringFormat(String regex, String type) {
+        String input = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println("Please enter a valid " + type + ": ");
+            input = sc.nextLine();
+
+            if (input.matches(regex)) {
+                validInput = true;
+            } else {
+                System.out.println("Invalid input. Please follow the format for a valid " + type + ".");
+            }
+        }
+
+        return input;
+    }
 }
