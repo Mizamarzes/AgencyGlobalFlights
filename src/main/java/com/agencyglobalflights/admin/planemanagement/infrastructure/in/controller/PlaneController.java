@@ -23,15 +23,12 @@ public class PlaneController {
     public PlaneController(RegisterPlaneUseCase registerPlaneUseCase,
             ViewPlaneInformationUseCase viewPlaneInformationUseCase,
             DeletePlaneUseCase deletePlaneUseCase,
-            UpdatePlaneUseCase updatePlaneUseCase) {
+            UpdatePlaneUseCase udatePlaneUseCase) {
         this.registerPlaneUseCase = registerPlaneUseCase;
         this.viewPlaneInformationUseCase = viewPlaneInformationUseCase;
         this.deletePlaneUseCase = deletePlaneUseCase;
         this.updatePlaneUseCase = updatePlaneUseCase;
     }    
-    
-    // -------------------------
-    // REGISTER PLANE
 
     public List<PlaneStatus> getAllStatuses() throws SQLException {
         ConsoleUtils.clear();
