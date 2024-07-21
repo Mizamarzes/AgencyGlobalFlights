@@ -23,7 +23,7 @@ public class PlaneController {
     public PlaneController(RegisterPlaneUseCase registerPlaneUseCase,
             ViewPlaneInformationUseCase viewPlaneInformationUseCase,
             DeletePlaneUseCase deletePlaneUseCase,
-            UpdatePlaneUseCase udatePlaneUseCase) {
+            UpdatePlaneUseCase updatePlaneUseCase) {
         this.registerPlaneUseCase = registerPlaneUseCase;
         this.viewPlaneInformationUseCase = viewPlaneInformationUseCase;
         this.deletePlaneUseCase = deletePlaneUseCase;

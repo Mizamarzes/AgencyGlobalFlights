@@ -32,7 +32,7 @@ public class TechnicianMainView {
         UpdateRevisionUseCase updtruc = new UpdateRevisionUseCase(rs);
         ViewRevHistoryUseCase vrevhuc = new ViewRevHistoryUseCase(rs);
 
-        RevisionController rc = new RevisionController(delruc, rruc, updtruc, vrevhuc);
+        RevisionController rc = new RevisionController(delruc, rruc, vrevhuc, updtruc);
 
         do {
 

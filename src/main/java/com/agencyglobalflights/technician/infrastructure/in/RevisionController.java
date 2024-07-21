@@ -7,6 +7,7 @@ import java.util.List;
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
 import com.agencyglobalflights.technician.application.DeleteRevisionUseCase;
 import com.agencyglobalflights.technician.application.RegisterRevisionUseCase;
+import com.agencyglobalflights.technician.application.UpdateRevisionUseCase;
 import com.agencyglobalflights.technician.application.ViewRevHistoryUseCase;
 import com.agencyglobalflights.technician.domain.entity.Employee;
 import com.agencyglobalflights.technician.domain.entity.Revision;
@@ -17,12 +18,15 @@ public class RevisionController {
     private DeleteRevisionUseCase delRevUc;
     private RegisterRevisionUseCase regRevUc;
     private ViewRevHistoryUseCase viewHisUc;
+    private UpdateRevisionUseCase updtruc;
 
 
-    public RevisionController(DeleteRevisionUseCase delRevUc, RegisterRevisionUseCase regRevUc, ViewRevHistoryUseCase viewHisUc) {
+    public RevisionController(DeleteRevisionUseCase delRevUc, RegisterRevisionUseCase regRevUc, ViewRevHistoryUseCase viewHisUc, UpdateRevisionUseCase updtruc) {
         this.delRevUc = delRevUc;
         this.regRevUc = regRevUc;
         this.viewHisUc = viewHisUc;
+        this.updtruc = updtruc;
+
     }
     
     public void createRevision() throws SQLException {
