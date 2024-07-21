@@ -375,5 +375,59 @@ DELIMITER ;
 
 
 
+DELIMITER $$
 
+
+CREATE PROCEDURE EditColumnWithDynamicDataType(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_new_value VARCHAR(255),
+    IN p_new_value_type VARCHAR(20), -- Nuevo parámetro para el tipo de dato del nuevo valor
+    IN p_data_type VARCHAR(20),
+    IN p_object_id VARCHAR(30)
+)
+BEGIN
+    DECLARE sql_query VARCHAR(1000);
+    DECLARE query_suffix VARCHAR(100);
+
+    SET @table_name = p_table_name;
+    SET @column_name = p_column_name;
+    SET @new_value = p_new_value;
+    SET @new_value_type = p_new_value_type; -- Nuevo parámetro para el tipo de dato del nuevo valor
+    SET @object_id = p_object_id;
+
+    -- Construir la parte inicial de la sentencia SQL
+    SET @query = CONCAT('UPDATE ', @table_name, ' SET ', @column_name, ' = ');
+
+    -- Determinar cómo agregar el nuevo valor basado en su tipo de dato
+    IF p_new_value_type = 'INT' THEN
+        SET @query = CONCAT(@query, 'CAST(? AS SIGNED)');
+    ELSEIF p_new_value_type = 'DATE' THEN
+        SET @query = CONCAT(@query, 'STR_TO_DATE(?, ''%Y-%m-%d'')');
+    ELSE
+        SET @query = CONCAT(@query, '?');
+    END IF;
+
+    -- Agregar la parte final de la sentencia SQL
+    SET @query = CONCAT(@query, ' WHERE id = ?');
+
+    -- Preparar y ejecutar la sentencia SQL
+    PREPARE stmt FROM @query;
+    IF p_new_value_type = 'DATE' THEN
+        SET @query_suffix = DATE_FORMAT(@new_value, '%Y-%m-%d');
+    ELSE
+        SET @query_suffix = @new_value;
+    END IF;
+    
+    EXECUTE stmt USING @query_suffix, @object_id;
+    DEALLOCATE PREPARE stmt;
+
+    SELECT 1; -- Opcional: devolver algo si es necesario
+END $$
+
+DELIMITER ;
+
+-- Ejemplooo
+
+CALL EditColumnWithDynamicDataType('revision', 'id_plane', 'abc123', 'VARCHAR', 'INT', '2');
 

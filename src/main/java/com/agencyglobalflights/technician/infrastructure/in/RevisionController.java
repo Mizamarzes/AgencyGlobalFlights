@@ -176,8 +176,8 @@ public class RevisionController {
         "\n" +
         "1. Update Date\n" +
         "2. Update Plane\n" +
-        "3. Update Description\n" +
-        "4. Update Employee\n" +
+        "3. Update Employee\n" +
+        "4. Update Description\n" +
         "5. Go back"
         );
 
@@ -185,43 +185,34 @@ public class RevisionController {
             
         switch (op) {
 
-            case 1:
-                // aqui se usa el procedure EditVarcharColumnIdVar
-
-                //mirar planecontroller para ver como se hace
-            
+            case 1:     
                 ConsoleUtils.clear();     
                 System.out.println("Enter the new Date: ");
-                Date new_name = ConsoleUtils.verifyDate();
-                
+                Date newDate = ConsoleUtils.verifyDate();
+                updtruc.updateRevDate(id, newDate);
                 ConsoleUtils.waitWindow();
                 break;
             case 2:
-
-                // aqui se usa el procedure EditIntColumnidVar
-
                 ConsoleUtils.clear();
                 viewAllPlanes();
                 System.out.println("Select the new Plane: ");
                 String newPlane = ConsoleUtils.verifyEntryString();
-            
+                updtruc.updateRevEmpl(id, newPlane);
                 ConsoleUtils.waitWindow();
                 break;
             case 3:
-
-                // aqui se usa el procedure EditVarcharColumnIdVar
-
                 ConsoleUtils.clear();
-                System.out.println("Enter the new description: ");
-                String newDesc = ConsoleUtils.verifyEntryString();
-                
+                System.out.println("Select the new Employee: ");
+                String newEmp = ConsoleUtils.verifyEntryString();
+                updtruc.updateRevEmpl(id, newEmp);
                 ConsoleUtils.waitWindow();
                 break;
             case 4:
                 ConsoleUtils.clear();
-                System.out.println("Select the new Employee: ");
-                String newEmp = ConsoleUtils.verifyEntryString();
-
+                System.out.println("Enter the new description: ");
+                String newDesc = ConsoleUtils.verifyEntryString();
+                updtruc.updateRevDesc(id, newDesc);
+                ConsoleUtils.waitWindow();
             case 5:
                 return;
             default:
