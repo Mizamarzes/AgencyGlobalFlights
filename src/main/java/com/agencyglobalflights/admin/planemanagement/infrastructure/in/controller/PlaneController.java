@@ -29,9 +29,6 @@ public class PlaneController {
         this.deletePlaneUseCase = deletePlaneUseCase;
         this.updatePlaneUseCase = updatePlaneUseCase;
     }    
-    
-    // -------------------------
-    // REGISTER PLANE
 
     public List<PlaneStatus> getAllStatuses() throws SQLException {
         ConsoleUtils.clear();

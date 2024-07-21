@@ -3,6 +3,13 @@ package com.agencyglobalflights.technician.view;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
+import com.agencyglobalflights.technician.application.DeleteRevisionUseCase;
+import com.agencyglobalflights.technician.application.RegisterRevisionUseCase;
+import com.agencyglobalflights.technician.application.UpdateRevisionUseCase;
+import com.agencyglobalflights.technician.application.ViewRevHistoryUseCase;
+import com.agencyglobalflights.technician.domain.service.RevisionService;
+import com.agencyglobalflights.technician.infrastructure.in.RevisionController;
+import com.agencyglobalflights.technician.infrastructure.out.RevisionRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class TechnicianMainView {
@@ -18,6 +25,14 @@ public class TechnicianMainView {
     }
 
     public void showmenu() throws SQLException {
+        RevisionService rs = new RevisionRepository();
+        
+        RegisterRevisionUseCase rruc = new RegisterRevisionUseCase(rs);
+        DeleteRevisionUseCase delruc = new DeleteRevisionUseCase(rs);
+        UpdateRevisionUseCase updtruc = new UpdateRevisionUseCase(rs);
+        ViewRevHistoryUseCase vrevhuc = new ViewRevHistoryUseCase(rs);
+
+        RevisionController rc = new RevisionController(delruc, rruc, vrevhuc, updtruc);
 
         do {
 
@@ -41,20 +56,18 @@ public class TechnicianMainView {
 
             switch (op) {
                 case 1:
-
+                    rc.createRevision();
                     break;
                 case 2:
-
+                    rc.viewRevisionHistory();
                     break;
                 case 3:
-
                     break;
                 case 4:
-
+                    rc.deleteRevision();
                     break;
                 case 5:
-                
-                    break;
+                    return;
                 default:
                     break;
             }

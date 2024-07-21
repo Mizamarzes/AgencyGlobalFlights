@@ -1,6 +1,5 @@
 package com.agencyglobalflights.technician.application;
 
-import java.security.PublicKey;
 import java.sql.SQLException;
 import java.util.List;
 
