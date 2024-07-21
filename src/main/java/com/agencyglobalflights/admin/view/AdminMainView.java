@@ -5,6 +5,7 @@ import java.sql.SQLException;
 import com.agencyglobalflights.admin.airportmanage.infrastructure.in.view.AirportManageView;
 import com.agencyglobalflights.admin.documentmanagement.infrastructure.in.view.DocumentManageView;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.view.FlightFaresView;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view.FlightManageVIew;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.view.PlaneManageView;
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
@@ -50,7 +51,8 @@ public class AdminMainView {
                     planeManageView.showmenu();
                     break;
                 case 2:
-
+                    FlightManageVIew flightManageVIew = new FlightManageVIew();
+                    flightManageVIew.showmenu();
                     break;
                 case 3:
 

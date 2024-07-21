@@ -2,11 +2,22 @@ package com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.flightsmanagement.application.UpdateFlightUseCase;
+import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
+import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.out.FlightRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class FlightManageVIew {
 
     public void showmenu() throws SQLException {
+        FlightService fs = new FlightRepository();
+
+        ViewFlightUseCase vfus = new ViewFlightUseCase(fs);
+        UpdateFlightUseCase ufuc = new UpdateFlightUseCase(fs);
+
+        FlightController fc = new FlightController(vfus, ufuc);
 
         do {
 
@@ -39,10 +50,10 @@ public class FlightManageVIew {
 
                     break;
                 case 4:
-
+                    fc.viewFlightByIdController();
                     break;
                 case 5:
-                
+                    fc.updateFlightController();
                     break;
                 case 6:
                 

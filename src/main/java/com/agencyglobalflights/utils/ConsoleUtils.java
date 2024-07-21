@@ -30,6 +30,7 @@ public class ConsoleUtils {
         while (!validInput) {
             try {
                 option = sc.nextInt();
+                sc.nextLine();
                 validInput = true;
             } catch (InputMismatchException e) {
                 System.out.println("Invalid input. Please enter numbers only.");
@@ -102,6 +103,7 @@ public class ConsoleUtils {
             try {
                 String input = sc.next();
                 option = Double.parseDouble(input);
+                sc.nextLine();
 
                 // Validar formato
                 if (input.matches("^\\d{1,5}(\\.\\d{1,2})?$")) {
@@ -111,6 +113,7 @@ public class ConsoleUtils {
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Invalid input. Please enter a valid double number.");
+                sc.nextLine();
             }
         }
 

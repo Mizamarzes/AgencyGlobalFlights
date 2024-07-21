@@ -28,6 +28,56 @@ END $$
 DELIMITER ;
 
 
+DELIMITER $$
+DROP PROCEDURE IF EXISTS showFlightById;
+CREATE PROCEDURE showFlightById(
+    IN object_id INT
+)
+BEGIN
+    SET @query = CONCAT('
+		SELECT
+			f.id,
+			f.trip_date,
+            f.price_trip,
+            c1.name AS orig_city,
+            c2.name AS dest_city
+		FROM flight AS f
+		JOIN city AS c1 ON c1.id = f.orig_city
+        JOIN city AS c2 ON c2.id = f.dest_city
+        WHERE f.id = ''', object_id, ''''
+    );
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS showFlights;
+CREATE PROCEDURE showFlights()
+BEGIN
+    SET @query = CONCAT('
+		SELECT
+			f.id,
+			f.trip_date,
+            f.price_trip,
+            c1.name AS orig_city,
+            c2.name AS dest_city
+		FROM flight AS f
+		JOIN city AS c1 ON c1.id = f.orig_city
+        JOIN city AS c2 ON c2.id = f.dest_city;
+    ');
+    
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+
 
 
 -- This procedure edits column int or varchar, but you have to enter the data type

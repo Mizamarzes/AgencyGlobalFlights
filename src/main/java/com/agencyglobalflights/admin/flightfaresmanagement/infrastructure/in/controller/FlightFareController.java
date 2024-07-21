@@ -79,7 +79,6 @@ public class FlightFareController {
         System.out.println("Enter the id of the fare: ");
         int op = ConsoleUtils.verifyingIntNoRange();
         getFlightFareByIdController(op);
-        ConsoleUtils.waitWindow();
     }
 
     // -------------------------
