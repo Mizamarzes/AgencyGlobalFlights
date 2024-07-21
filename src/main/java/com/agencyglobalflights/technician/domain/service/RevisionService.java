@@ -1,5 +1,6 @@
 package com.agencyglobalflights.technician.domain.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,8 +17,8 @@ public interface RevisionService {
     List<Plane> viewAllPlanes() throws SQLException;
     List<Employee> viewAllEmployees() throws SQLException;
     
-    // void updateRevDate(int id) throws SQLException;
-    // void updateRevPlane(int id) throws SQLException;
-    // void updateRevDesc(int id) throws SQLException;
-    // void updateRevEmpl(int id) throws SQLException;
+    void updateRevDate(int id, Date newdate) throws SQLException;
+    void updateRevPlane(int id, String newPlane) throws SQLException;
+    void updateRevDesc(int id, String newDesc) throws SQLException;
+    void updateRevEmpl(int id, String newEmpl) throws SQLException;
 }

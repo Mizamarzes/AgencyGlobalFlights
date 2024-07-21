@@ -62,6 +62,7 @@ public class TechnicianMainView {
                     rc.viewRevisionHistory();
                     break;
                 case 3:
+                    rc.UpdateRevision();
                     break;
                 case 4:
                     rc.deleteRevision();

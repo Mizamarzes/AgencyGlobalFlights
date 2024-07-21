@@ -2,11 +2,14 @@ package com.agencyglobalflights.technician.infrastructure.out;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.print.DocFlavor.STRING;
 
 import com.agencyglobalflights.admin.planemanagement.domain.entity.Plane;
 import com.agencyglobalflights.infrastructure.config.DatabaseConfig;
@@ -164,4 +167,106 @@ public class RevisionRepository implements RevisionService{
         return allEmployees;
     }
 
+    @Override
+    public void updateRevDate(int id, Date newdate) throws SQLException {
+        String tableName = "revision";
+        String columnName = "revision_date";
+        Date newValue = newdate;
+        String valueType = "DATE";
+        String idType = "INT";
+        int idObject = id;
+
+        String query = "{CALL EditColumnWithDynamicDataType(?, ?, ?, ?, ?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setString(1, tableName);
+            cs.setString(2, columnName);
+            cs.setDate(3, newValue);
+            cs.setString(4, valueType);
+            cs.setString(5, idType);
+            cs.setInt(6, idObject);
+            cs.executeUpdate();            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+
+
+    @Override 
+    public void updateRevPlane(int id, String newPlane) throws SQLException {
+        String tableName = "revision";
+        String columnName = "id_plane";
+        String newValue = newPlane;
+        String valueType = "VARCHAR";
+        String idType = "INT";
+        int idObject = id;
+
+        String query = "{CALL EditColumnWithDynamicDataType(?, ?, ?, ?, ?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setString(1, tableName);
+            cs.setString(2, columnName);
+            cs.setString(3, newValue);
+            cs.setString(4, valueType);
+            cs.setString(5, idType);
+            cs.setInt(6, idObject);
+            cs.executeUpdate(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
+
+    @Override
+    public void updateRevDesc(int id, String newDesc) throws SQLException {
+        String tableName = "revision";
+        String columnName = "description";
+        String newValue = newDesc;
+        String valueType = "TEXT";
+        String idType = "INT";
+        int idObject = id;
+
+        String query = "{CALL EditColumnWithDynamicDataType(?, ?, ?, ?, ?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setString(1, tableName);
+            cs.setString(2, columnName);
+            cs.setString(3, newValue);
+            cs.setString(4, valueType);
+            cs.setString(5, idType);
+            cs.setInt(6, idObject);
+            cs.executeUpdate(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+
+    }
+    
+    @Override
+    public void updateRevEmpl(int id, String newEmpl) throws SQLException{
+        String tableName = "revision";
+        String columnName = "id_emp";
+        String newValue = newEmpl;
+        String valueType = "VARCHAR";
+        String idType = "INT";
+        int idObject = id;
+
+        String query = "{CALL EditColumnWithDynamicDataType(?, ?, ?, ?, ?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setString(1, tableName);
+            cs.setString(2, columnName);
+            cs.setString(3, newValue);
+            cs.setString(4, valueType);
+            cs.setString(5, idType);
+            cs.setInt(6, idObject);
+            cs.executeUpdate(); 
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
+    }
 }
