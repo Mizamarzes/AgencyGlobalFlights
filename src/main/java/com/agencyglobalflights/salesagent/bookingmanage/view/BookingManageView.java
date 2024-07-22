@@ -2,11 +2,24 @@ package com.agencyglobalflights.salesagent.bookingmanage.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.salesagent.bookingmanage.application.CreateFlightBookingUseCase;
+import com.agencyglobalflights.salesagent.bookingmanage.application.DeleteFlightBookingUseCase;
+import com.agencyglobalflights.salesagent.bookingmanage.application.ViewFlightBookingsUseCase;
+import com.agencyglobalflights.salesagent.bookingmanage.domain.service.FlightBookingService;
+import com.agencyglobalflights.salesagent.bookingmanage.infrastructure.in.FlightBookingController;
+import com.agencyglobalflights.salesagent.bookingmanage.infrastructure.out.FlightBookingRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
-public class BookingManageVIew {
+public class BookingManageView {
 
     public void showmenu() throws SQLException {
+        FlightBookingService fbs = new FlightBookingRepository();
+        CreateFlightBookingUseCase cfbuc = new CreateFlightBookingUseCase(fbs);
+        DeleteFlightBookingUseCase dfbuc = new DeleteFlightBookingUseCase(fbs);
+        ViewFlightBookingsUseCase ffbuc = new ViewFlightBookingsUseCase(fbs);
+
+        FlightBookingController fbc = new FlightBookingController(cfbuc, dfbuc, ffbuc);
+
 
         do {
 
@@ -34,7 +47,7 @@ public class BookingManageVIew {
                 
                     break;
                 case 2:
-
+                fbc.CreateBooking();
                 // cliente, trayecto, fecha, tarifa.
                     break;
                 case 3:
