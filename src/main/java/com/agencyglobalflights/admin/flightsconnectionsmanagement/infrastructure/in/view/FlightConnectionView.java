@@ -11,27 +11,30 @@ import com.agencyglobalflights.admin.flightsmanagement.application.UpdateFlightU
 import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.out.FlightRepository;
+import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseCase;
+import com.agencyglobalflights.admin.planemanagement.infrastructure.in.controller.PlaneController;
+import com.agencyglobalflights.admin.planemanagement.infrastructure.out.PlaneRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class FlightConnectionView {
 
     public void showmenu() throws SQLException {
     // Inicializa los servicios y repositorios necesarios
-    ViewFlightUseCase viewFlightUseCase = new ViewFlightUseCase(new FlightRepository());
-    UpdateFlightUseCase updateFlightUseCase = new UpdateFlightUseCase(new FlightRepository());
-    DeleteFlightUseCase deleteFlightUseCase = new DeleteFlightUseCase(new FlightRepository());
+    UpdateFlightUseCase ufuc = new UpdateFlightUseCase(new FlightRepository());
+    UpdatePlaneUseCase upuc = new UpdatePlaneUseCase(new PlaneRepository());
 
     // Inicializa FlightController con todos los casos de uso
-    FlightController flightController = new FlightController(viewFlightUseCase, updateFlightUseCase, deleteFlightUseCase);
+    FlightController fc = new FlightController(ufuc);
+    PlaneController pc = new PlaneController(upuc);
 
     // Inicializa los casos de uso para FlightConnection
     FlightConnectionService fcs = new FlightConnectionRepository();
     
     CreateFlightConnectionUseCase cfcuc = new CreateFlightConnectionUseCase(fcs);
-    UpdateFlightUseCase ufuc = new UpdateFlightUseCase(new FlightRepository());
+    
 
     // Inicializa FlightConnectionController
-    FlightConnectionController fcc = new FlightConnectionController(cfcuc, ufuc, flightController);
+    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc);
 
         do {
 
