@@ -103,7 +103,7 @@ DELIMITER $$
 DROP PROCEDURE IF EXISTS showObjectInformationIDVARCHAR $$
 CREATE PROCEDURE showObjectInformationIDVARCHAR(
     IN table_name VARCHAR(64),
-    IN object_id VARCHAR(3)
+    IN object_id VARCHAR(10)
 )
 BEGIN
     SET @query = CONCAT('SELECT * FROM ', table_name, ' WHERE id = ''', object_id, '''');

@@ -1,4 +1,4 @@
-package com.agencyglobalflights.salesagent.view;
+package com.agencyglobalflights.salesagent.flightmanage;
 
 import java.sql.SQLException;
 
