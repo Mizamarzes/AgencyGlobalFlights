@@ -2,8 +2,10 @@ package com.agencyglobalflights.salesagent.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view.FlightManageVIew;
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
 import com.agencyglobalflights.salesagent.customermanage.CustomerManageView;
+import com.agencyglobalflights.salesagent.flightmanage.FlightManageView;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class SalesAgentMainView {
@@ -49,11 +51,11 @@ public class SalesAgentMainView {
                     customerManageView.showmenu();
                     break;
                 case 3:
-
+                    FlightManageView flightmanageview = new FlightManageView();
+                    flightmanageview.showmenu();
                     break;
                 case 4:
-
-                    break;
+                    return;
                 default:
                     break;
             }

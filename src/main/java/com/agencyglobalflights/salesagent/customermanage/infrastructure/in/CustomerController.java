@@ -26,8 +26,9 @@ public class CustomerController {
     }
 
     public void createCustomer() throws SQLException {
+        String REGEX_ONLY_DIGITS = "^\\d+$";
         ConsoleUtils.clear();
-
+        
         System.out.println("Enter the Name: ");
         String name = ConsoleUtils.verifyEntryString();   
 
@@ -40,16 +41,17 @@ public class CustomerController {
         int doc_type = ConsoleUtils.verifyEntryInt(1, 3);
 
         System.out.println("Please select the ID Number: ");
-        String idNumber = ConsoleUtils.verifyEntryString();
+        String idNumber = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
 
         Customer customer = new Customer(idNumber, name, age, doc_type);
         createCustUC.createCustomer(customer);
     }
 
     public void searchCustomer() throws SQLException {
+        String REGEX_ONLY_DIGITS = "^\\d+$";
         ConsoleUtils.clear();
         System.out.println("Enter the Customer ID: ");
-        String id = ConsoleUtils.verifyEntryString();
+        String id = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
         viewCustomer(id);
         ConsoleUtils.waitWindow();
     }
@@ -94,7 +96,7 @@ public class CustomerController {
         String REGEX_ONLY_DIGITS = "^\\d+$";
 
         System.out.println("\n" + "Please enter the ID of the Customer to edit:");
-        String id = ConsoleUtils.verifyEntryString();
+        String id = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
         ConsoleUtils.clear();
 
         viewCustomer(id);

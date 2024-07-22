@@ -56,11 +56,7 @@ public class CustomerManageView {
                     cc.createCustomer();
                     break;
                 case 4:
-
-                    break;
-                case 5:
-                
-                    break;
+                    return;
                 default:
                     break;
             }
