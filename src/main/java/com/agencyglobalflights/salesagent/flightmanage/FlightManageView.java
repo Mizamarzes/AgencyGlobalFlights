@@ -6,7 +6,6 @@ import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFligh
 import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
-import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.viewFlightConnectionUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
