@@ -4,6 +4,7 @@ import java.sql.SQLException;
 
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view.FlightManageVIew;
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
+import com.agencyglobalflights.salesagent.bookingmanage.view.BookingManageView;
 import com.agencyglobalflights.salesagent.customermanage.CustomerManageView;
 import com.agencyglobalflights.salesagent.flightmanage.FlightManageView;
 import com.agencyglobalflights.utils.ConsoleUtils;
@@ -44,7 +45,8 @@ public class SalesAgentMainView {
 
             switch (op) {
                 case 1:
-
+                    BookingManageView bookingManageView = new BookingManageView();
+                    bookingManageView.showmenu();
                     break;
                 case 2:
                     CustomerManageView customerManageView = new CustomerManageView();

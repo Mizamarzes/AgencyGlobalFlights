@@ -2,10 +2,13 @@ package com.agencyglobalflights.admin.flightsmanagement.infrastructure.out;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.naming.spi.DirStateFactory.Result;
 
 import com.agencyglobalflights.admin.airportmanage.domain.entity.City;
 import com.agencyglobalflights.admin.flightsmanagement.domain.entity.Flight;
@@ -48,6 +51,35 @@ public class FlightRepository implements FlightService {
         }
         return flight;
     }
+
+    // -------------------------
+    // VIEW FLIGHTS BY DATE
+
+
+    public List<Flight> getFlightsByDate(Date insertedDate) throws SQLException {
+        List <Flight> filteredFlights = new ArrayList<>();
+        String query = "{CALL showFlightsByDate(?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setDate(1, insertedDate);
+
+            try(ResultSet rs = cs.executeQuery()){
+                while (rs.next()) {
+                    Flight flight = new Flight();
+                    flight.setId(rs.getInt("id"));
+                    flight.setTrip_date(rs.getDate("trip_date"));
+                    flight.setPrice_trip(rs.getDouble("price_trip"));
+                    flight.setOrig_city_name(rs.getString("orig_city"));
+                    flight.setDest_city_name(rs.getString("dest_city"));
+                    filteredFlights.add(flight);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return filteredFlights;
+    }
+
 
     // -------------------------
     // UPDATE FLIGHT INFORMATION

@@ -1,5 +1,6 @@
 package com.agencyglobalflights.admin.flightsmanagement.domain.service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -10,6 +11,7 @@ public interface FlightService {
 
     // View flight
     Flight viewFlightById(int id) throws SQLException;
+    List<Flight> getFlightsByDate(Date insertedDate) throws SQLException;
 
     // Update flight
     void updateFlight(String tableName, String columnName, String newValue, String dataType , String id) throws SQLException;

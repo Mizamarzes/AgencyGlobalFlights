@@ -431,3 +431,25 @@ DELIMITER ;
 
 CALL EditColumnWithDynamicDataType('revision', 'id_plane', 'abc123', 'VARCHAR', 'INT', '2');
 
+-- PROCEDURE FOR SHOW FLIGHTS BY THE INSERTED DATE
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS showFlightsByDate $$
+CREATE PROCEDURE showFlightsByDate(
+	IN insertedDate DATE
+)
+BEGIN
+    SELECT 
+		f.id,
+        f.trip_date,
+        f.price_trip,
+        f.orig_city,
+        f.dest_city
+    FROM
+		flight f
+	WHERE
+		f.trip_date = insertedDate;
+END $$
+
+DELIMITER ;
