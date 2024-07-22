@@ -147,3 +147,32 @@ BEGIN
     DEALLOCATE PREPARE stmt;
 END $$
 DELIMITER ;
+
+
+
+
+
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS HasFlightConnections;
+CREATE PROCEDURE HasFlightConnections(
+    IN flightId INT, 
+    OUT hasConnections BOOLEAN
+)
+BEGIN
+    DECLARE connectionCount INT;
+
+    SELECT COUNT(*) INTO connectionCount
+    FROM flight_connection
+    WHERE id_trip = flightId;
+
+    IF connectionCount > 0 THEN
+        SET hasConnections = TRUE;
+    ELSE
+        SET hasConnections = FALSE;
+    END IF;
+END $$
+
+DELIMITER ;

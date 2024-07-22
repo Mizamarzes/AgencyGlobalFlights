@@ -8,4 +8,5 @@ public interface FlightConnectionService {
 
     // Create flight connection
     void flightConnectionCreate(FlightConnection flightConnection) throws SQLException;
+    boolean hasFlightConnections(int flightId) throws SQLException;
 }

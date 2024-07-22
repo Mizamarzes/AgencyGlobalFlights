@@ -26,8 +26,15 @@ public class FlightController {
 
     public FlightController(ViewFlightUseCase viewFlightUseCase) {
         this.viewFlightUseCase = viewFlightUseCase;
+        this.updateFlightUseCase = null;
+        this.deleteFlightUseCase = null;
     }
 
+    public FlightController(UpdateFlightUseCase updateFlightUseCase) {
+        this.viewFlightUseCase = null;
+        this.updateFlightUseCase = updateFlightUseCase;
+        this.deleteFlightUseCase = null;
+    }
 
     public void getFlightByIdController(int id) throws SQLException {
         ConsoleUtils.clear();

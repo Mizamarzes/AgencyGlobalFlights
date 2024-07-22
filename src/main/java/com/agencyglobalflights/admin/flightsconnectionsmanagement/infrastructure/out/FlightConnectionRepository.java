@@ -3,6 +3,7 @@ package com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructur
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Types;
 
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.domain.entity.FlightConnection;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.domain.service.FlightConnectionService;
@@ -21,6 +22,17 @@ public class FlightConnectionRepository implements FlightConnectionService {
 
     // -------------------------
     // CREATE FLIGHT CONNECTION 
+
+    public boolean hasFlightConnections(int flightId) throws SQLException {
+        String query = "{CALL HasFlightConnections(?, ?)}";
+        try (CallableStatement cs = connection.prepareCall(query)) {
+            cs.setInt(1, flightId);
+            cs.registerOutParameter(2, Types.BOOLEAN);
+            cs.execute();
+            return cs.getBoolean(2);
+        }
+    }
+    
 
     @Override
     public void flightConnectionCreate(FlightConnection flightConnection) throws SQLException {
