@@ -2,6 +2,7 @@ package com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.flightsmanagement.application.DeleteFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.application.UpdateFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
@@ -16,8 +17,9 @@ public class FlightManageVIew {
 
         ViewFlightUseCase vfus = new ViewFlightUseCase(fs);
         UpdateFlightUseCase ufuc = new UpdateFlightUseCase(fs);
+        DeleteFlightUseCase dfuc = new DeleteFlightUseCase(fs);
 
-        FlightController fc = new FlightController(vfus, ufuc);
+        FlightController fc = new FlightController(vfus, ufuc, dfuc);
 
         do {
 
@@ -56,7 +58,7 @@ public class FlightManageVIew {
                     fc.updateFlightController();
                     break;
                 case 6:
-                
+                    fc.deleteFlightController();
                     break;
                 case 7:
                 
