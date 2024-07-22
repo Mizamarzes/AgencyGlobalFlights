@@ -8,6 +8,10 @@ import java.util.Scanner;
 
 public class ConsoleUtils {
     private static final Scanner sc = new Scanner(System.in);
+
+    private static final String REGEX_DATE = "^(?:\\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12][0-9]|3[01]))$";
+    private static final String REGEX_DOUBLE = "^\\d{1,5}(\\.\\d{1,2})?$"; // Max 7 digits with 2 decimal places
+
     
     // Clean the console
     public static void clear() {
@@ -126,13 +130,89 @@ public class ConsoleUtils {
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println("Please enter a valid " + type + ": ");
             input = sc.nextLine();
 
             if (input.matches(regex)) {
                 validInput = true;
             } else {
                 System.out.println("Invalid input. Please follow the format for a valid " + type + ".");
+            }
+        }
+
+        return input;
+    }
+
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // REGEX DATE FUNCTIONS
+
+    // VERIFY DATE
+    public static String verifyingDateREGEX() {
+        String input = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            input = sc.nextLine();
+
+            if (input.matches(REGEX_DATE)) {
+                validInput = true;
+            } else {
+                System.out.println("Invalid input. Please enter a date in the format yyyy-mm-dd.");
+            }
+        }
+
+        return input;
+    }
+
+    public static String verifyingStringMaxStringREGEX(String prompt, int maxLength) {
+        String input = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            System.out.println(prompt);
+            input = sc.nextLine();
+
+            if (input.length() <= maxLength) {
+                validInput = true;
+            } else {
+                System.out.println("Invalid input. Please enter a string with at most " + maxLength + " characters.");
+            }
+        }
+
+        return input;
+    }
+
+    public static String verifyingDoubleREGEX() {
+        String input = "";
+        boolean validInput = false;
+    
+        while (!validInput) {
+            input = sc.nextLine();
+    
+            if (input.matches(REGEX_DOUBLE)) {
+                validInput = true;
+            } else {
+                System.out.println("Invalid input. Please enter a valid double with at most 7 digits and 2 decimal places.");
+            }
+        }
+    
+        return input;
+    }
+   
+    public static String verifyingIntREGEXString() {
+        String input = "";
+        boolean validInput = false;
+
+        while (!validInput) {
+            input = sc.nextLine();
+
+            try {
+                Integer.parseInt(input);
+                validInput = true;
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid integer(numbers only).");
             }
         }
 

@@ -1,10 +1,10 @@
-package com.agencyglobalflights.admin.view;
+package com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructure.in.view;
 
 import java.sql.SQLException;
 
 import com.agencyglobalflights.utils.ConsoleUtils;
 
-public class FlightConnectView {
+public class FlightConnectionView {
 
     public void showmenu() throws SQLException {
 
@@ -16,13 +16,15 @@ public class FlightConnectView {
             "       Please select an option:        \n" +
             "---------------------------------------\n" +
             "\n" +
-            "1. View flight connections\n" +
-            "2. Update flight connection information\n" +
-            "3. Delete flight connection\n" +
-            "4. Go back\n"
+            "1. Create Flight Connection\n" +
+            "2. View flight connections\n" +
+            "3. View crew connections\n" +
+            "4. Update flight connection information\n" +
+            "5. Delete flight connection\n" +
+            "6. Go back\n"
             );
 
-            int op = ConsoleUtils.verifyEntryInt(1, 4);
+            int op = ConsoleUtils.verifyEntryInt(1, 6);
 
 
             switch (op) {
@@ -36,6 +38,12 @@ public class FlightConnectView {
 
                     break;
                 case 4:
+
+                    break;
+                case 5:
+
+                    break;
+                case 6:
 
                     return;
                 default:
