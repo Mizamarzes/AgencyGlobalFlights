@@ -30,6 +30,16 @@ public class PlaneController {
         this.updatePlaneUseCase = updatePlaneUseCase;
     }    
 
+    // SPECIAL CONSTRUTOR FOR VIEW PLANES
+    public PlaneController(UpdatePlaneUseCase updatePlaneUseCase) {
+        this.registerPlaneUseCase = null;
+        this.viewPlaneInformationUseCase = null;
+        this.deletePlaneUseCase = null;
+        this.updatePlaneUseCase = updatePlaneUseCase;
+    }
+
+
+
     public List<PlaneStatus> getAllStatuses() throws SQLException {
         ConsoleUtils.clear();
         String border = "+----+-----------------+";
