@@ -3,6 +3,7 @@ package com.agencyglobalflights.salesagent.view;
 import java.sql.SQLException;
 
 import com.agencyglobalflights.auth.infrastructure.out.UserRepository;
+import com.agencyglobalflights.salesagent.customermanage.CustomerManageView;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class SalesAgentMainView {
@@ -44,7 +45,8 @@ public class SalesAgentMainView {
 
                     break;
                 case 2:
-
+                    CustomerManageView customerManageView = new CustomerManageView();
+                    customerManageView.showmenu();
                     break;
                 case 3:
 
