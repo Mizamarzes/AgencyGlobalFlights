@@ -1,5 +1,6 @@
 package com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -114,6 +115,29 @@ public class FlightController {
         }
         System.out.println(border);
         return flights;
+    }
+
+    public List<Flight> getFlightsByDateController(Date insertedDate) throws SQLException {
+        ConsoleUtils.clear();
+        String border = "+----+-------------+-----------+----------------+-----------------+";
+        String header = "| id |    date     |   price   |     origin     |     destiny     |";
+        List<Flight> filteredFlights = viewFlightUseCase.getFlightsByDate(insertedDate);
+        
+        System.out.println(border);
+        System.out.println(header);
+        System.out.println(border);
+
+        for (Flight flight : filteredFlights) {
+            System.out.printf("| %-2d | %-11s | %-9.2f | %-14s | %-15s |%n",
+                flight.getId(),
+                flight.getTrip_date(),
+                flight.getPrice_trip(),
+                flight.getOrig_city_name(),
+                flight.getDest_city_name()
+            );       
+        }
+        System.out.println(border);
+        return filteredFlights;
     }
 
     public void updateFlightController() throws SQLException {

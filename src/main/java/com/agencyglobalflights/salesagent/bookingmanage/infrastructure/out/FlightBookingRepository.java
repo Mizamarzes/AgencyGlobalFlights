@@ -16,8 +16,7 @@ public class FlightBookingRepository implements FlightBookingService{
 
     @Override
     public void createFlightBooking(FlightBooking flightBooking) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'createFlightBooking'");
+        
     }
 
     @Override

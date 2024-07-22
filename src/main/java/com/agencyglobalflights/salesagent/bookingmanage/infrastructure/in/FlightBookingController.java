@@ -1,13 +1,24 @@
 package com.agencyglobalflights.salesagent.bookingmanage.infrastructure.in;
 
+import java.io.Console;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFlightFareUseCase;
+import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
+import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
+import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.out.FlightRepository;
 import com.agencyglobalflights.salesagent.bookingmanage.application.CreateFlightBookingUseCase;
 import com.agencyglobalflights.salesagent.bookingmanage.application.DeleteFlightBookingUseCase;
 import com.agencyglobalflights.salesagent.bookingmanage.application.ViewFlightBookingsUseCase;
 import com.agencyglobalflights.salesagent.bookingmanage.domain.entity.FlightBooking;
+import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class FlightBookingController {
 
@@ -20,20 +31,42 @@ public class FlightBookingController {
         this.deleteBookingUC = deleteBookingUC;
         this.viewBookingsUC = viewBookingsUC;
     }
+    
+    //services
+    FlightService fs = new FlightRepository();
+    FlightFareService ffs = new FlightFareRepository();
+    
+    //use cases
+    ViewFlightUseCase vfuc = new ViewFlightUseCase(fs);
+    ViewFlightFareUseCase vffuc = new ViewFlightFareUseCase(ffs);
+    
+    //controllers
+    FlightController fc = new FlightController(vfuc);
+    FlightFareController ffc = new FlightFareController(vffuc);
+
 
     public void CreateBooking() throws SQLException {
+        String REGEX_ONLY_DIGITS = "^\\d+$";
+        ConsoleUtils.clear();
 
-        // MOSTRAR TODOS LOS CLIENTES
+        System.out.println("Please enter the Client ID: ");
+        String idCustomer = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
+        
+        System.out.println("Enter the new trip date: ");
+        Date bookingDate = ConsoleUtils.verifyDate();
 
-        //SOLICITAR ID CLIENTE
+        //MOSTRAR TODOS LOS VUELOS DE LA FECHA "bookingDate"
+        fc.getFlightsByDateController(bookingDate);
 
-        //SOLICITAR FECHA
-
-        //MOSTRAR TODOS LOS VUELOS
-        //SOLICITAR VUELO
+        System.out.println("Please select a Flight ");
+        int idFlight = ConsoleUtils.verifyingIntNoRange();
 
         //MOSTRAR TODAS LAS TARIFAS
-        //SOLICITARTARIFA
+        ffc.getAllFlightFaresController();
+
+        System.out.println("Please select a Flight Fare ");
+        int idFare = ConsoleUtils.verifyingIntNoRange();
+
 
     }
 
