@@ -22,8 +22,12 @@ public class FlightController {
         this.deleteFlightUseCase = deleteFlightUseCase;
     }
 
-    // -------------------------
-    // VIEW FLIGHT
+    // SPECIAL CONSTRUCTOR FOR ONLY VIEW FLIGHT INFORMATION
+
+    public FlightController(ViewFlightUseCase viewFlightUseCase) {
+        this.viewFlightUseCase = viewFlightUseCase;
+    }
+
 
     public void getFlightByIdController(int id) throws SQLException {
         ConsoleUtils.clear();

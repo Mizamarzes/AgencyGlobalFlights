@@ -26,8 +26,10 @@ public class FlightFareController {
         this.deleteFlightFareUseCase = deleteFlightFareUseCase;
     }
 
-    // -------------------------
-    // VIEW FLIGHT FARE
+    //SPECIAL CONSTRUCTOR FOR ONLY VIEW FLIGHT FARES
+    public FlightFareController(ViewFlightFareUseCase viewflightFareUseCase) {
+        this.viewflightFareUseCase = viewflightFareUseCase;
+    }
 
     public List<FlightFare> getAllFlightFaresController() throws SQLException{
         ConsoleUtils.clear();
