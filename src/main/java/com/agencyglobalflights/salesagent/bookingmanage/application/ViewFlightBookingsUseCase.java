@@ -14,8 +14,8 @@ public class ViewFlightBookingsUseCase {
         this.flightBookingService = flightBookingService;
     }
 
-    public List<FlightBooking> viewFlightBookings() throws SQLException {
-        List<FlightBooking> bookings = flightBookingService.viewFlightBookings();
+    public List<FlightBooking> viewFlightBookings(String columnName, String idObject) throws SQLException {
+        List<FlightBooking> bookings = flightBookingService.viewFlightBookings(columnName, idObject);
         return bookings;
     }
 }
