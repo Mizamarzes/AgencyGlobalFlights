@@ -33,7 +33,6 @@ public class FlightConnectionRepository implements FlightConnectionService {
         }
     }
     
-
     @Override
     public void flightConnectionCreate(FlightConnection flightConnection) throws SQLException {
         String query = "{CALL (?, ?, ?, ?, ?, ?)}";
@@ -48,4 +47,6 @@ public class FlightConnectionRepository implements FlightConnectionService {
             throw e;
         }
     }
+
+    
 }

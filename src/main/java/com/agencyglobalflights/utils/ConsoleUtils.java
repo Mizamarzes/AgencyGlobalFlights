@@ -166,12 +166,11 @@ public class ConsoleUtils {
         return input;
     }
 
-    public static String verifyingStringMaxStringREGEX(String prompt, int maxLength) {
+    public static String verifyingStringMaxStringREGEX(int maxLength) {
         String input = "";
         boolean validInput = false;
 
         while (!validInput) {
-            System.out.println(prompt);
             input = sc.nextLine();
 
             if (input.length() <= maxLength) {

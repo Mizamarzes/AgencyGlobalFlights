@@ -2,32 +2,31 @@ package com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructur
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller.AirportController;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.CreateFlightConnectionUseCase;
-// import com.agencyglobalflights.admin.flightsmanagement.application.UpdateFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
-// import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseCase;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.controller.PlaneController;
 import com.agencyglobalflights.utils.ConsoleUtils;
+import com.agencyglobalflights.utils.Validators;
 
 public class FlightConnectionController {
     private final CreateFlightConnectionUseCase createFlightConnectionUseCase;
 
-    // private final UpdateFlightUseCase updateFlightUseCase;
     private final FlightController flightController;
 
-    // private final UpdatePlaneUseCase updatePlaneUseCase;
     private final PlaneController planeController;
 
-    public FlightConnectionController(CreateFlightConnectionUseCase createFlightConnectionUseCase,
-            // UpdateFlightUseCase updateFlightUseCase, 
+    private final AirportController airportController;
+
+    public FlightConnectionController(
+            CreateFlightConnectionUseCase createFlightConnectionUseCase,
             FlightController flightController,
-            // UpdatePlaneUseCase updatePlaneUseCase, 
-            PlaneController planeController) {
+            PlaneController planeController,
+            AirportController airportController) {
         this.createFlightConnectionUseCase = createFlightConnectionUseCase;
-        // this.updateFlightUseCase = updateFlightUseCase;
         this.flightController = flightController;
-        // this.updatePlaneUseCase = updatePlaneUseCase;
         this.planeController = planeController;
+        this.airportController = airportController;
     }
 
     // -------------------------
@@ -38,7 +37,6 @@ public class FlightConnectionController {
         System.out.println("Enter the id of the flight");
         int id_flight = ConsoleUtils.verifyingIntNoRange();
 
-        // Verificar si el vuelo tiene conexiones de vuelo
         if (createFlightConnectionUseCase.hasFlightConnections(id_flight)) {
             System.out.println("The flight with id " + id_flight + " already has flight connections.");
             ConsoleUtils.waitWindow();
@@ -46,14 +44,30 @@ public class FlightConnectionController {
             System.out.println("The flight with id " + id_flight + " does not have any flight connections yet.");
             ConsoleUtils.waitWindow();
 
-            System.out.println("Enter the connection_number: ");
-            String connection_number = ConsoleUtils.verifyEntryString();
+            ConsoleUtils.clear();
+            System.out.println("Enter the connection_number of flight connection: ");
+            String connection_number = ConsoleUtils.verifyingStringMaxStringREGEX(10);
 
             ConsoleUtils.clear();
             planeController.findAllPlanes();
-            System.out.println("Enter the id of plane: ");
-            int id_plane = ConsoleUtils.verifyingIntNoRange();
-            // Aquí puedes continuar con la lógica para crear una nueva conexión de vuelo
+            System.out.println("Enter the id of the plane to assign: ");
+            String id_plane = ConsoleUtils.verifyingStringMaxStringREGEX(10);
+            boolean exists = Validators.checkIdExists("plane", "id", id_plane);
+
+            if (exists) {
+                System.out.println("The plane ID exists.");
+                // Proceder con la lógica de asignación
+            } else {
+                System.out.println("The plane ID does not exist.");
+                // Manejar el caso en el que el ID no existe
+            }
+
+            ConsoleUtils.clear();
+            airportController.findAllAirports();
+            System.out.println("Enter the id of the airport to assign destiny airport: ");
+            String id_airport_dest = ConsoleUtils.verifyingStringMaxStringREGEX(10);
+
+
         }
         
     }

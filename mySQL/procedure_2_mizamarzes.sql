@@ -149,11 +149,6 @@ END $$
 DELIMITER ;
 
 
-
-
-
-
-
 DELIMITER $$
 
 DROP PROCEDURE IF EXISTS HasFlightConnections;
@@ -176,3 +171,25 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS CheckIdExists;
+CREATE PROCEDURE CheckIdExists(
+    IN p_table_name VARCHAR(64),
+    IN p_column_name VARCHAR(64),
+    IN p_id_value VARCHAR(255)
+)
+BEGIN
+    SET @query = CONCAT('SELECT COUNT(*) FROM ', p_table_name, ' WHERE ', p_column_name, ' = ?');
+    
+    PREPARE stmt FROM @query;
+    SET @param = p_id_value;
+    EXECUTE stmt USING @param;
+    DEALLOCATE PREPARE stmt;
+END $$
+DELIMITER ;
+
+
+

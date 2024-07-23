@@ -24,6 +24,16 @@ public class AirportController {
         this.updtUseCase = updtUseCase;
     }
 
+    public AirportController(ViewAirpInfoUseCase vaUseCase) {
+        this.vaUseCase = vaUseCase;
+        this.caUseCase = null;
+        this.delUseCase =  null;
+        this.updtUseCase = null;
+    
+    }
+
+
+
     public List<Airport> findAllAirports() throws SQLException {
         String border = "+------+-------------------------------------+--------------+";
         String header = "|  id  |                name                 |     city     |";

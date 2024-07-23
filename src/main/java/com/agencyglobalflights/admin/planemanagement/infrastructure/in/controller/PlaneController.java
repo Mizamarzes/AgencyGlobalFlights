@@ -159,8 +159,8 @@ public class PlaneController {
 
     public List<Plane> findAllPlanes() throws SQLException {
         ConsoleUtils.clear();
-        String border = "+--------+---------+-------------------+-----------+----------+------------+";
-        String header = "|   ID   | Capacity | Fabrication Date  | Status ID | Model ID | Airline ID |";
+        String border = "+--------+-----.----+-------------------+-----------------+---------------+----------------------+";
+        String header = "|   ID   | Capacity | Fabrication Date  |     Status      |     Model     |        Airline       |";
         List<Plane> planes = updatePlaneUseCase.findAllPlanes();
     
         System.out.println(border);
@@ -168,13 +168,13 @@ public class PlaneController {
         System.out.println(border);
     
         for (Plane plane : planes) {
-            System.out.printf("| %-2s | %-7d | %-17s | %-9d | %-7d | %-9d |%n",
+            System.out.printf("| %-6s | %-8d | %-17s | %-15s | %-13s | %-20s |%n",
             plane.getId(),
             plane.getCapacity(),
             plane.getFabrication_date(),
-            plane.getId_status(),
-            plane.getId_model(),
-            plane.getId_airline());
+            plane.getStatus_name(),
+            plane.getModel_name(),
+            plane.getAirline_name());
         }
         System.out.println(border);
         return planes;

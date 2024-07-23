@@ -2,13 +2,14 @@ package com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructur
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.airportmanage.application.ViewAirpInfoUseCase;
+import com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller.AirportController;
+import com.agencyglobalflights.admin.airportmanage.infrastructure.out.AirportRepository;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.CreateFlightConnectionUseCase;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.domain.service.FlightConnectionService;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructure.in.controller.FlightConnectionController;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructure.out.FlightConnectionRepository;
-import com.agencyglobalflights.admin.flightsmanagement.application.DeleteFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.application.UpdateFlightUseCase;
-import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.out.FlightRepository;
 import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseCase;
@@ -22,10 +23,12 @@ public class FlightConnectionView {
     // Inicializa los servicios y repositorios necesarios
     UpdateFlightUseCase ufuc = new UpdateFlightUseCase(new FlightRepository());
     UpdatePlaneUseCase upuc = new UpdatePlaneUseCase(new PlaneRepository());
+    ViewAirpInfoUseCase vaiuc = new ViewAirpInfoUseCase(new AirportRepository());
 
     // Inicializa FlightController con todos los casos de uso
     FlightController fc = new FlightController(ufuc);
     PlaneController pc = new PlaneController(upuc);
+    AirportController ac = new AirportController(vaiuc);
 
     // Inicializa los casos de uso para FlightConnection
     FlightConnectionService fcs = new FlightConnectionRepository();
@@ -34,7 +37,7 @@ public class FlightConnectionView {
     
 
     // Inicializa FlightConnectionController
-    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc);
+    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc, ac);
 
         do {
 
