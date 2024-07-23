@@ -16,7 +16,7 @@ public class CreateFlightConnectionUseCase {
         flightConnectionService.flightConnectionCreate(flightConnection);
     }
 
-    public boolean hasFlightConnections(int flightId) throws SQLException{
+    public boolean hasFlightConnections(int flightId) throws SQLException {
         return flightConnectionService.hasFlightConnections(flightId);
     }
 }

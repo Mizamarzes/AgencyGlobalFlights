@@ -16,28 +16,29 @@ import com.agencyglobalflights.admin.planemanagement.application.UpdatePlaneUseC
 import com.agencyglobalflights.admin.planemanagement.infrastructure.in.controller.PlaneController;
 import com.agencyglobalflights.admin.planemanagement.infrastructure.out.PlaneRepository;
 import com.agencyglobalflights.utils.ConsoleUtils;
+import com.agencyglobalflights.utils.Validators;
 
 public class FlightConnectionView {
 
     public void showmenu() throws SQLException {
-    // Inicializa los servicios y repositorios necesarios
+
     UpdateFlightUseCase ufuc = new UpdateFlightUseCase(new FlightRepository());
     UpdatePlaneUseCase upuc = new UpdatePlaneUseCase(new PlaneRepository());
     ViewAirpInfoUseCase vaiuc = new ViewAirpInfoUseCase(new AirportRepository());
 
-    // Inicializa FlightController con todos los casos de uso
     FlightController fc = new FlightController(ufuc);
     PlaneController pc = new PlaneController(upuc);
     AirportController ac = new AirportController(vaiuc);
 
-    // Inicializa los casos de uso para FlightConnection
     FlightConnectionService fcs = new FlightConnectionRepository();
     
     CreateFlightConnectionUseCase cfcuc = new CreateFlightConnectionUseCase(fcs);
-    
 
-    // Inicializa FlightConnectionController
-    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc, ac);
+    // Validators
+    Validators validators = new Validators();
+
+    // Start FlightConnectionController
+    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc, ac, validators);
 
         do {
 

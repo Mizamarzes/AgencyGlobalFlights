@@ -35,7 +35,7 @@ public class FlightConnectionRepository implements FlightConnectionService {
     
     @Override
     public void flightConnectionCreate(FlightConnection flightConnection) throws SQLException {
-        String query = "{CALL (?, ?, ?, ?, ?, ?)}";
+        String query = "{CALL flightConnectionCreator(?, ?, ?, ?)}";
         try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setString(1, flightConnection.getConnection_number());
             cs.setInt(2, flightConnection.getId_trip());
@@ -47,6 +47,18 @@ public class FlightConnectionRepository implements FlightConnectionService {
             throw e;
         }
     }
+
+    // -------------------------
+    // ASSIGN FLIGHT CREW
+
+
+
+    // -------------------------
+    // VIEW FLIGHT CONNECTION
+
+    // public FlightConnection vFlightConnectionByIdFlight(int id) throws SQLException {
+    //     // String query = "{CALL }"
+    // }
 
     
 }

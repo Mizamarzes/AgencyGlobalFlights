@@ -149,8 +149,35 @@ END $$
 DELIMITER ;
 
 
-DELIMITER $$
 
+
+
+
+
+
+-- Structured procedure for check values on the table as VARCHAR
+
+
+
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS flightConnectionCreator;
+CREATE PROCEDURE flightConnectionCreator(
+    IN new_connection_number VARCHAR(20),
+    IN new_id_trip INT,
+    IN new_id_plane VARCHAR(30),
+    IN new_dest_airport VARCHAR(5)
+)
+BEGIN
+    INSERT INTO flight_connection (connection_number, id_trip, id_plane, dest_airport)
+    VALUES (new_connection_number, new_id_trip, new_id_plane, new_dest_airport);
+END $$
+DELIMITER ;
+
+
+-- verify if exists flight connections 
+
+DELIMITER $$
 DROP PROCEDURE IF EXISTS HasFlightConnections;
 CREATE PROCEDURE HasFlightConnections(
     IN flightId INT, 
@@ -169,24 +196,41 @@ BEGIN
         SET hasConnections = FALSE;
     END IF;
 END $$
+DELIMITER ;
 
+-- Structured procedure for check values on the table as VARCHAR
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS CheckIdExistsString;
+CREATE PROCEDURE CheckIdExistsString(
+	IN tableName VARCHAR(64), 
+    IN columnName VARCHAR(64), 
+    IN idValue VARCHAR(64)
+)
+BEGIN
+    SET @query = CONCAT('SELECT EXISTS(SELECT 1 FROM ', tableName, ' WHERE ', columnName, ' = ?) AS id_exists');
+    PREPARE stmt FROM @query;
+    SET @idValue = idValue;
+    EXECUTE stmt USING @idValue;
+    DEALLOCATE PREPARE stmt;
+END $$
 DELIMITER ;
 
 
+-- Structured procedure for check values on the table as INT
 
 DELIMITER $$
-DROP PROCEDURE IF EXISTS CheckIdExists;
-CREATE PROCEDURE CheckIdExists(
-    IN p_table_name VARCHAR(64),
-    IN p_column_name VARCHAR(64),
-    IN p_id_value VARCHAR(255)
+DROP PROCEDURE IF EXISTS CheckIdExistsINT;
+CREATE PROCEDURE CheckIdExistsINT(
+	IN tableName VARCHAR(64), 
+    IN columnName VARCHAR(64), 
+    IN idValue INT
 )
 BEGIN
-    SET @query = CONCAT('SELECT COUNT(*) FROM ', p_table_name, ' WHERE ', p_column_name, ' = ?');
-    
+    SET @query = CONCAT('SELECT EXISTS(SELECT 1 FROM ', tableName, ' WHERE ', columnName, ' = ?) AS id_exists');
     PREPARE stmt FROM @query;
-    SET @param = p_id_value;
-    EXECUTE stmt USING @param;
+    SET @idValue = idValue;
+    EXECUTE stmt USING @idValue;
     DEALLOCATE PREPARE stmt;
 END $$
 DELIMITER ;
