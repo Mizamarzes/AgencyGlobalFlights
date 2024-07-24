@@ -235,5 +235,55 @@ BEGIN
 END $$
 DELIMITER ;
 
+-- verify in tripcrew, if there are trip crews assigned
 
+DELIMITER $$
+CREATE PROCEDURE HasFlightCrewAssigns(
+    IN flight_connection_id INT, 
+    OUT hasFlightCrew BOOLEAN
+)
+BEGIN
+    DECLARE connectionCount INT;
+
+    SELECT COUNT(*) INTO connectionCount
+    FROM tripcrew
+    WHERE idconnection = flight_connection_id;
+
+    IF connectionCount > 0 THEN
+        SET hasFlightCrew = TRUE;
+    ELSE
+        SET hasFlightCrew = FALSE;
+    END IF;
+END $$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE GetAllEmployees()
+BEGIN
+    SELECT
+        e.id,
+        e.name,
+        tr.name AS role,
+        e.entrydate AS date,
+        air.name AS airline,
+        aport.name AS airport
+    FROM employee AS e
+    JOIN tripulationrole AS tr ON tr.id = e.idrole
+    JOIN airline AS air ON air.id = e.idairline
+    JOIN airport AS aport ON aport.id = e.idairport;
+END$$
+DELIMITER ;
+
+
+DELIMITER $$
+CREATE PROCEDURE createFlightCrew(
+    IN employee_id VARCHAR(10),
+    IN flight_connection_id INT
+)
+BEGIN
+    INSERT INTO tripcrew (idemployee, idconnection) 
+    VALUES (employee_id, flight_connection_id);
+END $$
+DELIMITER ;
 

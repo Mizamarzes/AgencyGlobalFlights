@@ -5,7 +5,12 @@ import java.sql.SQLException;
 import com.agencyglobalflights.admin.airportmanage.application.ViewAirpInfoUseCase;
 import com.agencyglobalflights.admin.airportmanage.infrastructure.in.controller.AirportController;
 import com.agencyglobalflights.admin.airportmanage.infrastructure.out.AirportRepository;
+import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.AssignFlightCrewUseCase;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.CreateFlightConnectionUseCase;
+import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.DeleteflightConnectionUseCase;
+import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.UpdateFlightConnectionUsecase;
+import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.ViewFlightConnectionUseCase;
+import com.agencyglobalflights.admin.flightsconnectionsmanagement.application.ViewFlightCrewUseCase;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.domain.service.FlightConnectionService;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructure.in.controller.FlightConnectionController;
 import com.agencyglobalflights.admin.flightsconnectionsmanagement.infrastructure.out.FlightConnectionRepository;
@@ -33,12 +38,17 @@ public class FlightConnectionView {
     FlightConnectionService fcs = new FlightConnectionRepository();
     
     CreateFlightConnectionUseCase cfcuc = new CreateFlightConnectionUseCase(fcs);
+    ViewFlightConnectionUseCase vfcuc = new ViewFlightConnectionUseCase(fcs);
+    UpdateFlightConnectionUsecase ufcuc = new UpdateFlightConnectionUsecase(fcs);
+    DeleteflightConnectionUseCase dfcuc = new DeleteflightConnectionUseCase(fcs);
+    AssignFlightCrewUseCase afcuc = new AssignFlightCrewUseCase(fcs);
+    ViewFlightCrewUseCase vfcucrew = new ViewFlightCrewUseCase(fcs);
 
     // Validators
     Validators validators = new Validators();
 
     // Start FlightConnectionController
-    FlightConnectionController fcc = new FlightConnectionController(cfcuc, fc, pc, ac, validators);
+    FlightConnectionController fcc = new FlightConnectionController(cfcuc, vfcuc, ufcuc, dfcuc, afcuc, vfcucrew, fc, pc, ac, validators);
 
         do {
 
@@ -65,19 +75,19 @@ public class FlightConnectionView {
                     fcc.createFlightConnectionController();
                     break;
                 case 2:
-
+                    fcc.AssignFlightCrewController();
                     break;
                 case 3:
-
+                    fcc.viewFlightControllerByIdFlightController();
                     break;
                 case 4:
-
+                    fcc.viewFlightCrewByIdFlightConnectionController();
                     break;
                 case 5:
-
+                    fcc.updateFlightConnectionsController();
                     break;
                 case 6:
-
+                    fcc.deleteFlightConnectionController();
                     break;
                 case 7:
 

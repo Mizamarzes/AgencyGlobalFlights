@@ -8,8 +8,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 import com.agencyglobalflights.admin.airportmanage.domain.entity.City;
 import com.agencyglobalflights.admin.flightsmanagement.domain.entity.Flight;
 import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
