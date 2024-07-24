@@ -1,7 +1,7 @@
 -- sql file to insertions
 
 -- USE railway;
-USE railway;
+USE ;
 
 INSERT INTO role (id, name) VALUES 
         (1, 'Super Admin'),
