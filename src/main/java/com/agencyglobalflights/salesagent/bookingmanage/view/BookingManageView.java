@@ -2,6 +2,14 @@ package com.agencyglobalflights.salesagent.bookingmanage.view;
 
 import java.sql.SQLException;
 
+import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFlightFareUseCase;
+import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
+import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
+import com.agencyglobalflights.admin.flightsmanagement.application.ViewFlightUseCase;
+import com.agencyglobalflights.admin.flightsmanagement.domain.service.FlightService;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
+import com.agencyglobalflights.admin.flightsmanagement.infrastructure.out.FlightRepository;
 import com.agencyglobalflights.salesagent.bookingmanage.application.CreateFlightBookingUseCase;
 import com.agencyglobalflights.salesagent.bookingmanage.application.DeleteFlightBookingUseCase;
 import com.agencyglobalflights.salesagent.bookingmanage.application.ViewFlightBookingsUseCase;
@@ -13,12 +21,23 @@ import com.agencyglobalflights.utils.ConsoleUtils;
 public class BookingManageView {
 
     public void showmenu() throws SQLException {
+
+        //services
         FlightBookingService fbs = new FlightBookingRepository();
+        FlightService fs = new FlightRepository();
+        FlightFareService ffs = new FlightFareRepository();
+    
+        //use cases
         CreateFlightBookingUseCase cfbuc = new CreateFlightBookingUseCase(fbs);
         DeleteFlightBookingUseCase dfbuc = new DeleteFlightBookingUseCase(fbs);
         ViewFlightBookingsUseCase ffbuc = new ViewFlightBookingsUseCase(fbs);
+        ViewFlightUseCase vfuc = new ViewFlightUseCase(fs);
+        ViewFlightFareUseCase vffuc = new ViewFlightFareUseCase(ffs);
 
-        FlightBookingController fbc = new FlightBookingController(cfbuc, dfbuc, ffbuc);
+        //controllers
+        FlightController fc = new FlightController(vfuc);
+        FlightFareController ffc = new FlightFareController(vffuc);
+        FlightBookingController fbc = new FlightBookingController(cfbuc, dfbuc, ffbuc, fc, ffc);
 
 
         do {
@@ -40,15 +59,10 @@ public class BookingManageView {
 
             switch (op) {
                 case 1:
-                
-                // El sistema solicita al agente ingresar el identificador del cliente o del VUELO.
-                // 3. El agente ingresa el identificador solicitado.
-                // 4. El sistema busca las reservas en la base de datos.
-                
+                fbc.viewFlightBookings();                
                     break;
                 case 2:
                 fbc.CreateBooking();
-                // cliente, trayecto, fecha, tarifa.
                     break;
                 case 3:
 

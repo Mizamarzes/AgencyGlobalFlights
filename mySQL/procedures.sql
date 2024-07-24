@@ -453,3 +453,20 @@ BEGIN
 END $$
 
 DELIMITER ;
+
+-- PROCEDURE TO INSERT A NEW FLIGHT BOOKING
+
+DELIMITER $$
+DROP PROCEDURE IF EXISTS createBooking $$
+CREATE PROCEDURE createBooking(
+    IN date_insert VARCHAR(40),
+    IN idflight_insert VARCHAR(30),
+    IN idcustomer_insert TEXT,
+    IN idfares_insert VARCHAR(10)
+)
+BEGIN
+    INSERT INTO flightbooking (date, idflight, idcustomer, idfares) 
+    VALUES (date_insert, idflight_insert, idcustomer_insert, idfares_insert);
+END $$
+
+DELIMITER ;
