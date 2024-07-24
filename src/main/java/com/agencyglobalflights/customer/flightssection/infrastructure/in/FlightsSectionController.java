@@ -8,6 +8,7 @@ import com.agencyglobalflights.admin.airportmanage.domain.entity.Airport;
 import com.agencyglobalflights.admin.documentmanagement.infrastructure.in.controller.DocTypeController;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
 import com.agencyglobalflights.admin.flightsmanagement.domain.entity.Flight;
+import com.agencyglobalflights.customer.flightssection.application.CalculateTotalUseCase;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertCustomerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertPassengerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.ShowAvAirportsDateUseCase;
@@ -25,6 +26,7 @@ public class FlightsSectionController {
     private CheckAndInsertPassengerUseCase checkAndInsertPassengerUseCase;
     private CheckAndInsertCustomerUseCase checkAndInsertCustomerUseCase;
     private CreateFlightBookingUseCase createFlightBookingUseCase;
+    private CalculateTotalUseCase calculateTotalUseCase;
     private FlightFareController flightFareController;
     private DocTypeController docTypeController;
 
@@ -35,13 +37,14 @@ public class FlightsSectionController {
             ShowFlightsByAirpDateUseCase showFlightsByAirpDateUseCase,
             CheckAndInsertPassengerUseCase checkAndInsertPassengerUseCase,
             CheckAndInsertCustomerUseCase checkAndInsertCustomerUseCase,
-            CreateFlightBookingUseCase createFlightBookingUseCase, FlightFareController flightFareController,
-            DocTypeController docTypeController) {
+            CreateFlightBookingUseCase createFlightBookingUseCase, CalculateTotalUseCase calculateTotalUseCase,
+            FlightFareController flightFareController, DocTypeController docTypeController) {
         this.showAvAirportsDateUseCase = showAvAirportsDateUseCase;
         this.showFlightsByAirpDateUseCase = showFlightsByAirpDateUseCase;
         this.checkAndInsertPassengerUseCase = checkAndInsertPassengerUseCase;
         this.checkAndInsertCustomerUseCase = checkAndInsertCustomerUseCase;
         this.createFlightBookingUseCase = createFlightBookingUseCase;
+        this.calculateTotalUseCase = calculateTotalUseCase;
         this.flightFareController = flightFareController;
         this.docTypeController = docTypeController;
     }
@@ -93,6 +96,7 @@ public class FlightsSectionController {
     }
 
     public void enterPassenger(int idBooking) throws SQLException {
+        String REGEX_ONLY_DIGITS = "^\\d+$";
         System.out.println("--------------------------------------\n" +
         "     Enter passenger information:     \n" +
         "--------------------------------------\n" +
@@ -101,43 +105,46 @@ public class FlightsSectionController {
         System.out.print("Enter the Name: ");
         String firstName = ConsoleUtils.verifyEntryString();
         System.out.print("Enter the Identification Number: ");
-        String idNumber = ConsoleUtils.verifyEntryString();
+        String idNumber = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
         System.out.print("Enter the Birth Date: ");
         Date birthDate = ConsoleUtils.verifyDate();
-        Passenger passenger = new Passenger(idNumber, firstName, birthDate, idBooking);
+        System.out.print("Enter the Phone number: ");
+        String phoneNumber = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
+        Passenger passenger = new Passenger(idNumber, firstName, birthDate, phoneNumber, idBooking);
         checkAndInsertPassengerUseCase.checkAndInsertPassenger(passenger);
     }
 
     public String enterCustomer() throws SQLException {
         String REGEX_ONLY_DIGITS = "^\\d+$";
         ConsoleUtils.clear();
-        System.out.println("--------------------------------------\n" +
-        "     Enter the Buyer information:     \n" +
+        String header = "--------------------------------------\n" +
+        "        Payment information:          \n" +
         "--------------------------------------\n" +
-        "\n"
-        );  
+        "\n";  
+
+        System.out.println(header);
         
-        System.out.println("Enter the Name: ");
+        System.out.println("Enter your Name: ");
         String name = ConsoleUtils.verifyEntryString();   
 
-        System.out.println("Enter the Age ");
+        System.out.println("Enter your Age: ");
         int age = ConsoleUtils.verifyEntryInt(1, 100);
 
-        System.out.println("Please select the Type of Document: ");
-        int doc_type = ConsoleUtils.verifyEntryInt(1, 3);
-
         docTypeController.viewAllTypes();
-
+        System.out.println("Please select a Type of Document: ");
+        int doc_type = ConsoleUtils.verifyEntryInt(1, 3);
+        
+        ConsoleUtils.clear();
+        System.out.println(header);
         System.out.println("Please enter the ID Number: ");
         String idNumber = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
-
+        
+        ConsoleUtils.clear();
         Customer customer = new Customer(idNumber, name, age, doc_type);
         checkAndInsertCustomerUseCase.checkAndInsertCustomer(customer);    
         
         return idNumber;
     }
-
-
 
     public int buyFlights() throws SQLException {
 
@@ -153,57 +160,67 @@ public class FlightsSectionController {
         Date insertedDate = ConsoleUtils.verifyDate();
     
 
-    // HACER UNA CONSULTA DE LOS VUELOS QUE ESTAN DISPONIBLES ESA FECHA Y
-    // SELECCIONAR LOS AEROPUERTOS DE DONDE SALEN ESOS VUELOS
-    //MOSTRAR LOS AEROPUERTOS 
-    showAvAirportsDateController(insertedDate);
-
-    
-    System.out.println("Please enter the Origin Airport: ");
-    String selectedAirport = ConsoleUtils.verifyEntryString();
-    
-
-    // SELECCIONAR UNO DE LOS AEROPUERTO
-
-    // HACER UNA CONSULTA DE LOS VUELOS QUE SALEN DE ESE AEROPUERTO, 
-
-    // Y MOSTRAR LOS VUELOS QUE ESTAN DISPONIBLES PARA SALIR DE ESE AEROPUERTO EN LA FECHA INTRODUCIDA AL PRINCIPIO
-    showFlightsByAirpDateController(insertedDate, selectedAirport);
-
-    // SELECCIONAR UNA ID DE VUELO
-    System.out.println("Please select a flight: ");
-    int selectedFlight = ConsoleUtils.verifyingIntNoRange();
-
-    //MOSTRAR TARIFAS
-    flightFareController.getAllFlightFaresController();
-    
-    //seleccionar tarifa
-    System.out.println("Please select a flight: ");
-    int selectedFare = ConsoleUtils.verifyingIntNoRange();
-
-    // CALCULAR TOTAL Y REALIZAR PAGO
-
-    String customerid = enterCustomer();
-
-    // AGREGAR la info de PASAJERO
-
-    FlightBooking newBooking = new FlightBooking(insertedDate, selectedFlight, selectedAirport, selectedFare);
-    int idBooking = createFlightBookingUseCase.createFlightBooking(newBooking);
-    
-    enterPassenger(idBooking);
-    System.out.println("Your Booking ID is: " + idBooking);
-
-
-
-
-    //SE CREA LA RESERVA
-
-    
-    
-
-    // AQUI EL SISTEMA RETORNA UN NUMERO DE RESERVA
-        int bookingID = 0;
-        return bookingID;
+        // HACER UNA CONSULTA DE LOS VUELOS QUE ESTAN DISPONIBLES ESA FECHA Y
+        // SELECCIONAR LOS AEROPUERTOS DE DONDE SALEN ESOS VUELOS
+        //MOSTRAR LOS AEROPUERTOS 
+        showAvAirportsDateController(insertedDate);
+        
+        
+        System.out.println("Please enter the Origin Airport: ");
+        String selectedAirport = ConsoleUtils.verifyEntryString();
+        
+        
+        // SELECCIONAR UNO DE LOS AEROPUERTO
+        
+        // HACER UNA CONSULTA DE LOS VUELOS QUE SALEN DE ESE AEROPUERTO, 
+        
+        // Y MOSTRAR LOS VUELOS QUE ESTAN DISPONIBLES PARA SALIR DE ESE AEROPUERTO EN LA FECHA INTRODUCIDA AL PRINCIPIO
+        showFlightsByAirpDateController(insertedDate, selectedAirport);
+        
+        // SELECCIONAR UNA ID DE VUELO
+        System.out.println("Please select a flight: ");
+        int selectedFlight = ConsoleUtils.verifyingIntNoRange();
+        
+        //MOSTRAR TARIFAS
+        flightFareController.getAllFlightFaresController();
+        
+        //seleccionar tarifa
+        System.out.println("Please select a flight: ");
+        int selectedFare = ConsoleUtils.verifyingIntNoRange();
+        
+        
+        // AGREGAR la info de PASAJERO
+        
+        String customerid = enterCustomer();
+        
+        // CALCULAR TOTAL Y REALIZAR PAGO
+        
+        double totalPrice = calculateTotalUseCase.calculateTotal(selectedFlight, selectedFare);
+        ConsoleUtils.clear();
+        System.out.println("--------------------------------------\n" +
+        "    Your total amount is " + totalPrice + " \n" +
+        "--------------------------------------\n");
+        ConsoleUtils.waitWindow();
+        
+        
+        //SE CREA LA RESERVA
+        
+        FlightBooking newBooking = new FlightBooking(insertedDate, selectedFlight, customerid, selectedFare);
+        int idBooking = createFlightBookingUseCase.createFlightBooking(newBooking);
+        
+        ConsoleUtils.clear();
+        System.out.println("Your Booking ID is: " + idBooking);
+        
+        enterPassenger(idBooking);
+        ConsoleUtils.clear();
+        System.out.println("======================================");
+        System.out.println("   Booking Successfully Purchased!");
+        System.out.println("        Enjoy your Flight!");
+        System.out.println("======================================");
+        System.out.println("        Your booking ID is: " + idBooking + " \n");
+        System.out.println("======================================");
+        ConsoleUtils.waitWindow();
+        return idBooking;
     }   
 
 }
