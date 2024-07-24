@@ -67,11 +67,29 @@ public class FlightBookingController {
         createBookingUC.createFlightBooking(newBooking);
     }
 
-    public boolean viewFlightBookings() throws SQLException {
-        boolean getOut = false;
+    public List<FlightBooking> getAllFlightsBookings(List<FlightBooking> bookings) throws SQLException {
+        ConsoleUtils.clear();
         String border = "+------+------------+--------+-------------+------+";
         String header = "|  Id  |    Date    | Flight | Customer ID | Fare |";
+        List<FlightBooking> flightBookings = bookings;
 
+        System.out.println(border);
+        System.out.println(header);
+        System.out.println(border);
+
+        for (FlightBooking flightBooking : bookings) {
+            System.out.printf("| %-4d | %-6s | %-6d | %-11s | %-4d |\n",
+            flightBooking.getId(), flightBooking.getDate(), flightBooking.getIdFlight(),
+            flightBooking.getIdCostumer(), flightBooking.getIdfares());
+        }
+        System.out.println(border);
+        ConsoleUtils.waitWindow();
+        return flightBookings;
+    }
+
+    public boolean viewFlightBookings() throws SQLException {
+        boolean getOut = false;
+        
         List<FlightBooking> bookings = new ArrayList<>();
         String REGEX_ONLY_DIGITS = "^\\d+$";
         String columnName;
@@ -98,6 +116,7 @@ public class FlightBookingController {
                 idObject = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 columnName = "idcustomer";
                 bookings = viewBookingsUC.viewFlightBookings(columnName, idObject);
+                getAllFlightsBookings(bookings);
                 break;
             case 2:
                 ConsoleUtils.clear();
@@ -105,6 +124,7 @@ public class FlightBookingController {
                 idObject = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
                 columnName = "idflight";
                 bookings = viewBookingsUC.viewFlightBookings(columnName, idObject);
+                getAllFlightsBookings(bookings);
                 break;
             case 3:
                 getOut = true;
@@ -114,18 +134,6 @@ public class FlightBookingController {
                 break;
         }
 
-        ConsoleUtils.clear();
-        System.out.println(border);
-        System.out.println(header);
-        System.out.println(border);
-
-        for (FlightBooking flightBooking : bookings) {
-            System.out.printf("| %-4d | %-6s | %-6d | %-11s | %-4d |\n",
-            flightBooking.getId(), flightBooking.getDate(), flightBooking.getIdFlight(),
-            flightBooking.getIdCostumer(), flightBooking.getIdfares());
-        }
-        System.out.println(border);
-        ConsoleUtils.waitWindow();
         return getOut;
     }
 
