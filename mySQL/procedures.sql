@@ -457,16 +457,115 @@ DELIMITER ;
 -- PROCEDURE TO INSERT A NEW FLIGHT BOOKING
 
 DELIMITER $$
+
 DROP PROCEDURE IF EXISTS createBooking $$
+
 CREATE PROCEDURE createBooking(
     IN date_insert VARCHAR(40),
     IN idflight_insert VARCHAR(30),
     IN idcustomer_insert TEXT,
-    IN idfares_insert VARCHAR(10)
+    IN idfares_insert VARCHAR(10),
+    OUT booking_id INT
 )
 BEGIN
     INSERT INTO flightbooking (date, idflight, idcustomer, idfares) 
     VALUES (date_insert, idflight_insert, idcustomer_insert, idfares_insert);
+
+    SET booking_id = LAST_INSERT_ID();
 END $$
 
 DELIMITER ;
+
+
+
+-- PROCEDURE FOR SEARCH FLIGHTS BY DATE AND AIRPORT
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS showFlightsByAirpDate $$
+CREATE PROCEDURE showFlightsByAirpDate(
+    IN insertedDate VARCHAR(64),
+    IN insertedAirport VARCHAR(10)
+)
+BEGIN
+    SET @query = CONCAT('
+SELECT
+	f.id,
+    f.trip_date,
+    c1.name AS orig_city,
+    c2.name AS dest_city,
+    f.price_trip
+FROM
+	airport a
+JOIN
+	city c1
+ON
+	a.idcity = c1.id
+JOIN
+	flight f
+ON	
+	c1.id =	f.orig_city
+JOIN
+	city c2
+ON
+	f.dest_city = c2.id
+WHERE
+	a.id = "', insertedAirport, '"
+AND
+	f.trip_date = "', insertedDate, '"'
+    );
+    PREPARE stmt FROM @query;
+    EXECUTE stmt;
+    DEALLOCATE PREPARE stmt;
+END $$
+
+DELIMITER ;
+
+CALL showFlightsByAirpDate("2004-12-31", "BOG");
+
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS checkAndInsertCustomer $$
+CREATE PROCEDURE checkAndInsertCustomer(
+    IN p_id VARCHAR(10),
+    IN p_name VARCHAR(50),
+    IN p_age INT,
+    IN p_doc_type INT
+)
+BEGIN
+    DECLARE customerExists INT;
+
+    SELECT COUNT(*) INTO customerExists
+    FROM customer
+    WHERE id = p_id;
+
+    IF customerExists = 0 THEN
+        INSERT INTO customer (id, name, age, doc_type)
+        VALUES (p_id, p_name, p_age, p_doc_type);
+    END IF;
+END$$
+
+DELIMITER ;
+
+DELIMITER $$
+
+DROP PROCEDURE IF EXISTS checkAndInsertPassenger $$
+CREATE PROCEDURE checkAndInsertPassenger(
+    IN p_idNumber VARCHAR(10),
+    IN p_name VARCHAR(255),
+    IN p_birthDate DATE,
+    IN P_id_flightbooking INT
+)
+BEGIN
+    DECLARE passengerExists INT;
+
+    SELECT COUNT(*) INTO passengerExists
+    FROM passenger
+    WHERE idNumber = p_idNumber;
+
+    IF passengerExists = 0 THEN
+        INSERT INTO passenger (firstName, idNumber, birthDate, id_flightbooking)
+        VALUES (p_firstName, p_idNumber, p_birthDate, P_id_flightbooking);
+    END IF;
+END$$

@@ -61,8 +61,8 @@ public class FlightBookingController {
         createBookingUC.createFlightBooking(newBooking);
     }
 
-    public List<FlightBooking> viewFlightBookings() throws SQLException {
-        
+    public boolean viewFlightBookings() throws SQLException {
+        boolean getOut = false;
         String border = "+------+------------+--------+-------------+------+";
         String header = "|  Id  |    Date    | Flight | Customer ID | Fare |";
 
@@ -101,8 +101,10 @@ public class FlightBookingController {
                 bookings = viewBookingsUC.viewFlightBookings(columnName, idObject);
                 break;
             case 3:
-                break;  
+                getOut = true;
+                break;
             default:
+                getOut = false;
                 break;
         }
 
@@ -117,18 +119,31 @@ public class FlightBookingController {
             flightBooking.getIdCostumer(), flightBooking.getIdfares());
         }
         System.out.println(border);
-        ConsoleUtils.waitWindow();
-        return bookings;
-
+        return getOut;
     }
 
     public void deleteFlightBooking() throws SQLException {
 
-        // EJECUTAR viewFlightBookings
+        boolean returnIsTrue = viewFlightBookings();
 
-        // SOLICITAR SELECCIONAR UNA DE LOS BOOKINGS RETORNADOS
+        if (returnIsTrue) {
+            return;
+        }
 
-        // PROCESO DE ELIMINAR
+        System.out.println("Please select a Booking to Delete: ");
+        int id = ConsoleUtils.verifyingIntNoRange();
+
+        System.out.println("Are you Sure?\n" +
+        "1. NO\n" +
+        "2. YES\n");
+        int conf = ConsoleUtils.verifyEntryInt(1, 2);
+        if (conf == 2) {
+            deleteBookingUC.deleteFlightBooking(id);
+            System.out.println("Revision successfully eliminated.");
+        } else {
+            System.out.println("Elimination canceled.");
+        }
+        ConsoleUtils.waitWindow();
     }  
 
 }

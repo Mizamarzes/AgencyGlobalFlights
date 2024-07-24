@@ -1,11 +1,14 @@
 package com.agencyglobalflights.view;
 
+import java.sql.SQLException;
+
 import com.agencyglobalflights.auth.infrastructure.in.view.LoginView;
+import com.agencyglobalflights.customer.view.CustomerMainView;
 import com.agencyglobalflights.utils.ConsoleUtils;
 
 public class MainMenu {
 
-    public void Start() {
+    public void Start() throws SQLException {
 
         ConsoleUtils.clear();
         System.out.println("--------------------------------------\n" +
@@ -23,8 +26,9 @@ public class MainMenu {
         
         switch (op) {
             case 1:
-                //iniciara view.customer.n
-                System.out.println("Opcion en desarrollo");
+                //inicia el customerMainView
+                CustomerMainView customerMainView = new CustomerMainView();
+                customerMainView.showmenu();
                 break;
             case 2:
                 //inicia el LoginView
@@ -33,7 +37,7 @@ public class MainMenu {
                 break;
             case 3:
                 System.out.println("Thanks for using our Platform");
-                return;
+                break;
             default:
                 break;
         }

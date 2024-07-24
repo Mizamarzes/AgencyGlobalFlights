@@ -59,13 +59,14 @@ public class BookingManageView {
 
             switch (op) {
                 case 1:
-                fbc.viewFlightBookings();                
+                fbc.viewFlightBookings(); 
+                ConsoleUtils.waitWindow();               
                     break;
                 case 2:
                 fbc.CreateBooking();
                     break;
                 case 3:
-
+                fbc.deleteFlightBooking();
                     break;
                 case 4:
                     return;

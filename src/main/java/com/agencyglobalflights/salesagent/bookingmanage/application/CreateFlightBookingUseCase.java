@@ -13,7 +13,9 @@ public class CreateFlightBookingUseCase {
         this.flightBookingService = flightBookingService;
     }
 
-    public void createFlightBooking(FlightBooking flightBooking) throws SQLException {
-        flightBookingService.createFlightBooking(flightBooking);  
+    public int createFlightBooking(FlightBooking flightBooking) throws SQLException {
+        int newBookingid = flightBookingService.createFlightBooking(flightBooking);  
+
+        return newBookingid;
     }
 }

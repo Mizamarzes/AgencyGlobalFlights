@@ -8,7 +8,7 @@ import com.agencyglobalflights.salesagent.bookingmanage.domain.entity.FlightBook
 public interface FlightBookingService {
 
     List<FlightBooking> viewFlightBookings(String columnName, String idObject) throws SQLException;
-    void createFlightBooking(FlightBooking flightBooking) throws SQLException;
+    int createFlightBooking(FlightBooking flightBooking) throws SQLException;
     void deleteFlightBooking(int id) throws SQLException;
 
 }
