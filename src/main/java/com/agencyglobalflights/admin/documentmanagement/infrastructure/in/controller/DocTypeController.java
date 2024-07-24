@@ -25,6 +25,11 @@ public class DocTypeController {
         this.deleteDocsUc = deleteDocsUc;
     }
 
+    //SPECIAL CONSTRUCTOR
+    public DocTypeController(ViewDocTypesUseCase viewDocsUc) {
+        this.viewDocsUc = viewDocsUc;
+    }
+
     public List<DocumentType> viewAllTypes() throws SQLException{
         List<DocumentType> alltypes = viewDocsUc.viewAllTypes();
         String border = "+------+----------------------------------+";

@@ -40,7 +40,7 @@ public class CustomerController {
         System.out.println("Please select the Type of Document: ");
         int doc_type = ConsoleUtils.verifyEntryInt(1, 3);
 
-        System.out.println("Please select the ID Number: ");
+        System.out.println("Please enter the ID Number: ");
         String idNumber = ConsoleUtils.verifyingStringFormat(REGEX_ONLY_DIGITS, "numbers only");
 
         Customer customer = new Customer(idNumber, name, age, doc_type);

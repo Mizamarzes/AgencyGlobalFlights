@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agencyglobalflights.admin.planemanagement.domain.entity.Airline;
 import com.agencyglobalflights.infrastructure.config.DatabaseConfig;
 import com.agencyglobalflights.salesagent.bookingmanage.domain.entity.FlightBooking;
 import com.agencyglobalflights.salesagent.bookingmanage.domain.service.FlightBookingService;
@@ -54,25 +53,42 @@ public class FlightBookingRepository implements FlightBookingService{
     }
 
     @Override
-    public void createFlightBooking(FlightBooking flightBooking) throws SQLException {
-        String query = "{CALL createBooking(?, ?, ?, ?)}";
-        try (CallableStatement cs = connection.prepareCall(query)){
+    public int createFlightBooking(FlightBooking flightBooking) throws SQLException {
+        String query = "{CALL createBooking(?, ?, ?, ?, ?)}";
+        int bookingId = 0;
+
+        try (CallableStatement cs = connection.prepareCall(query)) {
             cs.setDate(1, flightBooking.getDate());
             cs.setInt(2, flightBooking.getIdFlight());
             cs.setString(3, flightBooking.getIdCostumer());
             cs.setInt(4, flightBooking.getIdfares());
+            cs.registerOutParameter(5, java.sql.Types.INTEGER);
+
             cs.executeUpdate();
-            
-        } catch (Exception e) {
+
+            bookingId = cs.getInt(5);
+        } catch (SQLException e) {
             e.printStackTrace();
             throw e;
         }
+
+        return bookingId;
     }
 
     @Override
     public void deleteFlightBooking(int id) throws SQLException {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteFlightBooking'");
+        String tableName = "flightbooking";
+        String query = "{DeleteByIdInt(?, ?)}";
+
+        try (CallableStatement cs = connection.prepareCall(query)){
+            cs.setString(1, tableName);
+            cs.setInt(2, id);
+            cs.executeUpdate();
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw e;
+        }
     }
 
 }
