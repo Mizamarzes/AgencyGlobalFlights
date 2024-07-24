@@ -58,7 +58,6 @@ public class FlightConnectionController {
     // -------------------------
     // CREATE FLIGHT CONNECTION 
 
-
     public void createFlightConnectionController() throws SQLException {
         ConsoleUtils.clear();
         flightController.getAllFlightsController();

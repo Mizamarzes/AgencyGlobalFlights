@@ -1,12 +1,10 @@
 package com.agencyglobalflights.salesagent.bookingmanage.infrastructure.in;
 
-import java.io.Console;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.agencyglobalflights.admin.documentmanagement.domain.entity.DocumentType;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
 import com.agencyglobalflights.admin.flightsmanagement.infrastructure.in.controller.FlightController;
 import com.agencyglobalflights.salesagent.bookingmanage.application.CreateFlightBookingUseCase;
@@ -23,8 +21,6 @@ public class FlightBookingController {
     private FlightController flightController;
     private FlightFareController flightFareController;
 
-    
-    
     public FlightBookingController(CreateFlightBookingUseCase createBookingUC,
             DeleteFlightBookingUseCase deleteBookingUC, ViewFlightBookingsUseCase viewBookingsUC,
             FlightController flightController, FlightFareController flightFareController) {
@@ -33,6 +29,16 @@ public class FlightBookingController {
         this.viewBookingsUC = viewBookingsUC;
         this.flightController = flightController;
         this.flightFareController = flightFareController;
+    }
+
+    public FlightBookingController(
+        ViewFlightBookingsUseCase viewBookingsUC,
+        DeleteFlightBookingUseCase deleteBookingUC) {
+        this.viewBookingsUC = viewBookingsUC;
+        this.createBookingUC = null;
+        this.deleteBookingUC = deleteBookingUC;
+        this.flightController = null;
+        this.flightFareController = null;
     }
 
     public void CreateBooking() throws SQLException {
@@ -119,6 +125,7 @@ public class FlightBookingController {
             flightBooking.getIdCostumer(), flightBooking.getIdfares());
         }
         System.out.println(border);
+        ConsoleUtils.waitWindow();
         return getOut;
     }
 
