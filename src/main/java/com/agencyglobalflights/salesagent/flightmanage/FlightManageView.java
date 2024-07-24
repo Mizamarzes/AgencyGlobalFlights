@@ -22,7 +22,7 @@ public class FlightManageView {
         //use cases
         ViewFlightUseCase vfuc = new ViewFlightUseCase(fs);
         ViewFlightFareUseCase vffuc = new ViewFlightFareUseCase(ffs);
-
+    
         //controllers
         FlightController fc = new FlightController(vfuc);
         FlightFareController ffc = new FlightFareController(vffuc);
@@ -49,7 +49,7 @@ public class FlightManageView {
                     fc.viewFlightByIdController();
                     break;
                 case 2:
-                    // en desarrollo
+                    
                     break;
                 case 3:
                     ffc.viewflightFareByIdController();
