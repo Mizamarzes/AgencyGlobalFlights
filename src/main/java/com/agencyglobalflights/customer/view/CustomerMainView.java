@@ -10,6 +10,7 @@ import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFligh
 import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
+import com.agencyglobalflights.customer.flightssection.application.CalculateTotalUseCase;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertCustomerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertPassengerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.ShowAvAirportsDateUseCase;
@@ -36,6 +37,7 @@ public class CustomerMainView {
         CheckAndInsertCustomerUseCase checkAndInsertCustomerUseCase = new CheckAndInsertCustomerUseCase(fss);
         ShowFlightsByAirpDateUseCase showFlightsByAirpDateUseCase = new ShowFlightsByAirpDateUseCase(fss);
         CreateFlightBookingUseCase createFlightBookingUseCase = new CreateFlightBookingUseCase(fbs);
+        CalculateTotalUseCase calculateTotalUseCase = new CalculateTotalUseCase(fss);
         ShowAvAirportsDateUseCase showAvAirpUseCase = new ShowAvAirportsDateUseCase(fss);
         ViewDocTypesUseCase viewDocTypesUseCase = new ViewDocTypesUseCase(dts);
 
@@ -45,7 +47,7 @@ public class CustomerMainView {
         //controllers
         FlightFareController ffc = new FlightFareController(vffuc);
         DocTypeController dtc = new DocTypeController(viewDocTypesUseCase);
-        FlightsSectionController fsc = new FlightsSectionController(showAvAirpUseCase, showFlightsByAirpDateUseCase, checkAndInsertPassengerUseCase, checkAndInsertCustomerUseCase, createFlightBookingUseCase, ffc, dtc);
+        FlightsSectionController fsc = new FlightsSectionController(showAvAirpUseCase, showFlightsByAirpDateUseCase, checkAndInsertPassengerUseCase, checkAndInsertCustomerUseCase, createFlightBookingUseCase, calculateTotalUseCase, ffc, dtc);
         
         do {
 
