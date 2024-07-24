@@ -31,6 +31,7 @@ public class CustomerBookingController {
     // -------------------------
     // UPDATE FLIGHT BOOKING CUSTOMER
     public void updateCustomerFlightBookingController() throws SQLException {
+        ConsoleUtils.clear();
         System.out.println("Please, enter the id of the flight booking: ");
         String id = ConsoleUtils.verifyingIntREGEXString();
 
