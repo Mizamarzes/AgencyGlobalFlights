@@ -2,6 +2,7 @@ package com.agencyglobalflights.customer.flightssection.infrastructure.out;
 
 import java.sql.Connection;
 import java.sql.Date;
+import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -82,13 +83,14 @@ public class FlightsSectionRepository implements FlightsSectionService{
 
     @Override
     public void checkAndInsertPassenger(Passenger passenger) throws SQLException {
-        String query = "{CALL checkAndInsertPassenger(?, ?, ?)}";
+        String query = "{CALL checkAndInsertPassenger(?, ?, ?, ?, ?)}";
         
         try (CallableStatement cs = connection.prepareCall(query)){
-            cs.setString(1, passenger.getId());
-            cs.setString(2, passenger.getName());
+            cs.setString(1, passenger.getName());
+            cs.setString(2, passenger.getId());
             cs.setDate(3, passenger.getBirthDate());
-
+            cs.setString(4, passenger.getCel());
+            cs.setInt(5, passenger.getIdFlightBooking());
             cs.execute();
             System.out.println("Passenger information processed successfully.");
         } catch (SQLException e) {
@@ -99,7 +101,7 @@ public class FlightsSectionRepository implements FlightsSectionService{
 
     @Override 
     public void checkAndInsertCustomer(Customer customer) throws SQLException {
-        String query = "{CALL checkAndInsertPassenger(?, ?, ?, ?)}";
+        String query = "{CALL checkAndInsertCustomer(?, ?, ?, ?)}";
         try (CallableStatement cs = connection.prepareCall(query)){
             cs.setString(1, customer.getId());
             cs.setString(2, customer.getName());
@@ -113,6 +115,32 @@ public class FlightsSectionRepository implements FlightsSectionService{
             throw e;
         }
 
+    }
+
+    @Override
+    public double calculateTotal(int idFlight, int idFare) throws SQLException {
+        String sql = "{CALL calculateTotalPrice(?, ?, ?)}";
+            double totalPrice;
+
+            try (CallableStatement callableStatement = connection.prepareCall(sql)) {
+                // Configurar los parámetros de entrada
+                callableStatement.setInt(1, idFlight);
+                callableStatement.setInt(2, idFare);
+
+                // Configurar el parámetro de salida
+                callableStatement.registerOutParameter(3, java.sql.Types.DECIMAL);
+
+                // Ejecutar el procedimiento almacenado
+                callableStatement.execute();
+
+                // Obtener el resultado del parámetro de salida
+                totalPrice = callableStatement.getDouble(3);
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw e;
+            }
+
+        return totalPrice;
     }
 }    
 

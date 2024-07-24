@@ -18,4 +18,6 @@ public interface FlightsSectionService {
     void checkAndInsertPassenger(Passenger passenger) throws SQLException;
 
     void checkAndInsertCustomer(Customer customer) throws SQLException;
+
+    double calculateTotal(int idFlight, int idFare) throws SQLException;
 }
