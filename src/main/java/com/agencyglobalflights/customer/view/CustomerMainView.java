@@ -10,6 +10,7 @@ import com.agencyglobalflights.admin.flightfaresmanagement.application.ViewFligh
 import com.agencyglobalflights.admin.flightfaresmanagement.domain.service.FlightFareService;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.in.controller.FlightFareController;
 import com.agencyglobalflights.admin.flightfaresmanagement.infrastructure.out.FlightFareRepository;
+import com.agencyglobalflights.customer.customerbooking.infrastructure.in.view.CustomerBookingView;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertCustomerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.CheckAndInsertPassengerUseCase;
 import com.agencyglobalflights.customer.flightssection.application.ShowAvAirportsDateUseCase;
@@ -46,7 +47,10 @@ public class CustomerMainView {
         FlightFareController ffc = new FlightFareController(vffuc);
         DocTypeController dtc = new DocTypeController(viewDocTypesUseCase);
         FlightsSectionController fsc = new FlightsSectionController(showAvAirpUseCase, showFlightsByAirpDateUseCase, checkAndInsertPassengerUseCase, checkAndInsertCustomerUseCase, createFlightBookingUseCase, ffc, dtc);
-        
+
+        // menu
+        CustomerBookingView cbv = new CustomerBookingView();
+
         do {
 
             ConsoleUtils.clear();
@@ -68,11 +72,11 @@ public class CustomerMainView {
                     fsc.buyFlights();
                     break;
                 case 2:
-
+                    cbv.showmenu();
                     break;
                 case 3:
 
-                    break;
+                    return;
                 default:
                     break;
             }
