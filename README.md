@@ -1,65 +1,65 @@
 # Agency Global Flights
-### Integrantes:
+### Members:
 
 - Juan Diego Contreras
 - Santiago Laguado
 
-### Objetivos:
+### Objectives:
 
-- Desarrollo de consultas SQL eficientes.
-- Mejora de la estructura de la base de datos
-- Automatización de procesos
-- Análisis de datos
+- Development of efficient SQL queries.
+- Improved database structure
+- Process automation
+- Data analysis
 
-Vuelos Globales opera vuelos a nivel internacional y cuenta con una flota de aviones, tripulación variada, múltiples aerolíneas asociadas y una vasta red de aeropuertos y ciudades de destino. La empresa requiere una base de datos robusta para gestionar todos los aspectos de su operación, desde la reserva de vuelos hasta el mantenimiento de los aviones y la administración de la tripulación.
+Vuelos Globales operates flights internationally and has a fleet of aircraft, diverse crew, multiple airline partners and a vast network of airports and destination cities. The company requires a robust database to manage all aspects of its operation, from flight booking to aircraft maintenance and crew management.
 
-### Requerimientos de la base de datos suministrada:
+### Requirements of the supplied database:
 
-1. Registrar avión
-2. Tripulación  y trayecto
-3. Crear Reserva de vuelo
-4. Registrar revisón de mantenimiento
-5. Consultar información de cliente
-6. Consultar reserva de vuelo
-7. Registrar cliente
-8. Consultar información de avión
-9. Consultar información de trayecto
-10. Registrar Aeropuerto
-11. Consultar información de aeropuerto
-12. Consultar información de revisiones de avión 
-13. Actualizar información de cliente
-14. Elimminar reserva de vuelo
-15. Actualizar información de avión
-16. Eliminar avión 
-17. Asignar aeronave a trayecto
-18. Actualizar información de trayecto
-19. Elimminar trayecto
-20. Actualizar información de aeropuerto
-21. Eliminar aeropuerto
-22. Actualizar información de cliente
-23. Consultar información de vuelo
-24. Actualizar información de revisión
-25. Eliminar revisón de mantenimiento
-26. Consultar asignación de tripulación
-27. Consultar escalas de un trayecto
-28. Actualizar información de escala
-29. Eliminar escala
-30. Registrar tarifa de vuelo
-31. Actualizar información de tarifa de vuelo
-32. Eliminar tarifa de vuelo 
-33. Consultar tarifa de vuelo
-34. Registrar tipo de documento
-35. Actualizar tipo de documento
-36. Eliminar tipo de documento
-37. Consultar tipo de documento
-38. Buscar vuelos
-39. Seleccionar vuelo
-40. Añadir pasajero
-41. Seleccionar asientos
-42. Realizar pagos
-43. Consultar reserva de vuelo
-44. Cancelar reserva de vuelo 
-45. Modificar reserva de vuelo
+1. Register aircraft
+2. Crew and route
+3. Create Flight Reservation
+4. Register maintenance check
+5. Consult customer information
+6. Consult flight reservation
+7. Register customer
+8. Consult aircraft information
+9. Consult trip information
+10. Register Airport
+11. Consult airport information
+12. Consult aircraft revision information 
+13. Update customer information
+14. Delete flight reservation
+15. Update aircraft information
+16. Delete aircraft 
+17. Assign aircraft to route
+18. Update route information
+19. Delete route
+20. Update airport information
+21. Delete airport
+22. Update customer information
+23. Consult flight information
+24. Update revision information
+25. Delete maintenance overhaul
+26. Consult crew assignment
+27. Consult stopovers of a trip
+28. Update stopover information
+29. Delete stopover
+30. Record airfare
+31. Update airfare information
+32. Delete airfare 
+33. Consult airfare
+34. Register document type
+35. Update document type
+36. Delete document type
+37. Consult document type
+38. Search flights
+39. Select flight
+40. Add passenger
+41. Select seats
+42. Make payment
+43. Consult flight reservation
+44. Cancel flight reservation 
+45. Modify flight reservation
 
 ----------------------------------------------------------------------------------------------------------------------
 
@@ -67,10 +67,9 @@ Vuelos Globales opera vuelos a nivel internacional y cuenta con una flota de avi
 
 ![db_airport_diagram](https://github.com/Mizamarzes/AgencyGlobalFlights/blob/master/database_design/db_airport_diagram.png)
 
-Para llevar a cabo este proyecto el equipo de desarrollo empleó arquitectura hexagonal y vertical slicing:
+To carry out this project, the development team used hexagonal architecture and vertical slicing:
 
 ![image-20240725151922964](https://github.com/Mizamarzes/AgencyGlobalFlights/blob/master/database_design/tree_files.png)
-
 
 
 
