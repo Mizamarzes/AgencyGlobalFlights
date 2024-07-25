@@ -65,11 +65,11 @@ Vuelos Globales opera vuelos a nivel internacional y cuenta con una flota de avi
 
 ### Base de datos empleada: 
 
-![db_airport_diagram](/home/camper/Documentos/Agency-GlobalFlights-1/database_design/db_airport_diagram.png)
+![db_airport_diagram](https://github.com/Mizamarzes/AgencyGlobalFlights/blob/master/database_design/db_airport_diagram.png)
 
 Para llevar a cabo este proyecto el equipo de desarrollo empleó arquitectura hexagonal y vertical slicing:
 
-![image-20240725151922964](/home/camper/.config/Typora/typora-user-images/image-20240725151922964.png)
+![image-20240725151922964](https://github.com/Mizamarzes/AgencyGlobalFlights/blob/master/database_design/tree_files.png)
 
 
 
